@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class ProductSeeder extends Seeder
 {
@@ -16,24 +18,66 @@ class ProductSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $categories = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // IDs de categorías existentes
-        $brands = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // IDs de marcas existentes
+        $categories = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        $brands = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
         $products = [];
+        $existingSlugs = DB::table('products')->pluck('slug')->toArray(); // Obtener slugs existentes
 
-        for ($i = 0; $i < 10; $i++) {
-            $name = $faker->word . ' ' . $faker->randomElement(['Taladro', 'Martillo', 'Llave', 'Sierra', 'Pintura', 'Cemento', 'Tubería', 'Cable']);
-            
+        $productNames = [
+            "Taladro Eléctrico Profesional 500W con Percusión",
+            "Martillo de Carpintero con Mango de Fibra de Vidrio",
+            "Llave Inglesa Ajustable de 12 Pulgadas en Acero Forjado",
+            "Sierra Circular con Disco de Carburo para Corte Preciso",
+            "Pintura Acrílica Lavable para Interiores y Exteriores",
+            "Cemento Rápido de Secado Ultra Resistente para Construcción",
+            "Tubería de PVC de Alta Presión para Instalaciones Hidráulicas",
+            "Cable Eléctrico de Cobre Flexible 10m para Instalaciones",
+            "Destornillador Eléctrico con Batería de Litio y Accesorios",
+            "Set de Brocas para Madera y Metal con Estuche Organizador",
+            "Nivel Láser de Alta Precisión para Construcción y Carpintería",
+            "Escalera de Aluminio Extensible hasta 4 Metros",
+            "Guantes de Seguridad con Protección Anticorte Nivel 5",
+            "Taladro Percutor con Kit de Accesorios para Construcción",
+            "Compresor de Aire Portátil para Herramientas Neumáticas",
+            "Llave de Impacto Neumática con Torque Ajustable",
+            "Multímetro Digital Profesional con Funciones Avanzadas",
+            "Sierra Caladora con Velocidad Variable para Cortes Precisos",
+            "Cerradura Inteligente con Huella Digital y Control Remoto",
+            "Soldadora Inverter con Electrodo Revestido de Alta Potencia"
+        ];
+
+        for ($i = 0; $i < 50; $i++) {
+            $name = $faker->randomElement($productNames) . ' - ' . $faker->unique()->word;
+
+            // Generar slug único sin hacer consultas repetidas a la BD
+            $slug = Str::slug($name);
+            $originalSlug = $slug;
+            $counter = 1;
+
+            while (in_array($slug, $existingSlugs)) {
+                $slug = $originalSlug . '-' . $counter;
+                $counter++;
+            }
+
+            $existingSlugs[] = $slug; // Añadir al array para evitar futuros duplicados en este seeder
+
+            // Descargar imagen y guardar en storage local
+            $imageUrl = 'https://picsum.photos/300/300?random=' . rand(1, 1000);
+            $response = Http::get($imageUrl);
+            $fileName = 'products/' . Str::uuid() . '.jpg';
+            Storage::disk('public')->put($fileName, $response->body());
+
             $products[] = [
                 'name' => $name,
-                'slug' => Str::slug($name),
+                'slug' => $slug,
                 'description' => $faker->sentence(),
                 'price' => $faker->randomFloat(2, 10, 500),
                 'discount_price' => $faker->optional()->randomFloat(2, 5, 400),
                 'stock' => $faker->numberBetween(10, 200),
                 'sku' => strtoupper($faker->lexify('??????')),
                 'status' => 1,
-                'image' => 'https://picsum.photos/300/300?random=' . rand(1, 1000),
+                'image' => $fileName,
                 'category_id' => $faker->randomElement($categories),
                 'brand_id' => $faker->randomElement($brands),
             ];
@@ -42,3 +86,4 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert($products);
     }
 }
+

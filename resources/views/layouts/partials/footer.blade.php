@@ -7,17 +7,30 @@
                         <div class="tp-footer-widget footer-col-1 mb-50">
                             <div class="tp-footer-widget-content">
                                 <div class="tp-footer-logo">
-                                    <a href="index.html">
-                                        <img src="{{ asset('assets/principal/img/logo/logo.svg') }}" alt="logo">
+                                    <a href="{{ url('/') }}">
+                                        <img width="180" src="{{ asset($business->logo ?? 'assets/principal/img/logo/logo.png') }}"
+                                            alt="logo">
                                     </a>
                                 </div>
-                                <p class="tp-footer-desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                    Corporis, itaque?</p>
+                                <p class="tp-footer-desc">
+                                    {{ $business->description ?? 'Bienvenido a nuestra tienda en línea.' }}</p>
                                 <div class="tp-footer-social">
-                                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fa-brands fa-vimeo-v"></i></a>
+                                    @if ($business->facebook_url)
+                                        <a href="{{ $business->facebook_url }}" target="_blank"><i
+                                                class="fa-brands fa-facebook-f"></i></a>
+                                    @endif
+                                    @if ($business->twitter_url)
+                                        <a href="{{ $business->twitter_url }}" target="_blank"><i
+                                                class="fa-brands fa-twitter"></i></a>
+                                    @endif
+                                    @if ($business->linkedin_url)
+                                        <a href="{{ $business->linkedin_url }}" target="_blank"><i
+                                                class="fa-brands fa-linkedin-in"></i></a>
+                                    @endif
+                                    @if ($business->instagram_url)
+                                        <a href="{{ $business->instagram_url }}" target="_blank"><i
+                                                class="fa-brands fa-instagram"></i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -27,32 +40,34 @@
                             <h4 class="tp-footer-widget-title">Mi Cuenta</h4>
                             <div class="tp-footer-widget-content">
                                 <ul>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Wishlist</a></li>
-                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="{{ route('carts.index') }}">Carrito</a></li>
+                                    <li><a href="{{ route('wishlist.index') }}">Lista de deseos</a></li>
+                                    <li><a href="{{ route('profile.index') }}">Mi cuenta</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                         <div class="tp-footer-widget footer-col-3 mb-50">
-                            <h4 class="tp-footer-widget-title">Infomation</h4>
+                            <h4 class="tp-footer-widget-title">Información</h4>
                             <div class="tp-footer-widget-content">
                                 <ul>
                                     <li><a href="#">Privacy Policy</a></li>
                                     <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="{{ route('contact') }}">Contactos</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                         <div class="tp-footer-widget footer-col-4 mb-50">
-                            <h4 class="tp-footer-widget-title">Talk To Us</h4>
+                            <h4 class="tp-footer-widget-title">Contáctanos</h4>
                             <div class="tp-footer-widget-content">
                                 <div class="tp-footer-talk mb-20">
-                                    <span>Got Questions? Call us</span>
-                                    <h4><a href="tel:670-413-90-762">+670 413 90 762</a></h4>
+                                    <span>¿Tienes preguntas? Llámanos</span>
+                                    <h4><a
+                                            href="tel:{{ $business->phone ?? '000-000-0000' }}">{{ $business->phone ?? '000-000-0000' }}</a>
+                                    </h4>
                                 </div>
                                 <div class="tp-footer-contact">
                                     <div class="tp-footer-contact-item d-flex align-items-start">
@@ -68,18 +83,12 @@
                                                         d="M13 5.40039L10.496 7.40039C9.672 8.05639 8.32 8.05639 7.496 7.40039L5 5.40039"
                                                         stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"
                                                         stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M1 11.4004H5.8" stroke="currentColor" stroke-width="1.5"
-                                                        stroke-miterlimit="10" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path d="M1 8.19922H3.4" stroke="currentColor" stroke-width="1.5"
-                                                        stroke-miterlimit="10" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
                                                 </svg>
                                             </span>
                                         </div>
                                         <div class="tp-footer-contact-content">
-                                            <p>
-                                                <a href="mailto:ariana.azabache@tecsup.edu.pe">ariana.azabache@tecsup.edu.pe</a>
+                                            <p><a
+                                                    href="mailto:{{ $business->email ?? 'info@empresa.com' }}">{{ $business->email ?? 'info@empresa.com' }}</a>
                                             </p>
                                         </div>
                                     </div>
@@ -98,9 +107,18 @@
                                             </span>
                                         </div>
                                         <div class="tp-footer-contact-content">
-                                            <p><a href="https://www.google.com/maps/place/Sleepy+Hollow+Rd,+Gouverneur,+NY+13642,+USA/@44.3304966,-75.4552367,17z/data=!3m1!4b1!4m6!3m5!1s0x4cccddac8972c5eb:0x56286024afff537a!8m2!3d44.3304928!4d-75.453048!16s%2Fg%2F1tdsjdj4"
-                                                    target="_blank">79 Sleepy Hollow St. <br> Jamaica, New York
-                                                    1432</a></p>
+                                            @if ($business->latitude && $business->longitude)
+                                                <a href="https://www.google.com/maps?q={{ $business->latitude }},{{ $business->longitude }}"
+                                                    target="_blank">
+                                                @else
+                                                    <a href="#"
+                                                        onclick="alert('Ubicación no disponible'); return false;">
+                                            @endif
+                                            {{ $business->address ?? 'Dirección no disponible' }}, <br>
+                                            {{ $business->city ?? '' }}, {{ $business->state ?? '' }},
+                                            {{ $business->country ?? '' }}
+                                            </a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -108,6 +126,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="tp-footer-bottom">
@@ -122,7 +141,8 @@
                         <div class="col-md-6">
                             <div class="tp-footer-payment text-md-end">
                                 <p>
-                                    <img src="{{ asset('assets/principal/img/footer/footer-pay.png') }}" alt="">
+                                    <img src="{{ asset('assets/principal/img/footer/footer-pay.png') }}"
+                                        alt="">
                                 </p>
                             </div>
                         </div>

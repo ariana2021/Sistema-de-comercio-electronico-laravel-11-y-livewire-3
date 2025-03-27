@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('avatar')->nullable();
             $table->string('website')->nullable();
+            $table->string('google_id')->nullable();
             $table->enum('status', ['Activo', 'Inactivo'])->default('Activo');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

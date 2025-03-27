@@ -18,7 +18,7 @@
                                 stroke-linecap="round"></circle>
                         </svg>
                     </div>
-                    <img src="assets/img/logo/preloader/preloader-icon.svg" alt="">
+                    <img src="{{ asset('assets/principal/img/logo/preloader/preloader-icon.svg') }}" alt="">
                 </div>
                 <h3 class="tp-preloader-title">{{ config('app.name') }}</h3>
                 <p class="tp-preloader-subtitle">Loading</p>
@@ -57,7 +57,7 @@
             <div class="offcanvas__top mb-70 d-flex justify-content-between align-items-center">
                 <div class="offcanvas__logo logo">
                     <a href="{{ route('index') }}">
-                        <img src="{{ asset('assets/principal/img/logo/logo.svg') }}" alt="logo">
+                        <img src="{{ asset('assets/principal/img/logo/logo.png') }}" width="180" alt="logo">
                     </a>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="offcanvas__btn">
-                <a href="contact.html" class="tp-btn-2 tp-btn-border-2">Contacto</a>
+                <a href="{{ route('contact') }}" class="tp-btn-2 tp-btn-border-2">Contacto</a>
             </div>
         </div>
     </div>
@@ -115,7 +115,7 @@
             </div>
             <div class="col">
                 <div class="tp-mobile-item text-center">
-                    <a href="wishlist.html" class="tp-mobile-item-btn">
+                    <a href="{{ route('wishlist.index') }}" class="tp-mobile-item-btn">
                         <i class="flaticon-love"></i>
                         <span>Lista de deseos</span>
                     </a>
@@ -154,7 +154,7 @@
                     <form action="#">
                         <div class="tp-search-input mb-10">
                             <input type="text" placeholder="Buscar productos...">
-                            <button type="submit"><i class="flaticon-search-1"></i></button>
+                            <button type="button"><i class="flaticon-search-1"></i></button>
                         </div>
                     </form>
                 </div>
@@ -205,20 +205,38 @@
                                     <span class="tp-header-setting-toggle"
                                         id="tp-header-setting-toggle">Configuración</span>
                                     <ul>
+                                        @auth
+                                            <li>
+                                                <a href="{{ route('profile.index') }}">Mi Perfil</a>
+                                            </li>
+                                        @endauth
+
                                         <li>
-                                            <a href="profile.html">Mi Perfil</a>
+                                            <a href="{{ route('wishlist.index') }}">Lista de deseos</a>
                                         </li>
                                         <li>
-                                            <a href="wishlist.html">Lista de deseos</a>
+                                            <a href="{{ route('carts.index') }}">Carrito</a>
                                         </li>
-                                        <li>
-                                            <a href="cart.html">Carrito</a>
-                                        </li>
-                                        <li>
-                                            <a href="login.html">Salir</a>
-                                        </li>
+
+                                        @auth
+                                            <li>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                </form>
+                                                <a href="#"
+                                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    Salir
+                                                </a>
+                                            </li>
+                                        @else
+                                            <li>
+                                                <a href="{{ route('login') }}">Iniciar Sesión</a>
+                                            </li>
+                                        @endauth
                                     </ul>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -233,7 +251,7 @@
                     <div class="col-xl-2 col-lg-2 col-md-4 col-6">
                         <div class="logo">
                             <a href="{{ route('index') }}">
-                                <img src="{{ asset('assets/principal/img/logo/logo.svg') }}" alt="logo">
+                                <img src="{{ asset('assets/principal/img/logo/logo.png') }}" width="180" alt="logo">
                             </a>
                         </div>
                     </div>
@@ -245,16 +263,8 @@
                                         <input type="text" placeholder="Buscar productos...">
                                     </div>
                                     <div class="tp-header-search-btn">
-                                        <button type="submit">
-                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                                <path d="M19 19L14.65 14.65" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
+                                        <button type="button">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -265,7 +275,7 @@
                         <div class="tp-header-main-right d-flex align-items-center justify-content-end">
                             <div class="tp-header-login d-none d-lg-block">
                                 @auth
-                                    <a href="{{ route('profile') }}" class="d-flex align-items-center">
+                                    <a href="{{ route('profile.index') }}" class="d-flex align-items-center">
                                         <!-- Cambia 'profile' según tu ruta -->
                                         <div class="tp-header-login-icon">
                                             <span>
@@ -304,7 +314,7 @@
                                             </span>
                                         </div>
                                         <div class="tp-header-login-content d-none d-xl-block">
-                                            <span>Hello</span>
+                                            <span>Hola</span>
                                             <h5 class="tp-header-login-title">Iniciar sesión</h5>
                                         </div>
                                     </a>
@@ -313,7 +323,7 @@
 
                             <div class="tp-header-action d-flex align-items-center ml-50">
                                 <div class="tp-header-action-item d-none d-lg-block">
-                                    {{-- <livewire:wishlist-icon /> --}}
+                                    <livewire:wishlist-icon />
                                 </div>
                                 <div class="tp-header-action-item">
                                     <livewire:cart-icon />
@@ -357,37 +367,19 @@
                                 </button>
                                 <nav class="tp-category-menu-content">
                                     <ul>
+                                        @foreach ($categories as $category)
                                         <li>
-                                            <a href="shop.html">
-                                                <span>
-                                                    <svg width="16" height="17" viewBox="0 0 16 17"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M5.90532 14.8316V12.5719C5.9053 11.9971 6.37388 11.5301 6.95443 11.5262H9.08101C9.66434 11.5262 10.1372 11.9944 10.1372 12.5719V12.5719V14.8386C10.1371 15.3266 10.5305 15.7254 11.0233 15.7368H12.441C13.8543 15.7368 15 14.6026 15 13.2035V13.2035V6.77525C14.9925 6.22482 14.7314 5.70794 14.2911 5.37171L9.44253 1.50496C8.59311 0.83168 7.38562 0.83168 6.5362 1.50496L1.70886 5.37873C1.26693 5.7136 1.00544 6.23133 1 6.78227V13.2035C1 14.6026 2.1457 15.7368 3.55899 15.7368H4.97671C5.48173 15.7368 5.89114 15.3315 5.89114 14.8316V14.8316"
-                                                            stroke="currentColor" stroke-width="1.5"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
+                                            <a href="{{ route('category', $category->slug) }}">
+                                                <span style="display: inline-block; width: 30px;">
+                                                    <img src="{{ Storage::url($category->image) }}"
+                                                        alt="{{ $category->name }}"
+                                                        style="width: 100%; height: auto;">
                                                 </span>
-                                                New Arrivals
+                                                {{ $category->name }}
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="shop.html">
-                                                <span>
-                                                    <svg width="18" height="18" viewBox="0 0 18 18"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                                            d="M9 1C13.4176 1 17 4.5816 17 9C17 13.4184 13.4176 17 9 17C4.5816 17 1 13.4184 1 9C1 4.5816 4.5816 1 9 1Z"
-                                                            stroke="currentColor" stroke-width="1.5"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                                            d="M11.5263 8.99592C11.5263 8.31286 8.02529 6.12769 7.62814 6.5206C7.23099 6.9135 7.19281 11.0413 7.62814 11.4712C8.06348 11.9027 11.5263 9.67898 11.5263 8.99592Z"
-                                                            stroke="currentColor" stroke-width="1.5"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
-                                                </span>
-                                                TV, Video & Musice</a>
-                                        </li>
+                                        
+                                        @endforeach
                                     </ul>
                                 </nav>
                             </div>
@@ -396,9 +388,9 @@
                             <div class="main-menu menu-style-1">
                                 <nav class="tp-main-menu-content">
                                     <ul>
-                                        <li><a href="contact.html">Inicio</a></li>
-                                        <li><a href="contact.html">Productos</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="{{ url('/') }}">Inicio</a></li>
+                                        <li><a href="{{ route('shop') }}">Productos</a></li>
+                                        <li><a href="{{ route('contact') }}">Contacto</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -423,8 +415,8 @@
                                     </span>
                                 </div>
                                 <div class="tp-header-contact-content">
-                                    <h5>Hotline:</h5>
-                                    <p><a href="tel:402-763-282-46">+(402) 763 282 46</a></p>
+                                    <h5>Línea directa:</h5>
+                                    <p><a href="tel:402-763-282-46">+{{ $business->phone }}</a></p>
                                 </div>
                             </div>
                         </div>

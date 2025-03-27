@@ -5,7 +5,7 @@
                 <div class="col-xl-3 col-lg-3 col-md-3 col-6">
                     <div class="logo">
                         <a href="index.html">
-                            <img src="{{ asset('assets/principal/img/logo/logo.svg') }}" alt="logo">
+                            <img src="{{ asset('assets/principal/img/logo/logo.png') }}" width="150" alt="logo">
                         </a>
                     </div>
                 </div>
@@ -14,12 +14,12 @@
                         <nav id="mobile-menu">
                             <ul>
                                 <li>
-                                    <a href="index.html">Home</a>
+                                    <a href="{{ url('/') }}">Inicio</a>
                                 </li>
                                 <li>
-                                    <a href="shop.html">Products</a>
+                                    <a href="{{ route('shop') }}">Productos</a>
                                 </li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{{ route('contact') }}">Contacto</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -27,7 +27,7 @@
                 <div class="col-xl-3 col-lg-3 col-md-3 col-6">
                     <div class="tp-header-action d-flex align-items-center justify-content-end ml-50">
                         <div class="tp-header-action-item d-none d-lg-block">
-                            {{-- <livewire:wishlist-icon /> --}}
+                            <livewire:wishlist-icon />
                         </div>
                         <div class="tp-header-action-item">
                             <livewire:cart-icon />

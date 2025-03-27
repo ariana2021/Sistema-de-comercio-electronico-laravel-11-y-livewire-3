@@ -33,12 +33,33 @@
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-settings menu-icon"></i>
             </a>
-            <div class="collapse {{ request()->routeIs('users.*') ? 'show' : '' }}" id="ui-administracion">
+            <div class="collapse {{ request()->routeIs('users.*')
+            || request()->routeIs('coupons.*') 
+            || request()->routeIs('business.*') 
+            || request()->routeIs('sliders.*') ? 'show' : '' }}" id="ui-administracion">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}"
                             href="{{ route('users.index') }}">
                             Usuarios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('business.index') ? 'active' : '' }}"
+                            href="{{ route('business.index') }}">
+                            Empresa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('coupons.index') ? 'active' : '' }}"
+                            href="{{ route('coupons.index') }}">
+                            Cupones
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('sliders.index') ? 'active' : '' }}"
+                            href="{{ route('sliders.index') }}">
+                            Sliders
                         </a>
                     </li>
                 </ul>
@@ -78,6 +99,13 @@
                 </ul>
             </div>
         </li>
+
+        <li class="nav-item {{ request()->routeIs('orders*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('orders.index') }}">
+                <span class="menu-title">Pedidos</span>
+                <i class="mdi mdi-package-variant-closed menu-icon"></i>
+            </a>
+        </li>        
 
 
     </ul>

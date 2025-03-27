@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('discount_price', 10, 2)->nullable();
             $table->integer('stock')->default(0);
+            $table->integer('sales_count')->default(0);
             $table->string('sku')->unique();
             $table->boolean('status')->default(true);
             $table->string('image')->nullable();

@@ -21,12 +21,10 @@
                                 <th scope="col">Acciones</th>
                                 <th scope="col">Imagen</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Descripción</th>
                                 <th scope="col">Precio</th>
                                 <th scope="col">Precio Descuento</th>
                                 <th scope="col">Stock</th>
                                 <th scope="col">SKU</th>
-                                <th scope="col">Estado</th>
                                 <th scope="col">Categoría</th>
                                 <th scope="col">Marca</th>
                             </tr>
@@ -35,31 +33,30 @@
                             @foreach ($products as $product)
                                 <tr>
                                     <td>
-                                        <button wire:click="edit({{ $product->id }})"
-                                            class="btn btn-outline-primary btn-sm">
+                                        <button wire:click="edit({{ $product->id }})" class="btn btn-outline-primary btn-sm">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button wire:click="confirmDelete({{ $product->id }})"
-                                            class="btn btn-outline-danger btn-sm">
+                                        <button wire:click="confirmDelete({{ $product->id }})" class="btn btn-outline-danger btn-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        <a href="{{route('product.gallery', $product->id)}}" class="btn btn-outline-secondary btn-sm">
+                                            <i class="fas fa-images"></i>
+                                        </a>
                                     </td>
+                                    
                                     <td>
                                         @if ($product->image)
-                                            {{-- <img src="{{ Storage::url($product->image) }}" alt="Imagen del producto"
-                                                width="100"> --}}
-                                            <img src="{{ $product->image }}" alt="Imagen del producto" width="100">
+                                            <img src="{{ Storage::url($product->image) }}" alt="Imagen del producto"
+                                                width="100">
                                         @else
                                             <span>No hay imagen</span>
                                         @endif
                                     </td>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->description }}</td>
                                     <td>{{ $product->price }}</td>
                                     <td>{{ $product->discount_price }}</td>
                                     <td>{{ $product->stock }}</td>
                                     <td>{{ $product->sku }}</td>
-                                    <td>{{ $product->status }}</td>
                                     <td>{{ $product->category->name ?? 'Sin categoría' }}</td>
                                     <td>{{ $product->brand->name ?? 'Sin marca' }}</td>
                                 </tr>

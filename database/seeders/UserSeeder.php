@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'address' => 'Direccion Admin',
             'website' => 'https://example.com',
             'password' => Hash::make('admin123')
-        ]);
+        ])->assignRole('admin');
 
         User::create([
             'name' => 'Test User',

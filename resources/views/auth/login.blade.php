@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="p-5">
+    <div class="p-5 efecto-parallax">
         <div class="col-md-4 mx-auto">
             <div class="card">
                 <div class="card-body">
@@ -11,6 +11,13 @@
                                 <img src="{{ asset('assets/admin/images/logo.png') }}" class="rounded-circle" alt="Logo"
                                     width="100">
                             </div>
+
+                            <div class="d-grid mb-3">
+                                <a href="{{ route('login.google') }}" class="btn btn-danger">
+                                    <i class="fab fa-google"></i> Iniciar sesión con Google
+                                </a>
+                            </div>
+
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="mb-3">

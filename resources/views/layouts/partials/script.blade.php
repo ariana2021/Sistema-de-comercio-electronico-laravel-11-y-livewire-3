@@ -12,21 +12,23 @@
 <script src="{{ asset('assets/principal/js/wow.js') }}"></script>
 <script src="{{ asset('assets/principal/js/isotope-pkgd.js') }}"></script>
 <script src="{{ asset('assets/principal/js/imagesloaded-pkgd.js') }}"></script>
-<script src="{{ asset('assets/principal/js/ajax-form.js') }}"></script>
 <script src="{{ asset('assets/principal/js/main.js') }}"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('livewire:init', function() {
         Livewire.on('showAlert', (res) => {
-            console.log(res);
-            Swal.fire({
-                title: res[0],
-                icon: res[1],
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 2000
-            });
+            alertSweet(res[0], res[1]);
         });
     });
+
+    function alertSweet(titulo, icono) {
+        Swal.fire({
+            title: titulo,
+            icon: icono,
+            toast: true,
+            position: 'bottom-start',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }
 </script>

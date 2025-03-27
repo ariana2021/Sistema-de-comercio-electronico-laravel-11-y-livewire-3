@@ -38,9 +38,7 @@
                                     </td>
                                     <td>
                                         @if ($category->image)
-                                            {{-- <img src="{{ Storage::url($category->image) }}" alt="Imagen del producto"
-                                                width="100"> --}}
-                                                <img src="{{ $category->image }}" alt="Imagen del producto"
+                                            <img src="{{ Storage::url($category->image) }}" alt="Imagen del producto"
                                                 width="100">
                                         @else
                                             <span>No hay imagen</span>

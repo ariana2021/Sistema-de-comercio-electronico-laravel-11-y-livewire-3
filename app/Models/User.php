@@ -25,6 +25,7 @@ class User extends Authenticatable
         'address',
         'avatar',
         'website',
+        'google_id',
         'email_verified_at',
         'password',
         'branch_id',
@@ -51,5 +52,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function loyaltyPoints()
+    {
+        return $this->hasOne(LoyaltyPoint::class);
+    }
+
+    public function getAvailablePointsAttribute(): int
+    {
+        return $this->loyaltyPoints ? $this->loyaltyPoints->availablePoints() : 0;
     }
 }

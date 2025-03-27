@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Middleware\CheckUserStatus;
+use App\Http\Middleware\RoleRedirectMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,9 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Aquí es donde registras tu middleware
-        $middleware->append(CheckUserStatus::class);
+        $middleware->alias([
+            'role' => RoleRedirectMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+

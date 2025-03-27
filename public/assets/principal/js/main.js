@@ -931,6 +931,7 @@
 		slidesPerView: 4,
 		spaceBetween: 30,
 		loop: true,
+		autoplay: true,
 		rtl: rtl_setting,
 		pagination: {
 			el: ".tp-deals-slider-dot",
@@ -1518,6 +1519,7 @@
 		spaceBetween: 0,
 		loop: true,
 		rtl: rtl_setting,
+		autoplay: true,
 		pagination: {
 			el: ".tp-testimonial-slider-dot",
 			clickable: true,
@@ -1536,6 +1538,7 @@
 		slidesPerView: 1,
 		spaceBetween: 0,
 		loop: true,
+		autoplay: true,
 		rtl: rtl_setting,
 		enteredSlides: false,
 		pagination: {

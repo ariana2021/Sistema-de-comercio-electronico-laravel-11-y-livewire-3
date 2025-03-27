@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\TemporaryCart;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -20,12 +23,33 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    protected function authenticated(Request $request, $user)
+    {
+        // Obtener datos actuales de la sesión con IDs de productos como claves
+        $cartSession = Session::get('cart', []);
+        $wishlistSession = Session::get('wishlist', []);
+
+        // Recuperar o crear el registro en la tabla temporary_carts
+        $temporaryCart = TemporaryCart::firstOrNew(['user_id' => $user->id]);
+
+        // Asegurar que los datos sean arrays y fusionarlos manteniendo los IDs como claves
+        $temporaryCart->cart_data = is_array($temporaryCart->cart_data) ? ($temporaryCart->cart_data + $cartSession) : $cartSession;
+        $temporaryCart->wishlist_data = is_array($temporaryCart->wishlist_data) ? ($temporaryCart->wishlist_data + $wishlistSession) : $wishlistSession;
+
+        // Guardar en la base de datos
+        $temporaryCart->save();
+
+        // Restaurar los datos en la sesión manteniendo los IDs de productos como claves
+        Session::put('cart', $temporaryCart->cart_data);
+        Session::put('wishlist', $temporaryCart->wishlist_data);
+
+        // Redireccionar según el rol del usuario
+        return $user->hasRole('admin')
+            ? redirect()->route('home')
+            : redirect()->route('profile.index');
+    }
+
+
 
     /**
      * Create a new controller instance.

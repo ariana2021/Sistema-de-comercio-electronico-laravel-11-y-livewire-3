@@ -16,14 +16,16 @@
                 @forelse ($cart as $item)
                     <div class="cartmini__widget-item">
                         <div class="cartmini__thumb">
-                            <a href="product-details.html">
-                                <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}">
+                            <a href="{{ route('product.detail', $item['slug']) }}">
+                                <img src="{{ Storage::url($item['image']) }}" alt="{{ $item['name'] }}">
                             </a>
                         </div>
                         <div class="cartmini__content">
-                            <h5 class="cartmini__title"><a href="product-details.html">{{ $item['name'] }}</a></h5>
+                            <h5 class="cartmini__title"><a
+                                    href="{{ route('product.detail', $item['slug']) }}">{{ $item['name'] }}</a></h5>
                             <div class="cartmini__price-wrapper">
-                                <span class="cartmini__price">${{ $item['price'] }}</span>
+                                <span
+                                    class="cartmini__price">{{ config('app.currency_symbol') }}{{ $item['price'] }}</span>
                                 <span class="cartmini__quantity">x{{ $item['quantity'] }}</span>
                             </div>
                         </div>
@@ -35,7 +37,7 @@
                     <div class="text-center">
                         <img src="{{ asset('assets/principal/img/product/cartmini/empty-cart.png') }}" alt="">
                         <p>Tu carrito está vacío</p>
-                        <a href="shop.html" class="tp-btn">Ir a la tienda</a>
+                        <a href="{{ route('shop') }}" class="tp-btn">Ir a la tienda</a>
                     </div>
                 @endforelse
             </div>

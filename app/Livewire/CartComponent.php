@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\TemporaryCart;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\Session;
 
@@ -34,8 +36,24 @@ class CartComponent extends Component
             Session::put('cart', $cart);
 
             $this->dispatch('cartUpdated');
-            $this->dispatch('showAlert', 'Producto eliminado del carrito', 'warning');
+            $this->dispatch('showAlert', 'Producto eliminado del carrito', 'success');
         }
+
+        if (Auth::check()) {
+            $this->updateDatabase();
+        }
+    }
+
+    private function updateDatabase()
+    {
+        $userId = Auth::id();
+        $cartData = Session::get('cart', []);
+        $wishlistData = Session::get('wishlist', []);
+
+        TemporaryCart::updateOrCreate(
+            ['user_id' => $userId],
+            ['cart_data' => $cartData, 'wishlist_data' => $wishlistData]
+        );
     }
 
 
