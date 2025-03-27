@@ -8,10 +8,11 @@
                             <div class="tp-footer-widget-content">
                                 <div class="tp-footer-logo">
                                     <a href="index.html">
-                                        <img src="{{asset('assets/principal/img/logo/logo.svg')}}" alt="logo">
+                                        <img src="{{ asset('assets/principal/img/logo/logo.svg') }}" alt="logo">
                                     </a>
                                 </div>
-                                <p class="tp-footer-desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis, itaque?</p>
+                                <p class="tp-footer-desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                                    Corporis, itaque?</p>
                                 <div class="tp-footer-social">
                                     <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                                     <a href="#"><i class="fa-brands fa-twitter"></i></a>
@@ -77,7 +78,9 @@
                                             </span>
                                         </div>
                                         <div class="tp-footer-contact-content">
-                                            <p><a href="mailto:shofy@support.com">shofy@support.com</a></p>
+                                            <p>
+                                                <a href="mailto:ariana.azabache@tecsup.edu.pe">ariana.azabache@tecsup.edu.pe</a>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="tp-footer-contact-item d-flex align-items-start">
@@ -113,13 +116,13 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="tp-footer-copyright">
-                                <p>© {{date('Y')}} All Rights Reserved <a href="#">Tu amor</a>.</p>
+                                <p>© {{ date('Y') }} All Rights Reserved <a href="#">Tu amor</a>.</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="tp-footer-payment text-md-end">
                                 <p>
-                                    <img src="{{asset('assets/principal/img/footer/footer-pay.png')}}" alt="">
+                                    <img src="{{ asset('assets/principal/img/footer/footer-pay.png') }}" alt="">
                                 </p>
                             </div>
                         </div>

@@ -20,7 +20,7 @@
                     </div>
                     <img src="assets/img/logo/preloader/preloader-icon.svg" alt="">
                 </div>
-                <h3 class="tp-preloader-title">Shofy</h3>
+                <h3 class="tp-preloader-title">{{ config('app.name') }}</h3>
                 <p class="tp-preloader-subtitle">Loading</p>
             </div>
         </div>

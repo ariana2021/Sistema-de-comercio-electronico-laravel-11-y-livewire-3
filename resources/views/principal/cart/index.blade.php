@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-xxl-12">
                     <div class="breadcrumb__content p-relative z-index-1">
-                        <h3 class="breadcrumb__title">Shopping Cart</h3>
+                        <h3 class="breadcrumb__title">Mi carrito</h3>
                         <div class="breadcrumb__list">
-                            <span><a href="#">Home</a></span>
-                            <span>Shopping Cart</span>
+                            <span><a href="{{ route('index') }}">Inicio</a></span>
+                            <span>Mi carrito</span>
                         </div>
                     </div>
                 </div>
@@ -38,8 +38,8 @@
                                 @foreach ($carts as $cart)
                                     <tr>
                                         <!-- img -->
-                                        <td class="tp-cart-img"><a href="#"> <img
-                                                    src="{{ $cart['image'] }}" alt=""></a></td>
+                                        <td class="tp-cart-img"><a href="#"> <img src="{{ $cart['image'] }}"
+                                                    alt=""></a></td>
                                         <!-- title -->
                                         <td class="tp-cart-title">
                                             <a href="#">{{ $cart['name'] }}</a>
@@ -52,7 +52,7 @@
                                                 <span class="tp-cart-minus">
                                                     <i class="fas fa-minus"></i>
                                                 </span>
-                                            <input class="tp-cart-input" type="text" value="{{ $cart['quantity'] }}">
+                                                <input class="tp-cart-input" type="text" value="{{ $cart['quantity'] }}">
                                                 <span class="tp-cart-plus">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
