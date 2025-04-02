@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('status', ['Activo', 'Inactivo'])->default('Activo');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->json('billing_details')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

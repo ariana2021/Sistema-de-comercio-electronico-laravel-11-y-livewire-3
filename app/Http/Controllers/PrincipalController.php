@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class PrincipalController extends Controller
@@ -63,7 +64,11 @@ class PrincipalController extends Controller
         $wishlist = $wishlistData ? $wishlistData->wishlist_data : [];
         $wishlistCount = count($wishlist);
 
-        return view('principal.home.profile', compact('orders', 'ordersCount', 'wishlist', 'wishlistCount'));
+        $availableCashback = Auth::user()->cashbacks()
+                                ->where('status', 'available')
+                                ->sum('amount');
+
+        return view('principal.home.profile', compact('orders', 'ordersCount', 'wishlist', 'wishlistCount', 'availableCashback'));
     }
 
     public function updateProfile(Request $request)
@@ -83,6 +88,31 @@ class PrincipalController extends Controller
         $user->update($validated);
 
         return response()->json(['message' => 'Perfil actualizado con éxito'], 200);
+    }
+
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        // Eliminar foto anterior si existe
+        if ($user->avatar) {
+            Storage::delete($user->avatar);
+        }
+
+        // Guardar nueva foto
+        $path = $request->file('image')->store('avatars', 'public');
+
+        // Actualizar en la BD
+        $user->update(['avatar' => $path]);
+
+        return response()->json([
+            'success' => true,
+            'image_url' => Storage::url($path)
+        ]);
     }
 
     public function updatePassword(Request $request)

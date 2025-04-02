@@ -14,11 +14,7 @@
                         <!-- product action -->
                         <div class="tp-product-action">
                             <div class="tp-product-action-item d-flex flex-column">
-                                <button type="button" class="tp-product-action-btn tp-product-quick-view-btn">
-                                    <i class="fal fa-eye"></i>
-                                    <span class="tp-product-tooltip">Vista previa</span>
-                                </button>
-                                <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn">
+                                <button type="button" wire:click="addToWishlist({{ $offer->product->id }})" class="tp-product-action-btn tp-product-add-to-wishlist-btn">
                                     <i class="fas fa-heart-circle"></i>
                                     <span class="tp-product-tooltip">Añadir a lista de deseos</span>
                                 </button>
@@ -26,7 +22,7 @@
                         </div>
 
                         <div class="tp-product-add-cart-btn-large-wrapper">
-                            <button type="button" class="tp-product-add-cart-btn-large">
+                            <button type="button" class="tp-product-add-cart-btn-large" wire:click="addToCart({{ $offer->product->id }})">
                                 <i class="far fa-cart-plus"></i>
                                 Añadir al carrito
                             </button>

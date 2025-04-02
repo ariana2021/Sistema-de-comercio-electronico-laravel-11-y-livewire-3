@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('assets/principal/css/flaticon_shofy.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/principal/css/spacing.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/principal/css/main.css') }}">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="{{ asset('assets/principal/css/custom.css') }}">
     @stack('styles')
 </head>

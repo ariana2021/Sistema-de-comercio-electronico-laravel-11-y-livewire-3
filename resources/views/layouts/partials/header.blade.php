@@ -99,7 +99,7 @@
         <div class="row row-cols-5">
             <div class="col">
                 <div class="tp-mobile-item text-center">
-                    <a href="shop.html" class="tp-mobile-item-btn">
+                    <a href="{{ route('shop') }}" class="tp-mobile-item-btn">
                         <i class="flaticon-store"></i>
                         <span>Store</span>
                     </a>
@@ -123,7 +123,7 @@
             </div>
             <div class="col">
                 <div class="tp-mobile-item text-center">
-                    <a href="{{route('profile.index')}}" class="tp-mobile-item-btn">
+                    <a href="{{ route('profile.index') }}" class="tp-mobile-item-btn">
                         <i class="flaticon-user"></i>
                         <span>Mi Cuenta</span>
                     </a>
@@ -153,7 +153,7 @@
                     </div>
                     <form action="#">
                         <div class="tp-search-input mb-10">
-                            <input type="text" placeholder="Buscar productos...">
+                            <input type="text" class="search-products" placeholder="Buscar productos...">
                             <button type="button"><i class="flaticon-search-1"></i></button>
                         </div>
                     </form>
@@ -251,7 +251,8 @@
                     <div class="col-xl-2 col-lg-2 col-md-4 col-6">
                         <div class="logo">
                             <a href="{{ route('index') }}">
-                                <img src="{{ asset('assets/principal/img/logo/logo.png') }}" width="180" alt="logo">
+                                <img src="{{ asset('assets/principal/img/logo/logo.png') }}" width="180"
+                                    alt="logo">
                             </a>
                         </div>
                     </div>
@@ -260,7 +261,8 @@
                             <form action="#">
                                 <div class="tp-header-search-wrapper d-flex align-items-center">
                                     <div class="tp-header-search-box">
-                                        <input type="text" placeholder="Buscar productos...">
+                                        <input type="text" class="search-products"
+                                            placeholder="Buscar productos...">
                                     </div>
                                     <div class="tp-header-search-btn">
                                         <button type="button">
@@ -278,17 +280,24 @@
                                     <a href="{{ route('profile.index') }}" class="d-flex align-items-center">
                                         <!-- Cambia 'profile' según tu ruta -->
                                         <div class="tp-header-login-icon">
-                                            <span>
-                                                <svg width="17" height="21" viewBox="0 0 17 21" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <circle cx="8.57894" cy="5.77803" r="4.77803"
-                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                                        d="M1.00002 17.2014C0.998732 16.8655 1.07385 16.5337 1.2197 16.2311C1.67736 15.3158 2.96798 14.8307 4.03892 14.611C4.81128 14.4462 5.59431 14.336 6.38217 14.2815C7.84084 14.1533 9.30793 14.1533 10.7666 14.2815C11.5544 14.3367 12.3374 14.4468 13.1099 14.611C14.1808 14.8307 15.4714 15.27 15.9291 16.2311C16.2224 16.8479 16.2224 17.564 15.9291 18.1808C15.4714 19.1419 14.1808 19.5812 13.1099 19.7918C12.3384 19.9634 11.5551 20.0766 10.7666 20.1304C9.57937 20.2311 8.38659 20.2494 7.19681 20.1854C6.92221 20.1854 6.65677 20.1854 6.38217 20.1304C5.59663 20.0773 4.81632 19.9641 4.04807 19.7918C2.96798 19.5812 1.68652 19.1419 1.2197 18.1808C1.0746 17.8747 0.999552 17.5401 1.00002 17.2014Z"
-                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
+                                            <span class="overflow-hidden">
+                                                @if (auth()->user()->avatar)
+                                                    <img id="profile-login"
+                                                        src="{{ Storage::url(auth()->user()->avatar) }}"
+                                                        alt="Foto de perfil" width="30">
+                                                @else
+                                                    <svg width="17" height="21" viewBox="0 0 17 21"
+                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="8.57894" cy="5.77803" r="4.77803"
+                                                            stroke="currentColor" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M1.00002 17.2014C0.998732 16.8655 1.07385 16.5337 1.2197 16.2311C1.67736 15.3158 2.96798 14.8307 4.03892 14.611C4.81128 14.4462 5.59431 14.336 6.38217 14.2815C7.84084 14.1533 9.30793 14.1533 10.7666 14.2815C11.5544 14.3367 12.3374 14.4468 13.1099 14.611C14.1808 14.8307 15.4714 15.27 15.9291 16.2311C16.2224 16.8479 16.2224 17.564 15.9291 18.1808C15.4714 19.1419 14.1808 19.5812 13.1099 19.7918C12.3384 19.9634 11.5551 20.0766 10.7666 20.1304C9.57937 20.2311 8.38659 20.2494 7.19681 20.1854C6.92221 20.1854 6.65677 20.1854 6.38217 20.1304C5.59663 20.0773 4.81632 19.9641 4.04807 19.7918C2.96798 19.5812 1.68652 19.1419 1.2197 18.1808C1.0746 17.8747 0.999552 17.5401 1.00002 17.2014Z"
+                                                            stroke="currentColor" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                @endif
+
                                             </span>
                                         </div>
                                         <div class="tp-header-login-content d-none d-xl-block">
@@ -368,17 +377,16 @@
                                 <nav class="tp-category-menu-content">
                                     <ul>
                                         @foreach ($categories as $category)
-                                        <li>
-                                            <a href="{{ route('category', $category->slug) }}">
-                                                <span style="display: inline-block; width: 30px;">
-                                                    <img src="{{ Storage::url($category->image) }}"
-                                                        alt="{{ $category->name }}"
-                                                        style="width: 100%; height: auto;">
-                                                </span>
-                                                {{ $category->name }}
-                                            </a>
-                                        </li>
-                                        
+                                            <li>
+                                                <a href="{{ route('category', $category->slug) }}">
+                                                    <span style="display: inline-block; width: 30px;">
+                                                        <img src="{{ Storage::url($category->image) }}"
+                                                            alt="{{ $category->name }}"
+                                                            style="width: 100%; height: auto;">
+                                                    </span>
+                                                    {{ $category->name }}
+                                                </a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </nav>

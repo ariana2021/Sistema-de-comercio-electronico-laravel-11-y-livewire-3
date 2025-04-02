@@ -38,6 +38,7 @@ trait CartTrait
 
                 $this->dispatch('wishlistUpdated');
                 $this->dispatch('showAlert', 'Producto agregado a la lista de deseos', 'success');
+                $this->skipRender();
             }
         } else {
             $this->dispatch('showAlert', 'El producto ya está en la lista de deseos', 'warning');
@@ -84,6 +85,7 @@ trait CartTrait
         
         $this->dispatch('cartUpdated');
         $this->dispatch('showAlert', 'Producto agregado al carrito', 'success');
+        $this->skipRender();
     }
 
     private function updateDatabase()

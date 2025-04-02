@@ -13368,13 +13368,13 @@ div.tp-blog-thumb img {
   position: absolute;
   top: 2px;
   right: -8px;
-  width: 25px;
+  width: 40px;
   height: 25px;
   line-height: 20px;
   border: 2px solid var(--tp-common-white);
   background-color: var(--tp-theme-primary);
   color: var(--tp-common-white);
-  border-radius: 50%;
+  border-radius: 5px;
   font-size: 13px;
   font-weight: 500;
 }
@@ -17392,7 +17392,7 @@ product all slider
 }
 .tp-product-details-msg ul li::after {
   position: absolute;
-  content: url("../img/product/icons/check-3.svg");
+  content: url("../img/product/icons/check.svg");
   top: 4px;
   left: 0;
   width: 18px;

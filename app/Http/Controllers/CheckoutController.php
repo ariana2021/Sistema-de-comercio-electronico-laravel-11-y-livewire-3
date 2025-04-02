@@ -7,12 +7,14 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\TemporaryCart;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('principal.cart.payment');
     }
 
@@ -32,10 +34,15 @@ class CheckoutController extends Controller
             return redirect()->route('carts.index')->with('error', 'Tu carrito está vacío.');
         }
 
-        $carts = $cart->cart_data; // Laravel convierte JSON a array automáticamente
+        $carts = $cart->cart_data;
         $shippingCost = $external_reference['shipping_cost'];
         $discount = $external_reference['discount'];
-        $billingDetails = $external_reference['billing_details'];
+        $user = User::find($external_reference['user_id']);
+        if ($user) {
+            $billingDetails = $user->billing_details;
+        } else {
+            $billingDetails = []; 
+        }
         $applied_coupons = $external_reference['applied_coupons'] ?? null;
         $subtotal = collect($carts)->sum(fn($cart) => $cart['price'] * $cart['quantity']);
         $cashbackUsado = min($external_reference['cashback_usado'] ?? 0, Cashback::where('user_id', $external_reference['user_id'])->where('status', 'available')->sum('amount'));

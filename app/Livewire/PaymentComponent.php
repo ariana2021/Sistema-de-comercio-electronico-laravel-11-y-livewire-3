@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Cashback;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
@@ -24,8 +25,7 @@ class PaymentComponent extends Component
 
     public function mount()
     {
-        $billingDetails = session('billing_details', []);
-
+        $billingDetails = Auth::user()->billing_details ?? [];
         $this->first_name = $billingDetails['first_name'] ?? '';
         $this->last_name = $billingDetails['last_name'] ?? '';
         $this->email = $billingDetails['email'] ?? '';
@@ -38,6 +38,7 @@ class PaymentComponent extends Component
         $this->cashbackDisponible = Cashback::where('user_id', Auth::id())
             ->where('status', 'available')
             ->sum('amount');
+
         $this->carts = Session::get('cart', []);
 
         if (empty($this->carts)) {
@@ -59,7 +60,6 @@ class PaymentComponent extends Component
             $client = new PreferenceClient();
             $items = [];
 
-            // Monto total de descuento a aplicar
             $totalDiscount = 0;
 
             if ($this->cashback_usado > 0) {
@@ -67,12 +67,8 @@ class PaymentComponent extends Component
                 $totalDiscount = $this->cashback_usado;
             }
 
-            // Añadir productos al carrito
             foreach ($this->carts as $item) {
-                // Precio original del producto
                 $precio_producto = (float) $item['price'];
-
-                // Aplicar el descuento total proporcionalmente a cada producto
                 if ($totalDiscount > 0) {
                     $discountPerProduct = $totalDiscount / $totalPrice * $item['price'];
                     $precio_producto -= $discountPerProduct;
@@ -85,8 +81,6 @@ class PaymentComponent extends Component
                     "currency_id" => "PEN"
                 ];
             }
-
-            // Si hay costo de envío, añadirlo
             if ($this->shippingCost > 0) {
                 $items[] = [
                     "title" => "Costo de Envío",
@@ -110,7 +104,7 @@ class PaymentComponent extends Component
                     'applied_coupons' => session('applied_coupons', 0.00),
                     'discount' => session('discount', 0.00),
                     'cashback_usado' => $this->cashback_usado,
-                    'billing_details' => session('billing_details', [])
+                    // 'billing_details' => session('billing_details', [])
                 ]),
             ]);
 

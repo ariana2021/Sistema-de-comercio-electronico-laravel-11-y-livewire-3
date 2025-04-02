@@ -17,8 +17,7 @@ class ShoppingCart extends Component
     {
         $this->categories = Category::with(['products' => function ($query) {
             $query->latest()->take(4);
-        }])->orderBy('id', 'desc')->get();
-        
+        }])->orderBy('id', 'desc')->get();        
     }
 
     public function render()

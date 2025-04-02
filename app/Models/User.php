@@ -29,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'google_id',
         'email_verified_at',
         'password',
+        'billing_details',
         'branch_id',
     ];
 
@@ -52,6 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'billing_details' => 'array',
         ];
     }
 
@@ -63,5 +65,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvailablePointsAttribute(): int
     {
         return $this->loyaltyPoints ? $this->loyaltyPoints->availablePoints() : 0;
+    }
+
+    public function cashbacks()
+    {
+        return $this->hasMany(Cashback::class);
     }
 }

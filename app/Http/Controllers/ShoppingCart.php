@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
@@ -14,6 +15,23 @@ class ShoppingCart extends Controller
         return view('principal.cart.index');
     }
 
+    public function search(Request $request)
+    {
+        $term = $request->get('term');
+        $products = Product::where('name', 'LIKE', '%' . $term . '%')
+        ->limit(10) 
+        ->get(['name', 'slug']);
+
+        return response()->json($products->map(function ($product) {
+            return [
+                'label' => $product->name,
+                'value' => $product->name,
+                'url' => route('product.detail', $product->slug)
+            ];
+        }));
+    }
+
+
     public function wishlist()
     {
         return view('principal.cart.wishlist');
@@ -22,7 +40,7 @@ class ShoppingCart extends Controller
     public function calculateShipping(Request $request)
     {
         $business = Business::first();
-        
+
         // Dirección del usuario
         $userAddress = $request->input('user_address');
 
@@ -55,7 +73,8 @@ class ShoppingCart extends Controller
         return response()->json(['distance' => $distanceKm, 'shipping_cost' => round($shippingCost, 2)]);
     }
 
-    public function checkout() {
+    public function checkout()
+    {
         return view('principal.cart.checkout');
     }
 }

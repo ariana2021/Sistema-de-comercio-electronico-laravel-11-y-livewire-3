@@ -112,16 +112,20 @@ class CheckoutComponent extends Component
         try {
             session()->put('cashback_usado', $this->cashback_usado);
 
-            session()->put('billing_details', [
-                'first_name' => $this->first_name,
-                'last_name' => $this->last_name,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'address' => $this->address,
-                'city' => $this->city,
-                'zip_code' => $this->zip_code,
-                'order_notes' => $this->order_notes,
+            $user = Auth::user();
+            $user->update([
+                'billing_details' => [
+                    'first_name' => $this->first_name,
+                    'last_name' => $this->last_name,
+                    'email' => $this->email,
+                    'phone' => $this->phone,
+                    'address' => $this->address,
+                    'city' => $this->city,
+                    'zip_code' => $this->zip_code,
+                    'order_notes' => $this->order_notes,
+                ]
             ]);
+
 
             return redirect()->route('payment.index');
         } catch (\Exception $e) {

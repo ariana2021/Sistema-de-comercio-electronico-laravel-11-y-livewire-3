@@ -99,9 +99,9 @@
     <section class="tp-product-offer grey-bg-2 pt-70 pb-80">
         <div class="container">
             <div class="row align-items-end">
-                <div class="col-xl-4 col-md-5 col-sm-6">
+                <div class="col-xl-8 col-md-7 col-sm-6">
                     <div class="tp-section-title-wrapper mb-40">
-                        <h3 class="tp-section-title">Oferta del día
+                        <h3 class="tp-section-title">Las ofertas terminan en
 
                             <svg width="114" height="35" viewBox="0 0 114 35" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -112,7 +112,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="col-xl-8 col-md-7 col-sm-6">
+                <div class="col-xl-4 col-md-5 col-sm-6">
                     <div class="tp-product-offer-more-wrapper d-flex justify-content-sm-end p-relative z-index-1">
                         <div class="tp-product-offer-more mb-40 text-sm-end grey-bg-2">
                             <span class="tp-product-offer-more-border"></span>

@@ -14,7 +14,28 @@
 <script src="{{ asset('assets/principal/js/imagesloaded-pkgd.js') }}"></script>
 <script src="{{ asset('assets/principal/js/main.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script>
+    $(document).ready(function() {
+    $('.search-products').autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: '{{ route("products.search") }}',
+                data: {
+                    term: request.term
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            window.location.href = ui.item.url;
+        }
+    });
+});
+
     document.addEventListener('livewire:init', function() {
         Livewire.on('showAlert', (res) => {
             alertSweet(res[0], res[1]);

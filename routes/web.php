@@ -23,6 +23,7 @@ Route::get('/product/{slug}', [PrincipalController::class, 'product'])->name('pr
 Route::post('/cart/calculate-shipping', [ShoppingCart::class, 'calculateShipping'])->name('carts.calculateShipping');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/products/search', [ShoppingCart::class, 'search'])->name('products.search');
 
 Route::get('/auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
@@ -43,6 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/profile', [PrincipalController::class, 'profile'])->name('profile.index');
     Route::post('/perfil/update', [PrincipalController::class, 'updateProfile'])->name('profile.updateProfile');
+    Route::post('/profile/update-photo', [PrincipalController::class, 'updatePhoto'])->name('profile.update-photo');
     Route::post('/profile/update-password', [PrincipalController::class, 'updatePassword'])->name('profile.update.password');
     Route::get('/order/status/{id}', [PrincipalController::class, 'showStatus'])->name('order.status');
     Route::get('/order/{encryptedId}/invoice/pdf', [PrincipalController::class, 'generateTicket'])->name('order.invoice.pdf');

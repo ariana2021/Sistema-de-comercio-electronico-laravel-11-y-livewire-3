@@ -51,7 +51,7 @@ class SliderComponent extends Component
         $this->dispatch('cartUpdated');
         $this->dispatch('showAlert', 'Producto agregado al carrito con descuento', 'success');
 
-        $this->skipRender(); // Evita que el componente completo se vuelva a renderizar
+        $this->skipRender();
     }
 
 

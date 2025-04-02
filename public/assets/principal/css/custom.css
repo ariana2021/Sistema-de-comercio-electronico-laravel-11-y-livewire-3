@@ -193,4 +193,8 @@ p {
     text-transform: uppercase;
 }
 
+.ui-autocomplete{
+	z-index: 10000 !important;
+}
+
 
