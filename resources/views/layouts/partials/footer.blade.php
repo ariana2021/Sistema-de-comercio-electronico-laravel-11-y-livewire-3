@@ -1,3 +1,4 @@
+
 <footer>
     <div class="tp-footer-area" data-bg-color="footer-bg-grey">
         <div class="tp-footer-top pt-95 pb-40">
@@ -135,7 +136,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="tp-footer-copyright">
-                                <p>© {{ date('Y') }} All Rights Reserved <a href="#">Tu amor</a>.</p>
+                                <p>© {{ date('Y') }} All Rights Reserved <a href="#">Tu sitio web</a>.</p>
                             </div>
                         </div>
                         <div class="col-md-6">

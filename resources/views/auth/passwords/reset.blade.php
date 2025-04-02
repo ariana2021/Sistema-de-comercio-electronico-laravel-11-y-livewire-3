@@ -9,9 +9,6 @@
                         <div class="row">
                             <div class="col-md-7 mx-auto">
                                 <div class="auth-form-light text-left p-5">
-                                    <div class="brand-logo">
-                                        <img src="{{ asset('assets/admin/images/logo.png') }}" width="100">
-                                    </div>
                                     <h6 class="font-weight-bold text-center">{{ __('Reset Password') }}</h6>
                                     <form method="POST" action="{{ route('password.update') }}">
                                         @csrf

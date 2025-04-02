@@ -19,7 +19,7 @@
                                         <!-- img -->
                                         <td class="tp-cart-img">
                                             <a href="{{ route('product.detail', $item['slug']) }}">
-                                                <img src="{{ Storage::url($item['image']) }}" alt="">
+                                                <img loading="lazy" src="{{ Storage::url($item['image']) }}" alt="">
                                             </a>
                                         </td>
                                         <!-- title -->

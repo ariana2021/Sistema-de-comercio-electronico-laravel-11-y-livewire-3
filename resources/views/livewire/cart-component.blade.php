@@ -17,7 +17,7 @@
                     <div class="cartmini__widget-item">
                         <div class="cartmini__thumb">
                             <a href="{{ route('product.detail', $item['slug']) }}">
-                                <img src="{{ Storage::url($item['image']) }}" alt="{{ $item['name'] }}">
+                                <img loading="lazy" src="{{ Storage::url($item['image']) }}" alt="{{ $item['name'] }}">
                             </a>
                         </div>
                         <div class="cartmini__content">
@@ -35,7 +35,7 @@
                     </div>
                 @empty
                     <div class="text-center">
-                        <img src="{{ asset('assets/principal/img/product/cartmini/empty-cart.png') }}" alt="">
+                        <img loading="lazy" src="{{ asset('assets/principal/img/product/cartmini/empty-cart.png') }}" alt="">
                         <p>Tu carrito está vacío</p>
                         <a href="{{ route('shop') }}" class="tp-btn">Ir a la tienda</a>
                     </div>

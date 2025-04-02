@@ -123,7 +123,7 @@
             </div>
             <div class="col">
                 <div class="tp-mobile-item text-center">
-                    <a href="profile.html" class="tp-mobile-item-btn">
+                    <a href="{{route('profile.index')}}" class="tp-mobile-item-btn">
                         <i class="flaticon-user"></i>
                         <span>Mi Cuenta</span>
                     </a>
@@ -390,6 +390,7 @@
                                     <ul>
                                         <li><a href="{{ url('/') }}">Inicio</a></li>
                                         <li><a href="{{ route('shop') }}">Productos</a></li>
+                                        <li><a href="{{ route('posts.index') }}">Blog</a></li>
                                         <li><a href="{{ route('contact') }}">Contacto</a></li>
                                     </ul>
                                 </nav>

@@ -33,10 +33,13 @@
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-settings menu-icon"></i>
             </a>
-            <div class="collapse {{ request()->routeIs('users.*')
-            || request()->routeIs('coupons.*') 
-            || request()->routeIs('business.*') 
-            || request()->routeIs('sliders.*') ? 'show' : '' }}" id="ui-administracion">
+            <div class="collapse {{ request()->routeIs('users.*') ||
+            request()->routeIs('coupons.*') ||
+            request()->routeIs('business.*') ||
+            request()->routeIs('sliders.*')
+                ? 'show'
+                : '' }}"
+                id="ui-administracion">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}"
@@ -105,7 +108,40 @@
                 <span class="menu-title">Pedidos</span>
                 <i class="mdi mdi-package-variant-closed menu-icon"></i>
             </a>
-        </li>        
+        </li>
+
+        <li class="nav-item {{ request()->routeIs('admin.posts.*') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-post"
+                aria-expanded="{{ request()->routeIs('admin.posts.*') ? 'true' : 'false' }}" aria-controls="ui-post">
+                <span class="menu-title">Entradas</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-folder-outline menu-icon"></i> <!-- 📁 Carpeta -->
+            </a>
+            <div class="collapse {{ request()->routeIs('admin.posts.*') ? 'show' : '' }}" id="ui-post">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.posts.index') ? 'active' : '' }}"
+                            href="{{ route('admin.posts.index') }}">
+                            Blog
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.comments.index') ? 'active' : '' }}"
+                            href="{{ route('admin.comments.index') }}">
+                            Comentarios
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item {{ request()->routeIs('admin.ratings*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.ratings.index') }}">
+                <span class="menu-title">Calificaciones</span>
+                <i class="mdi mdi-star-circle menu-icon"></i> <!-- ⭐ Estrella -->
+            </a>
+        </li>
+
 
 
     </ul>

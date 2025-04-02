@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cashback;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\TemporaryCart;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
+    public function index() {
+        return view('principal.cart.payment');
+    }
+
     public function checkoutSuccess(Request $request)
     {
         $external_reference = json_decode($request->input('external_reference'), true);
@@ -34,7 +38,8 @@ class CheckoutController extends Controller
         $billingDetails = $external_reference['billing_details'];
         $applied_coupons = $external_reference['applied_coupons'] ?? null;
         $subtotal = collect($carts)->sum(fn($cart) => $cart['price'] * $cart['quantity']);
-        $total = ($subtotal - $discount) + $shippingCost;
+        $cashbackUsado = min($external_reference['cashback_usado'] ?? 0, Cashback::where('user_id', $external_reference['user_id'])->where('status', 'available')->sum('amount'));
+        $total = ($subtotal - $discount - $cashbackUsado) + $shippingCost;
 
         try {
             // ✅ Crear la orden en la base de datos
@@ -49,7 +54,6 @@ class CheckoutController extends Controller
                 'billing_details' => $billingDetails
             ]);
 
-            // ✅ Asociar productos a la orden
             foreach ($carts as $item) {
                 $product = Product::find($item['id']);
                 if ($product) {
@@ -68,9 +72,8 @@ class CheckoutController extends Controller
                 ]);
             }
 
-            $cuponesIds = $applied_coupons ?? []; // Asegurar que sea un array
+            $cuponesIds = $applied_coupons ?? [];
 
-            // ✅ Actualizar uso del cupón si existen
             if (!empty($cuponesIds)) {
                 foreach ($cuponesIds as $couponId) {
                     $coupon = Coupon::find($couponId);
@@ -85,6 +88,38 @@ class CheckoutController extends Controller
                 }
             }
 
+            if ($cashbackUsado > 0) {
+                $cashbacks = Cashback::where('user_id', $external_reference['user_id'])
+                    ->where('status', 'available')
+                    ->orderBy('created_at')
+                    ->get();
+
+                $montoRestante = $cashbackUsado;
+                foreach ($cashbacks as $cashback) {
+                    if ($montoRestante <= 0) break;
+
+                    if ($cashback->amount <= $montoRestante) {
+                        $montoRestante -= $cashback->amount;
+                        $cashback->update(['status' => 'used']);
+                    } else {
+                        $cashback->update(['amount' => $cashback->amount - $montoRestante]);
+                        $montoRestante = 0;
+                    }
+                }
+            }
+
+            $cashbackPercentage = 5;
+            $cashbackAmount = ($subtotal * $cashbackPercentage) / 100;
+
+            if ($cashbackAmount > 0) {
+                Cashback::create([
+                    'user_id' => $external_reference['user_id'],
+                    'order_id' => $order->id,
+                    'amount' => $cashbackAmount,
+                    'status' => 'pending',
+                ]);
+            }
+
             $cart->cart_data = [];
             $cart->save();
 
@@ -93,6 +128,7 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.failure')->with('error', 'Hubo un problema al procesar el pago.');
         }
     }
+
 
     public function failure()
     {

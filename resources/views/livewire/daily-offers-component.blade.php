@@ -7,8 +7,8 @@
                 @endphp
                 <div class="tp-product-offer-item tp-product-item transition-3 swiper-slide">
                     <div class="tp-product-thumb p-relative fix m-img">
-                        <a href="{{ $offer->button_url }}">
-                            <img src="{{ asset('storage/' . $offer->image) }}" alt="product-offer">
+                        <a href="{{ route('product.detail', $offer->product->slug) }}">
+                            <img loading="lazy" src="{{ Storage::url($offer->image) }}" alt="product-offer">
                         </a>
 
                         <!-- product action -->
@@ -39,13 +39,14 @@
                             <a href="#">Oferta Especial</a>
                         </div>
                         <h3 class="tp-product-title">
-                            <a href="{{ $offer->button_url }}">
+                            <a href="{{ route('product.detail', $offer->product->slug) }}">
                                 {{ $offer->title }}
                             </a>
                         </h3>
                         <p>{{ $offer->description }}</p>
                         <div class="tp-product-price-wrapper">
-                            <span class="tp-product-price old-price">{{ config('app.currency_symbol') }}{{ number_format($offer->discount, 2) }}</span>
+                            <span
+                                class="tp-product-price old-price">{{ config('app.currency_symbol') }}{{ number_format($offer->discount, 2) }}</span>
                             <span
                                 class="tp-product-price new-price">{{ config('app.currency_symbol') }}{{ number_format($offer->discount * 0.8, 2) }}</span>
                         </div>

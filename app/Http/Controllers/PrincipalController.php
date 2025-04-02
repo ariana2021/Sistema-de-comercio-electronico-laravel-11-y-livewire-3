@@ -29,6 +29,7 @@ class PrincipalController extends Controller
             ->take(10)
             ->get();
         $business = Business::first();
+
         return view('principal.home.index', compact('ratings', 'business'));
     }
 

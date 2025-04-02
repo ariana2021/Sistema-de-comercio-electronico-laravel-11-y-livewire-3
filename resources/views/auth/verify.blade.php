@@ -9,9 +9,6 @@
                         <div class="row">
                             <div class="col-md-7 mx-auto">
                                 <div class="auth-form-light text-center p-5">
-                                    <div class="brand-logo mb-3">
-                                        <img src="{{ asset('assets/admin/images/logo.png') }}" width="100">
-                                    </div>
                                     @if (session('resent'))
                                         <div class="alert alert-success" role="alert">
                                             {{ __('A fresh verification link has been sent to your email address.') }}

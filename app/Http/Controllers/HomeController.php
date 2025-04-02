@@ -73,14 +73,14 @@ class HomeController extends Controller
             ->with('category')
             ->get();
 
-        $productRatings = Rating::select('product_id', DB::raw('AVG(rating) as avg_rating'))
+            $productRatings = Rating::select('product_id', DB::raw('AVG(rating) as avg_rating'))
             ->groupBy('product_id')
             ->having('avg_rating', '>=', 4)
             ->with('product:id,name')
+            ->inRandomOrder()
+            ->limit(10)
             ->get();
-
-
-
+            
         // Uso de Cupones de Descuento
         $couponUsage = Coupon::selectRaw('code, used_count')
             ->get();
@@ -91,7 +91,7 @@ class HomeController extends Controller
 
         $weeklyOrders = Order::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
 
-        $onlineVisitors = rand(50, 500); // Puedes conectar esto con Google Analytics o Redis
+        $onlineVisitors = rand(50, 500);
 
         return view('home', compact(
             'salesByMonth',

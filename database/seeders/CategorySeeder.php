@@ -34,6 +34,11 @@ class CategorySeeder extends Seeder
 
         $data = [];
 
+        if (Storage::exists('public/categories')) {
+            Storage::deleteDirectory('public/categories');
+        }
+        Storage::makeDirectory('public/categories');
+        
         foreach ($categories as $category) {
             // Generar slug único
             $slug = Str::slug($category);

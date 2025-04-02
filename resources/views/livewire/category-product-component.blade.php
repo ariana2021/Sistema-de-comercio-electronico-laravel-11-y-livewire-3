@@ -5,7 +5,7 @@
                 <div class="tp-product-item p-relative transition-3 mb-25">
                     <div class="tp-product-thumb p-relative fix m-img">
                         <a href="{{ $product->id }}">
-                            <img src="{{ Storage::url($product->image) }}" alt="product-electronic">
+                            <img loading="lazy" src="{{ Storage::url($product->image) }}" alt="product-electronic">
                         </a>
 
                         <!-- product badge -->
@@ -93,7 +93,7 @@
                                         data-bs-target="#nav-{{ $index }}" type="button" role="tab"
                                         aria-controls="nav-{{ $index }}"
                                         aria-selected="{{ $loop->first ? 'true' : 'false' }}">
-                                        <img src="{{ Storage::url($image) }}" alt="" class="img-fluid">
+                                        <img loading="lazy" src="{{ Storage::url($image) }}" alt="" class="img-fluid">
                                     </button>
                                 @endforeach
                             </div>
@@ -106,7 +106,7 @@
                                     id="nav-{{ $index }}" role="tabpanel"
                                     aria-labelledby="nav-{{ $index }}-tab" tabindex="0">
                                     <div class="tp-product-details-nav-main-thumb text-center">
-                                        <img src="{{ Storage::url($image) }}" alt=""
+                                        <img loading="lazy" src="{{ Storage::url($image) }}" alt=""
                                             class="img-fluid mx-auto d-block">
                                     </div>
                                 </div>

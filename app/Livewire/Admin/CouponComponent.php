@@ -22,6 +22,10 @@ class CouponComponent extends Component
             'code' => 'required|string|max:50|unique:coupons,code,' . $this->coupon_id,
             'discount_type' => 'required|in:percentage,fixed',
             'discount_value' => 'required|numeric|min:0',
+            'max_uses' => 'nullable|integer|min:1',
+            'start_date' => 'nullable|date',
+            'expiration_date' => 'nullable|date|after_or_equal:start_date',
+            'active' => 'boolean',
             'selectedProducts' => 'array',
         ];
     }
@@ -36,6 +40,10 @@ class CouponComponent extends Component
                 'code' => $this->code,
                 'discount_type' => $this->discount_type,
                 'discount_value' => $this->discount_value,
+                'max_uses' => $this->max_uses,
+                'start_date' => $this->start_date,
+                'expiration_date' => $this->expiration_date,
+                'active' => $this->active,
             ]
         );
 
@@ -53,6 +61,10 @@ class CouponComponent extends Component
         $this->code = $coupon->code;
         $this->discount_type = $coupon->discount_type;
         $this->discount_value = $coupon->discount_value;
+        $this->max_uses = $coupon->max_uses;
+        $this->start_date = $coupon->start_date;
+        $this->expiration_date = $coupon->expiration_date;
+        $this->active = $coupon->active;
         $this->selectedProducts = $coupon->products()->pluck('products.id')->toArray(); // Especifica la tabla
         $this->editing = true;
     }

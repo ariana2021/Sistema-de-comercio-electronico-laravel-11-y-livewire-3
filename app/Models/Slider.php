@@ -15,7 +15,6 @@ class Slider extends Model
         'image',
         'product_id',
         'discount',
-        'button_url',
         'status',
         'start_date',
         'end_date',

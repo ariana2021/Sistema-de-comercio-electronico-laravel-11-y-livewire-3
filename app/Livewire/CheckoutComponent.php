@@ -2,29 +2,35 @@
 
 namespace App\Livewire;
 
+use App\Models\Cashback;
 use Livewire\Component;
 use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use MercadoPago\Client\Preference\PreferenceClient;
-use MercadoPago\Exceptions\MPApiException;
-use MercadoPago\MercadoPagoConfig;
 
 class CheckoutComponent extends Component
 {
-    public $first_name, $last_name, $company, $country, $address, $apartment, $city, $state, $postcode, $phone, $email, $order_notes;
+    public $first_name, $last_name, $email, $phone, $address, $city, $zip_code, $order_notes;
+    public $isConfirmed = false;
+
     public $carts = [];
     public $subtotal;
     public $shippingCost;
     public $total;
-    public $coupon;
+    public $coupon, $cashbackDisponible;
     public $discount = 0;
-    public $preference_id;
-    public $isConfirmed = false;
+    public $cashback_usado = 0;
 
     public function mount()
     {
+        $this->first_name = Auth::user()->name;
+        $this->email = Auth::user()->email;
+        $this->phone = Auth::user()->phone;
+        $this->address = Auth::user()->address;
+        $this->cashbackDisponible = Cashback::where('user_id', Auth::id())
+            ->where('status', 'available')
+            ->sum('amount');
         $this->carts = Session::get('cart', []);
 
         if (empty($this->carts)) {
@@ -34,56 +40,6 @@ class CheckoutComponent extends Component
         $this->shippingCost = session('shipping_cost', 0.00);
         $this->subtotal = array_sum(array_map(fn($cart) => $cart['price'] * $cart['quantity'], $this->carts));
         $this->calculateTotal();
-        $this->createMercadoPagoPreference();
-    }
-
-    public function createMercadoPagoPreference()
-    {
-        try {
-            MercadoPagoConfig::setAccessToken(config('services.mercadopago.access_token'));
-
-            $client = new PreferenceClient();
-            $items = [];
-
-            foreach ($this->carts as $item) {
-                $items[] = [
-                    "title" => $item['name'],
-                    "quantity" => $item['quantity'],
-                    "unit_price" => (float) $item['price'],
-                    "currency_id" => "PEN"
-                ];
-            }
-
-            if ($this->shippingCost > 0) {
-                $items[] = [
-                    "title" => "Costo de Envío",
-                    "quantity" => 1,
-                    "unit_price" => (float) $this->shippingCost,
-                    "currency_id" => "PEN"
-                ];
-            }
-
-            $preference = $client->create([
-                "items" => $items,
-                "back_urls" => [
-                    "success" => route('checkout.success', [], true),
-                    "failure" => route('checkout.failure', [], true),
-                    "pending" => route('checkout.pending', [], true)
-                ],
-                "auto_return" => "approved",
-                "external_reference" => json_encode([
-                    'user_id' => Auth::id(),
-                    'shipping_cost' => session('shipping_cost', 0.00),
-                    'applied_coupons' => session('applied_coupons', 0.00),
-                    'discount' => session('discount', 0.00),
-                    'billing_details' => session('billing_details', [])
-                ]),
-            ]);
-
-            $this->preference_id = $preference->id;
-        } catch (MPApiException $e) {
-            session()->flash('error', 'Error al generar la preferencia de pago.');
-        }
     }
 
     public function applyCoupon()
@@ -129,6 +85,48 @@ class CheckoutComponent extends Component
     {
         $this->subtotal = array_sum(array_map(fn($cart) => $cart['price'] * $cart['quantity'], $this->carts));
         $this->total = ($this->subtotal - $this->discount) + $this->shippingCost;
+    }
+
+    public function checkoutSuccess()
+    {
+        // Validación de los campos
+        $this->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|min:9|max:15',
+            'address' => 'required|string|max:500',
+            'city' => 'required|string|max:255',
+            'zip_code' => 'required|string|max:10',
+            'order_notes' => 'nullable|string|max:500', // Si tienes notas opcionales
+            'isConfirmed' => 'accepted', // Asegúrate de que la orden esté confirmada (checkbox)
+        ], [
+            // Personalización de mensajes de error (opcional)
+            'first_name.required' => 'El nombre es obligatorio.',
+            'email.email' => 'Por favor ingresa un correo electrónico válido.',
+            'phone.min' => 'El teléfono debe tener al menos 10 caracteres.',
+            'isConfirmed.accepted' => 'Debes confirmar que la información es correcta.',
+        ]);
+
+        // Si pasa la validación, continúas con el proceso
+        try {
+            session()->put('cashback_usado', $this->cashback_usado);
+
+            session()->put('billing_details', [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'phone' => $this->phone,
+                'address' => $this->address,
+                'city' => $this->city,
+                'zip_code' => $this->zip_code,
+                'order_notes' => $this->order_notes,
+            ]);
+
+            return redirect()->route('payment.index');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Hubo un problema al procesar tu compra.');
+        }
     }
 
     public function render()

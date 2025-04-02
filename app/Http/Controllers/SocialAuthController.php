@@ -29,14 +29,14 @@ class SocialAuthController extends Controller
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
-                    'password' => bcrypt(uniqid()), // Generar una contraseña aleatoria
+                    'password' => bcrypt(uniqid()),
                 ]);
             }
 
             // Iniciar sesión
             Auth::login($user);
 
-            return redirect()->intended('/home');
+            return redirect()->intended('/profile');
         } catch (\Exception $e) {
             return redirect('/login')->with('error', 'Ocurrió un error al iniciar sesión con Google.');
         }

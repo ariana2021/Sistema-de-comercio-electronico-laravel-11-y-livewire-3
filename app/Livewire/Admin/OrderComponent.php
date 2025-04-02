@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Mail\OrderStatusUpdated;
+use App\Models\Cashback;
 use App\Models\Order;
 use App\Models\OrderStatusHistory;
 use Illuminate\Support\Facades\Mail;
@@ -67,6 +68,12 @@ class OrderComponent extends Component
             'status' => $this->new_status,
             'note' => $this->note,
         ]);
+
+        if ($this->new_status === 'entregado' || $this->new_status === 'enviado') {
+            Cashback::where('order_id', $this->order_id)
+                ->where('status', 'pending')
+                ->update(['status' => 'available']);
+        }
 
         // Enviar correo al usuario
         //Mail::to($order->user->email)->send(new OrderStatusUpdated($order, $this->status, $this->note));

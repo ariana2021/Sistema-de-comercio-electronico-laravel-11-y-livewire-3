@@ -92,7 +92,7 @@
                                             <div class="tp-product-item-2 mb-40">
                                                 <div class="tp-product-thumb-2 p-relative z-index-1 fix w-img">
                                                     <a href="{{ route('product.detail', $product->slug) }}">
-                                                        <img src="{{ Storage::url($product->image) }}" alt="">
+                                                        <img loading="lazy" src="{{ Storage::url($product->image) }}" alt="">
                                                     </a>
                                                     <!-- product action -->
                                                     <div class="tp-product-action-2 tp-product-action-blackStyle">
@@ -156,7 +156,7 @@
                                                 <div class="tp-product-list-item d-md-flex">
                                                     <div class="tp-product-list-thumb p-relative fix">
                                                         <a href="{{ route('product.detail', $product->slug) }}">
-                                                            <img src="{{ Storage::url($product->image) }}"
+                                                            <img loading="lazy" src="{{ Storage::url($product->image) }}"
                                                                 alt="">
                                                         </a>
                                                         <!-- product action -->
@@ -254,7 +254,7 @@
                                         data-bs-target="#nav-{{ $index }}" type="button" role="tab"
                                         aria-controls="nav-{{ $index }}"
                                         aria-selected="{{ $loop->first ? 'true' : 'false' }}">
-                                        <img src="{{ Storage::url($image) }}" alt="" class="img-fluid">
+                                        <img loading="lazy" src="{{ Storage::url($image) }}" alt="" class="img-fluid">
                                     </button>
                                 @endforeach
                             </div>
@@ -267,7 +267,7 @@
                                     id="nav-{{ $index }}" role="tabpanel"
                                     aria-labelledby="nav-{{ $index }}-tab" tabindex="0">
                                     <div class="tp-product-details-nav-main-thumb text-center">
-                                        <img src="{{ Storage::url($image) }}" alt=""
+                                        <img loading="lazy" src="{{ Storage::url($image) }}" alt=""
                                             class="img-fluid mx-auto d-block">
                                     </div>
                                 </div>

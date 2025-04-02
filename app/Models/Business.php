@@ -15,6 +15,7 @@ class Business extends Model
         'tax_id',
         'email',
         'phone',
+        'cashback_percentage',
         'website',
         'logo',
         'description',

@@ -142,7 +142,6 @@ class ProductComponent extends Component
         $this->stock = $product->stock;
         $this->sku = $product->sku;
         $this->status = $product->status;
-        $this->image = $product->image;
         $this->category_id = $product->category_id;
         $this->brand_id = $product->brand_id;
         $this->openModal();

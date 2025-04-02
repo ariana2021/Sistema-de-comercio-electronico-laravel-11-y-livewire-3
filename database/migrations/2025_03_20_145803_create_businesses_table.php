@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('phone')->nullable(); // Teléfono
             $table->string('website')->nullable(); // Sitio web
             $table->string('logo')->nullable(); // Logo de la empresa
+            $table->decimal('cashback_percentage', 10, 2)->default(0); //
             $table->text('description')->nullable(); // Descripción de la empresa
 
             // Dirección

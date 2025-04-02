@@ -13,50 +13,76 @@
             @if (session()->has('success'))
                 <div class="alert alert-success mt-3">{{ session('success') }}</div>
             @endif
-            <input type="text" class="form-control" placeholder="Buscar cupones..." wire:model.live="searchCoupons">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Descuento</th>
-                        <th>Productos</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($coupons as $coupon)
-                        <tr>
-                            <td>{{ $coupon->code }}</td>
-                            <td>{{ $coupon->discount_value }} ({{ ucfirst($coupon->discount_type) }})</td>
-                            <td>
-                                <ul class="list-unstyled">
-                                    @foreach ($coupon->products as $product)
-                                        <li class="d-flex justify-content-start align-items-center">
-                                            <button class="btn btn-sm btn-outline-danger mx-2"
-                                                wire:click="removeProduct({{ $coupon->id }}, {{ $product->id }})">
-                                                <i class="fas fa-times-circle"></i>
-                                            </button>
-                                            <span>{{ Str::limit($product->name, 25) }} </span>
+            <input type="text" class="form-control mb-3" placeholder="Buscar cupones..."
+                wire:model.live="searchCoupons">
+            @if ($coupons->isEmpty())
+                <div class="alert alert-warning text-center">
+                    <strong>No hay cupones registrados.</strong>
+                </div>
+            @else
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Acciones</th>
+                                <th>Código</th>
+                                <th>Descuento</th>
+                                <th>Uso Máximo</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Expiración</th>
+                                <th>Estado</th>
+                                <th>Productos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($coupons as $coupon)
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" wire:click="edit({{ $coupon->id }})"
+                                            data-bs-toggle="modal" data-bs-target="#couponModal">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" wire:click="delete({{ $coupon->id }})"
+                                            onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                    <td>{{ $coupon->code }}</td>
+                                    <td>{{ $coupon->discount_value }} ({{ ucfirst($coupon->discount_type) }})</td>
+                                    <td>{{ $coupon->max_uses ?? 'Ilimitado' }}</td>
+                                    <td>{{ $coupon->start_date ? $coupon->start_date->format('d/m/Y H:i') : 'N/A' }}
+                                    </td>
+                                    <td>{{ $coupon->expiration_date ? $coupon->expiration_date->format('d/m/Y H:i') : 'Sin Expiración' }}
+                                    </td>
+                                    <td>
+                                        @if ($coupon->active)
+                                            <span class="badge badge-success">Activo</span>
+                                        @else
+                                            <span class="badge badge-danger">Inactivo</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            @foreach ($coupon->products as $product)
+                                                <li class="d-flex justify-content-start align-items-center">
+                                                    <button class="btn btn-sm btn-outline-danger mx-2"
+                                                        wire:click="removeProduct({{ $coupon->id }}, {{ $product->id }})">
+                                                        <i class="fas fa-times-circle"></i>
+                                                    </button>
+                                                    <span>{{ Str::limit($product->name, 25) }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
 
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-warning" wire:click="edit({{ $coupon->id }})"
-                                    data-bs-toggle="modal" data-bs-target="#couponModal">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-sm btn-danger" wire:click="delete({{ $coupon->id }})"
-                                    onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {{ $coupons->links() }}
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                {{ $coupons->links() }}
+            @endif
+
         </div>
     </div>
 
@@ -85,11 +111,13 @@
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label">Valor de descuento</label>
-                                <input type="number" step="0.01" class="form-control" wire:model="discount_value" placeholder="0.00">
+                                <input type="number" step="0.01" class="form-control" wire:model="discount_value"
+                                    placeholder="0.00">
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label">Máximo uso</label>
-                                <input type="number" class="form-control" wire:model="max_uses" placeholder="Máximo uso">
+                                <input type="number" class="form-control" wire:model="max_uses"
+                                    placeholder="Máximo uso">
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label">Fecha Inicio</label>

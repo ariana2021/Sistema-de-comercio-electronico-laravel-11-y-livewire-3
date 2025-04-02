@@ -7,34 +7,54 @@
                         <div class="tp-product-details-thumb-wrapper tp-tab d-sm-flex">
                             <nav>
                                 <div class="nav nav-tabs flex-sm-column" id="productDetailsNavThumb" role="tablist">
+                                    @if ($product->image)
+                                        <button class="nav-link active" id="nav-main-tab" data-bs-toggle="tab"
+                                            data-bs-target="#nav-main" type="button" role="tab"
+                                            aria-controls="nav-main" aria-selected="true">
+                                            <img loading="lazy" src="{{ Storage::url($product->image) }}" alt="">
+                                        </button>
+                                    @endif
+
                                     @foreach ($product->images as $index => $image)
-                                        <button class="nav-link {{ $index == 0 ? 'active' : '' }}"
+                                        <button
+                                            class="nav-link {{ $index == 0 && !$product->image ? 'active' : '' }}"
                                             id="nav-{{ $index }}-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-{{ $index }}" type="button" role="tab"
                                             aria-controls="nav-{{ $index }}"
-                                            aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
-                                            <img src="{{ Storage::url($image->url) }}" alt="">
+                                            aria-selected="{{ $index == 0 && !$product->image ? 'true' : 'false' }}">
+                                            <img loading="lazy" src="{{ Storage::url($image->url) }}" alt="">
                                         </button>
                                     @endforeach
                                 </div>
                             </nav>
 
                             <div class="tab-content m-img" id="productDetailsNavContent">
+                                @if ($product->image)
+                                    <div class="tab-pane fade show active" id="nav-main" role="tabpanel"
+                                        aria-labelledby="nav-main-tab" tabindex="0">
+                                        <div class="tp-product-details-nav-main-thumb d-flex justify-content-center align-items-center"
+                                            style="height: 400px;">
+                                            <img loading="lazy" src="{{ Storage::url($product->image) }}" alt=""
+                                                class="img-fluid">
+                                        </div>
+                                    </div>
+                                @endif
+
                                 @foreach ($product->images as $index => $image)
-                                    <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}"
+                                    <div class="tab-pane fade {{ $index == 0 && !$product->main_image ? 'show active' : '' }}"
                                         id="nav-{{ $index }}" role="tabpanel"
                                         aria-labelledby="nav-{{ $index }}-tab" tabindex="0">
                                         <div class="tp-product-details-nav-main-thumb d-flex justify-content-center align-items-center"
                                             style="height: 400px;">
-                                            <img src="{{ Storage::url($image->url) }}" alt="" class="img-fluid">
+                                            <img loading="lazy" src="{{ Storage::url($image->url) }}" alt=""
+                                                class="img-fluid">
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-
                         </div>
-
-                    </div> <!-- col end -->
+                    </div>
+                    <!-- col end -->
                     <div class="col-xl-5 col-lg-6">
                         <div class="tp-product-details-wrapper">
                             <!-- Categoría -->
@@ -237,7 +257,7 @@
                                                             <div
                                                                 class="tp-product-details-review-avater d-flex align-items-start">
                                                                 <div class="tp-product-details-review-avater-thumb">
-                                                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($rating->user->name) }}"
+                                                                    <img loading="lazy" src="https://ui-avatars.com/api/?name={{ urlencode($rating->user->name) }}"
                                                                         alt="">
                                                                 </div>
                                                                 <div class="tp-product-details-review-avater-content">
@@ -369,8 +389,8 @@
                                 <div class="col-md-3">
                                     <div class="tp-product-item-3 tp-product-style-primary mb-50">
                                         <div class="tp-product-thumb-3 mb-15 fix p-relative z-index-1">
-                                            <a href="{{ route('product.delete', $related->slug) }}">
-                                                <img src="{{ Storage::url($related->image) }}"
+                                            <a href="{{ route('product.detail', $related->slug) }}">
+                                                <img loading="lazy" src="{{ Storage::url($related->image) }}"
                                                     alt="{{ $related->name }}">
                                             </a>
 
@@ -407,7 +427,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="tp-product-add-cart-btn-large-wrapper" wire:click="addToCart({{ $related->id }})">
+                                            <div class="tp-product-add-cart-btn-large-wrapper"
+                                                wire:click="addToCart({{ $related->id }})">
                                                 <button type="button" class="tp-product-add-cart-btn-large">
                                                     Añadir a la cesta
                                                 </button>
@@ -458,7 +479,7 @@
                                         data-bs-target="#nav-{{ $index }}" type="button" role="tab"
                                         aria-controls="nav-{{ $index }}"
                                         aria-selected="{{ $loop->first ? 'true' : 'false' }}">
-                                        <img src="{{ Storage::url($image) }}" alt="" class="img-fluid">
+                                        <img loading="lazy" src="{{ Storage::url($image) }}" alt="" class="img-fluid">
                                     </button>
                                 @endforeach
                             </div>
@@ -471,7 +492,7 @@
                                     id="nav-{{ $index }}" role="tabpanel"
                                     aria-labelledby="nav-{{ $index }}-tab" tabindex="0">
                                     <div class="tp-product-details-nav-main-thumb text-center">
-                                        <img src="{{ Storage::url($image) }}" alt=""
+                                        <img loading="lazy" src="{{ Storage::url($image) }}" alt=""
                                             class="img-fluid mx-auto d-block">
                                     </div>
                                 </div>

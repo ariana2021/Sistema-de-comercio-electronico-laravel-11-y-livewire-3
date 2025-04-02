@@ -19,24 +19,36 @@
                                     <div class="tp-checkout-input">
                                         <label>Nombre <span>*</span></label>
                                         <input type="text" wire:model.defer="first_name" placeholder="Tu Nombre">
+                                        @error('first_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="tp-checkout-input">
                                         <label>Apellido <span>*</span></label>
                                         <input type="text" wire:model.defer="last_name" placeholder="Tu Apellido">
+                                        @error('last_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="tp-checkout-input">
                                         <label>Correo Electrónico <span>*</span></label>
                                         <input type="email" wire:model.defer="email" placeholder="Tu Correo">
+                                        @error('email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="tp-checkout-input">
                                         <label>Teléfono <span>*</span></label>
                                         <input type="text" wire:model.defer="phone" placeholder="Tu Teléfono">
+                                        @error('phone')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -44,33 +56,54 @@
                                         <label>Dirección</label>
                                         <input type="text" wire:model.defer="address"
                                             placeholder="Dirección de la calle">
+                                        @error('address')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="tp-checkout-input">
                                         <label>Ciudad</label>
                                         <input type="text" wire:model.defer="city" placeholder="Ciudad">
+                                        @error('city')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="tp-checkout-input">
                                         <label>Código Postal</label>
                                         <input type="text" wire:model.defer="zip_code" placeholder="Código Postal">
+                                        @error('zip_code')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="order_notes">Nota</label>
+                                        <textarea id="order_notes" class="form-control" wire:model.defer="order_notes" placeholder="Nota" rows="3"></textarea>
+                                        @error('order_notes')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12 mt-3">
                                     <div class="form-check">
                                         <input type="checkbox" id="confirm" class="form-check-input"
-                                            wire:model.live="isConfirmed">
-                                        <label for="confirm" class="form-check-label">
-                                            Confirmo que mis datos son correctos
-                                        </label>
+                                            wire:model="isConfirmed">
+                                        <label for="confirm" class="form-check-label">Confirmo que mis datos son
+                                            correctos</label>
                                     </div>
+                                    @error('isConfirmed')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
 
@@ -105,7 +138,7 @@
                             @foreach ($carts as $item)
                                 <li class="tp-order-info-list-desc">
                                     <p>{{ $item['name'] }} <span>x {{ $item['quantity'] }}</span></p>
-                                    <span>${{ number_format($item['price'] * $item['quantity'], 2) }}</span>
+                                    <span>{{ config('app.currency_symbol') }}{{ number_format($item['price'] * $item['quantity'], 2) }}</span>
                                 </li>
                             @endforeach
                             <li class="tp-order-info-list-subtotal">
@@ -122,48 +155,21 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-                <div class="tp-checkout-place white-bg">
-                    <h3 class="tp-checkout-place-title">Métodos de Pago</h3>
 
-                    <div class="accordion" id="paymentMethodsAccordion">
-                        <!-- Mercado Pago -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#mercadoPagoPayment">
-                                    Mercado Pago
-                                </button>
-                            </h2>
-                            <div id="mercadoPagoPayment" class="accordion-collapse collapse"
-                                data-bs-parent="#paymentMethodsAccordion">
-                                <div class="accordion-body">
-                                    <p>Paga con Mercado Pago usando tarjetas o saldo.</p>
-                                    <div class="mercado-pago-button"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <p>Tienes
+                        <strong>{{ config('app.currency_symbol') }}{{ number_format($cashbackDisponible, 2) }}</strong>
+                        de cashback disponible.
+                    </p>
+
+                    <div class="mb-3">
+                        <label for="cashback_usado">¿Cuánto cashback quieres usar?</label>
+                        <input type="number" id="cashback_usado" wire:model="cashback_usado"
+                            max="{{ $cashbackDisponible }}" step="0.01" value="0">
                     </div>
+
+                    <button wire:click="checkoutSuccess" class="btn btn-primary">Finalizar Compra</button>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-@push('scripts')
-    @if ($preference_id)
-        <script src="https://sdk.mercadopago.com/js/v2"></script>
-        <script>
-            const mp = new MercadoPago("{{ config('services.mercadopago.public_key') }}");
-            const checkout = mp.checkout({
-                preference: {
-                    id: "{{ $preference_id }}"
-                },
-                render: {
-                    container: ".mercado-pago-button",
-                    label: "Pagar con Mercado Pago"
-                }
-            });
-        </script>
-    @endif
-@endpush

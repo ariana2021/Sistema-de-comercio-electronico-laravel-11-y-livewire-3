@@ -7,16 +7,6 @@
                 <div class="card-body">
                     <div class="login-container">
                         <div class="login-card">
-                            <div class="text-center mb-3">
-                                <img src="{{ asset('assets/admin/images/logo.png') }}" class="rounded-circle" alt="Logo"
-                                    width="100">
-                            </div>
-
-                            <div class="d-grid mb-3">
-                                <a href="{{ route('login.google') }}" class="btn btn-danger">
-                                    <i class="fab fa-google"></i> Iniciar sesión con Google
-                                </a>
-                            </div>
 
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
@@ -35,7 +25,12 @@
                                         <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                     @enderror
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">INICIAR SESIÓN</button>
+                                <button type="submit" class="btn btn-primary w-100 mb-3">INICIAR SESIÓN</button>
+                                <div class="d-grid mb-3">
+                                    <a href="{{ route('login.google') }}" class="btn btn-outline-danger">
+                                        <i class="fab fa-google"></i> Iniciar sesión con Google
+                                    </a>
+                                </div>
                                 <div class="mt-3 form-check">
                                     <input type="checkbox" class="form-check-input" name="remember" id="remember"
                                         {{ old('remember') ? 'checked' : '' }}>
@@ -48,6 +43,12 @@
                                     @endif
                                 </div>
                             </form>
+
+                            <!-- Enlace para registrarse -->
+                            <div class="mt-3 text-center">
+                                <span>¿No tienes cuenta?</span>
+                                <a href="{{ route('register') }}" class="text-decoration-none fw-bold">Regístrate aquí</a>
+                            </div>
                         </div>
                     </div>
                 </div>

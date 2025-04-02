@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/email/verify';
 
     /**
      * Create a new controller instance.
@@ -53,7 +54,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'plan_id' => ['required'],
             'terms' => ['required', 'accepted'],  // Se agrega la validación del checkbox
         ]);
     }
@@ -67,19 +67,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // Desencriptar el plan_id si está presente
-        $planId = $data['plan_id'] ?? null;
-
-        if ($planId) {
-            $planId = Crypt::decryptString($planId);
-        }
-
         // Crear el usuario
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'plan_id' => $planId,
+            'password' => Hash::make($data['password'])
         ]);
+
+        return $user;
+    }
+
+    /**
+     * Handle a registered user event.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function registered(Request $request, $user)
+    {
+        event(new Registered($user)); // Dispara el evento de registro
+
+        return redirect('/email/verify');
     }
 }

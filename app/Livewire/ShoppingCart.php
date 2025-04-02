@@ -15,12 +15,10 @@ class ShoppingCart extends Component
 
     public function mount()
     {
-        $this->categories = Category::orderBy('id', 'desc')->get();
-
-        // Obtener 8 productos recientes por cada categoría
-        $this->categories->each(function ($category) {
-            $category->setRelation('products', $category->products()->latest()->take(8)->get());
-        });
+        $this->categories = Category::with(['products' => function ($query) {
+            $query->latest()->take(4);
+        }])->orderBy('id', 'desc')->get();
+        
     }
 
     public function render()

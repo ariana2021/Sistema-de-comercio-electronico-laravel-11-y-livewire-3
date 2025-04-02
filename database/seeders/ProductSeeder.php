@@ -24,6 +24,11 @@ class ProductSeeder extends Seeder
         $products = [];
         $existingSlugs = DB::table('products')->pluck('slug')->toArray(); // Obtener slugs existentes
 
+        if (Storage::exists('public/products')) {
+            Storage::deleteDirectory('public/products');
+        }
+        Storage::makeDirectory('public/products');
+
         $productNames = [
             "Taladro Eléctrico Profesional 500W con Percusión",
             "Martillo de Carpintero con Mango de Fibra de Vidrio",

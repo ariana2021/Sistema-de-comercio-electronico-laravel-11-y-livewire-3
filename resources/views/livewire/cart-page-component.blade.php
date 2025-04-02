@@ -21,7 +21,7 @@
                                 @foreach ($carts as $id => $cart)
                                     <tr>
                                         <td class="tp-cart-img">
-                                            <a href="#"><img src="{{ Storage::url($cart['image']) }}"
+                                            <a href="#"><img loading="lazy" src="{{ Storage::url($cart['image']) }}"
                                                     alt=""></a>
                                         </td>
                                         <td class="tp-cart-title p-2">

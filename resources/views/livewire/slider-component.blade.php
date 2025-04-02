@@ -4,14 +4,14 @@
             @foreach ($sliders as $slider)
                 <div class="tp-slider-item tp-slider-height d-flex align-items-center swiper-slide green-dark-bg">
                     <div class="tp-slider-shape">
-                        <img class="tp-slider-shape-1"
+                        <img loading="lazy" class="tp-slider-shape-1"
                             src="{{ asset('assets/principal/img/slider/shape/slider-shape-1.png') }}" alt="slider-shape">
-                        <img class="tp-slider-shape-2"
+                        <img loading="lazy" class="tp-slider-shape-2"
                             src="{{ asset('assets/principal/img/slider/shape/slider-shape-2.png') }}" alt="slider-shape">
-                        <img class="tp-slider-shape-3"
+                        <img loading="lazy" class="tp-slider-shape-3"
                             src="{{ asset('assets/principal/img/slider/shape/slider-shape-3.png') }}"
                             alt="slider-shape">
-                        <img class="tp-slider-shape-4"
+                        <img loading="lazy" class="tp-slider-shape-4"
                             src="{{ asset('assets/principal/img/slider/shape/slider-shape-4.png') }}"
                             alt="slider-shape">
                     </div>
@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-xl-7 col-lg-6 col-md-6">
                                 <div class="tp-slider-thumb text-end">
-                                    <img src="{{ Storage::url($slider->image) }}" alt="slider-img">
+                                    <img loading="lazy" src="{{ Storage::url($slider->image) }}" alt="slider-img">
                                 </div>
                             </div>
                         </div>
