@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Rating;
+use App\Models\Service;
 use App\Models\Slider;
 use App\Models\TemporaryCart;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -31,7 +32,9 @@ class PrincipalController extends Controller
             ->get();
         $business = Business::first();
 
-        return view('principal.home.index', compact('ratings', 'business'));
+        $services = Service::all();
+
+        return view('principal.home.index', compact('ratings', 'business', 'services'));
     }
 
     public function category($slug)

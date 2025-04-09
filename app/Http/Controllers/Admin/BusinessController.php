@@ -34,6 +34,7 @@ class BusinessController extends Controller
             'shipping_enabled' => 'required|boolean',
             'cost_per_km' => 'required|numeric|min:0',
             'tax_percentage' => 'nullable|numeric|min:0|max:100',
+            'cashback_percentage' => 'nullable|numeric|min:0|max:100',
         ], $this->messages());
 
         $business->update($validated);

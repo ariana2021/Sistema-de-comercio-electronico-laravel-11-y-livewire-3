@@ -1,66 +1,71 @@
 @section('title', 'Pedidos')
 
 <div>
-    <div class="row shadow-sm">
-        <div class="col-lg-12">
-            <input type="text" class="form-control mt-3" placeholder="Buscar pedidos..." wire:model.live="search">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="text" class="form-control mt-3" placeholder="Buscar pedidos..."
+                        wire:model.live="search">
 
-            @if (session()->has('message'))
-                <div class="alert alert-success mt-3">{{ session('message') }}</div>
-            @endif
+                    @if (session()->has('message'))
+                        <div class="alert alert-success mt-3">{{ session('message') }}</div>
+                    @endif
 
-            @if ($orders->count())
+                    @if ($orders->count())
 
-                <div class="table-responsive">
-                    <table class="table table-striped" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th scope="col">Acciones</th>
-                                <th scope="col">ID</th>
-                                <th scope="col">Cliente</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">Envio</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($orders as $order)
-                                <tr>
-                                    <td>
-                                        <button wire:click="openModal({{ $order->id }})"
-                                            class="btn btn-outline-primary btn-sm">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
+                        <div class="table-responsive">
+                            <table class="table table-striped" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Acciones</th>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Cliente</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Envio</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($orders as $order)
+                                        <tr>
+                                            <td>
+                                                <button wire:click="openModal({{ $order->id }})"
+                                                    class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
 
-                                        <a href="{{ route('order.invoice.pdf', Crypt::encrypt($order->id)) }}"
-                                            target="_blank" class="btn btn-danger btn-sm">
-                                            Factura
-                                        </a>
-                                    </td>
-                                    <td>#{{ $order->id }}</td>
-                                    <td>{{ $order->user->name }}</td>
-                                    <td>{{ config('app.currency_symbol') }}{{ number_format($order->total - $order->shipping_cost, 2) }}
-                                    </td>
-                                    <td>{{ ucfirst($order->shipping_cost) }}</td>
-                                    <td>
-                                        <span class="badge bg-primary">{{ ucfirst($order->status) }}</span>
-                                    </td>
-                                    <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                <a href="{{ route('order.invoice.pdf', Crypt::encrypt($order->id)) }}"
+                                                    target="_blank" class="btn btn-danger btn-sm">
+                                                    Factura
+                                                </a>
+                                            </td>
+                                            <td>#{{ $order->id }}</td>
+                                            <td>{{ $order->user->name }}</td>
+                                            <td>{{ config('app.currency_symbol') }}{{ number_format($order->total - $order->shipping_cost, 2) }}
+                                            </td>
+                                            <td>{{ ucfirst($order->shipping_cost) }}</td>
+                                            <td>
+                                                <span class="badge bg-primary">{{ ucfirst($order->status) }}</span>
+                                            </td>
+                                            <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-2">
+                            {{ $orders->links() }}
+                        </div>
+                    @else
+                        <div class="alert alert-warning mt-3" role="alert">
+                            <strong>No hay pedidos disponibles</strong>
+                        </div>
+                    @endif
                 </div>
-
-                <div class="mt-2">
-                    {{ $orders->links() }}
-                </div>
-            @else
-                <div class="alert alert-warning mt-3" role="alert">
-                    <strong>No hay pedidos disponibles</strong>
-                </div>
-            @endif
+            </div>
         </div>
     </div>
 

@@ -6,7 +6,7 @@
                     <div class="list-group-item py-3">
                         <div class="d-flex align-items-start">
                             <!-- Avatar -->
-                            <img src="{{ $comment->user->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) . '&background=random&size=80' }}"
+                            <img src="{{ $comment->user->avatar ? Storage::url($comment->user->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) . '&background=random&size=80' }}"
                                 class="rounded-circle border shadow-sm me-3" width="50" height="50"
                                 alt="{{ $comment->user->name }}">
 
@@ -20,7 +20,7 @@
                                         </small>
                                     </div>
                                     <a href="#" class="text-primary small"
-                                        wire:click.prevent="setReplyingTo({{ $comment->id }})">
+                                        wire:click="setReplyingTo({{ $comment->id }})">
                                         <i class="fas fa-reply"></i> Responder
                                     </a>
                                 </div>
@@ -62,7 +62,7 @@
                                     <div class="border-bottom pb-2 mb-2">
                                         <div class="d-flex align-items-start">
                                             <!-- Avatar -->
-                                            <img src="{{ $reply->user->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($reply->user->name) . '&background=random&size=80' }}"
+                                            <img src="{{ $reply->user->avatar ? Storage::url($reply->user->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($reply->user->name) . '&background=random&size=80' }}"
                                                 class="rounded-circle border shadow-sm me-3" width="40"
                                                 height="40" alt="{{ $reply->user->name }}">
 
@@ -75,7 +75,7 @@
                                                             class="text-muted">{{ $reply->created_at->format('d M, Y h:i A') }}</small>
                                                     </div>
                                                     <a href="#" class="text-primary small"
-                                                        wire:click.prevent="setReplyingTo({{ $reply->id }})">
+                                                        wire:click="setReplyingTo({{ $reply->id }})">
                                                         <i class="fas fa-reply"></i> Responder
                                                     </a>
                                                 </div>

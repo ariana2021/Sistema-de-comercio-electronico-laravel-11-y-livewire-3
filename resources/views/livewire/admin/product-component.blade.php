@@ -1,78 +1,85 @@
 @section('title', 'Productos')
 
 <div>
-    <div class="row shadow-sm">
-        <div class="col-lg-12">
-            <button wire:click="create()" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus-circle"></i>
-                Nuevo
-            </button>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <button wire:click="create()" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus-circle"></i>
+                        Nuevo
+                    </button>
 
-            @if (session()->has('message'))
-                <div class="alert alert-success mt-3">{{ session('message') }}</div>
-            @endif
-            <input type="text" class="form-control mt-3" placeholder="Buscar..." wire:model.live="search">
+                    @if (session()->has('message'))
+                        <div class="alert alert-success mt-3">{{ session('message') }}</div>
+                    @endif
+                    <input type="text" class="form-control mt-3" placeholder="Buscar..." wire:model.live="search">
 
-            @if ($products->count())
+                    @if ($products->count())
 
-                <div class="table-responsive">
-                    <table class="table table-striped" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th scope="col">Acciones</th>
-                                <th scope="col">Imagen</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Precio Descuento</th>
-                                <th scope="col">Stock</th>
-                                <th scope="col">SKU</th>
-                                <th scope="col">Categoría</th>
-                                <th scope="col">Marca</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($products as $product)
-                                <tr>
-                                    <td>
-                                        <button wire:click="edit({{ $product->id }})" class="btn btn-outline-primary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button wire:click="confirmDelete({{ $product->id }})" class="btn btn-outline-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                        <a href="{{route('product.gallery', $product->id)}}" class="btn btn-outline-secondary btn-sm">
-                                            <i class="fas fa-images"></i>
-                                        </a>
-                                    </td>
-                                    
-                                    <td>
-                                        @if ($product->image)
-                                            <img src="{{ Storage::url($product->image) }}" alt="Imagen del producto"
-                                                width="100">
-                                        @else
-                                            <span>No hay imagen</span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->price }}</td>
-                                    <td>{{ $product->discount_price }}</td>
-                                    <td>{{ $product->stock }}</td>
-                                    <td>{{ $product->sku }}</td>
-                                    <td>{{ $product->category->name ?? 'Sin categoría' }}</td>
-                                    <td>{{ $product->brand->name ?? 'Sin marca' }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                        <div class="table-responsive">
+                            <table class="table table-striped" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Acciones</th>
+                                        <th scope="col">Imagen</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Precio Descuento</th>
+                                        <th scope="col">Stock</th>
+                                        <th scope="col">SKU</th>
+                                        <th scope="col">Categoría</th>
+                                        <th scope="col">Marca</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($products as $product)
+                                        <tr>
+                                            <td>
+                                                <button wire:click="edit({{ $product->id }})"
+                                                    class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button wire:click="confirmDelete({{ $product->id }})"
+                                                    class="btn btn-outline-danger btn-sm">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                <a href="{{ route('product.gallery', $product->id) }}"
+                                                    class="btn btn-outline-secondary btn-sm">
+                                                    <i class="fas fa-images"></i>
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                @if ($product->image)
+                                                    <img src="{{ Storage::url($product->image) }}"
+                                                        alt="Imagen del producto" width="100">
+                                                @else
+                                                    <span>No hay imagen</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $product->name }}</td>
+                                            <td>{{ $product->price }}</td>
+                                            <td>{{ $product->discount_price }}</td>
+                                            <td>{{ $product->stock }}</td>
+                                            <td>{{ $product->sku }}</td>
+                                            <td>{{ $product->category->name ?? 'Sin categoría' }}</td>
+                                            <td>{{ $product->brand->name ?? 'Sin marca' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-2">
+                            {{ $products->links() }}
+                        </div>
+                    @else
+                        <div class="alert alert-warning mt-3" role="alert">
+                            <strong>No hay productos</strong>
+                        </div>
+                    @endif
                 </div>
-
-                <div class="mt-2">
-                    {{ $products->links() }}
-                </div>
-            @else
-                <div class="alert alert-warning mt-3" role="alert">
-                    <strong>No hay productos</strong>
-                </div>
-            @endif
+            </div>
         </div>
     </div>
 

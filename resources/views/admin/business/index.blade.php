@@ -154,11 +154,18 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
 
-                <h4 class="mt-4">Impuestos</h4>
-                <div class="row">
                     <div class="col-md-6 mb-3">
+                        <label class="form-label">Porcentaje de Cashback (%)</label>
+                        <input type="number" name="cashback_percentage" class="form-control"
+                            value="{{ old('cashback_percentage', $business->cashback_percentage ?? 0) }}" min="0"
+                            max="100">
+                        @error('cashback_percentage')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6 mb-3 d-none">
                         <label class="form-label">Porcentaje de Impuestos (%)</label>
                         <input type="number" name="tax_percentage" class="form-control"
                             value="{{ old('tax_percentage', $business->tax_percentage ?? 0) }}" min="0"
@@ -168,7 +175,6 @@
                         @enderror
                     </div>
                 </div>
-
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>

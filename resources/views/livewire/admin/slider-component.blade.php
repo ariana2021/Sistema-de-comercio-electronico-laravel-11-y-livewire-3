@@ -1,63 +1,68 @@
 @section('title', 'Sliders')
 <div>
-    <!-- Mensajes Flash -->
-    @if (session()->has('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
+    <div class="card">
+        <div class="card-body">
+            <!-- Mensajes Flash -->
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
+
+            <div class="d-flex justify-content-between mb-3">
+                <button class="btn btn-primary" wire:click="$set('sliderId', null)" data-bs-toggle="modal"
+                    data-bs-target="#sliderModal">
+                    Nuevo
+                </button>
+                <input type="text" class="form-control w-25" placeholder="Buscar Sliders..."
+                    wire:model.live="searchSliders">
+            </div>
+
+            <!-- Tabla de Sliders -->
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Título</th>
+                            <th>Producto</th>
+                            <th>Descuento</th>
+                            <th>Estado</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($sliders as $slider)
+                            <tr>
+                                <td><img src="{{ Storage::url($slider->image) }}" width="50"></td>
+                                <td>
+                                    {{ Str::limit($slider->title, 30, '...') }}
+                                </td>
+                                <td>
+                                    {{ Str::limit(optional($slider->product)->name, 30, '...') }}
+                                </td>
+
+                                <td>{{ $slider->discount ?? 'N/A' }}</td>
+                                <td>
+                                    <span class="badge {{ $slider->status ? 'bg-success' : 'bg-danger' }}">
+                                        {{ $slider->status ? 'Activo' : 'Inactivo' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning" wire:click="edit({{ $slider->id }})"><i
+                                            class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-danger" wire:click="delete({{ $slider->id }})"><i
+                                            class="fas fa-times-circle"></i></button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            {{ $sliders->links() }}
         </div>
-    @endif
-
-    <div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-primary" wire:click="$set('sliderId', null)" data-bs-toggle="modal"
-            data-bs-target="#sliderModal">
-            Nuevo
-        </button>
-        <input type="text" class="form-control w-25" placeholder="Buscar Sliders..." wire:model.live="searchSliders">
     </div>
-
-    <!-- Tabla de Sliders -->
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Título</th>
-                    <th>Producto</th>
-                    <th>Descuento</th>
-                    <th>Estado</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($sliders as $slider)
-                    <tr>
-                        <td><img src="{{ Storage::url($slider->image) }}" width="50"></td>
-                        <td>
-                            {{ Str::limit($slider->title, 30, '...') }}
-                        </td>
-                        <td>
-                            {{ Str::limit(optional($slider->product)->name, 30, '...') }}
-                        </td>
-
-                        <td>{{ $slider->discount ?? 'N/A' }}</td>
-                        <td>
-                            <span class="badge {{ $slider->status ? 'bg-success' : 'bg-danger' }}">
-                                {{ $slider->status ? 'Activo' : 'Inactivo' }}
-                            </span>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-warning" wire:click="edit({{ $slider->id }})"><i
-                                    class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-danger" wire:click="delete({{ $slider->id }})"><i
-                                    class="fas fa-times-circle"></i></button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    {{ $sliders->links() }}
 
     <!-- Modal -->
     <div wire:ignore.self class="modal fade" id="sliderModal" tabindex="-1" aria-labelledby="sliderModalLabel"

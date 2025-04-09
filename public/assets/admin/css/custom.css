@@ -1,50 +1,3 @@
-.bg-success {
-    background-color: #018e27 !important;
-    color: black !important;
-}
-
-/* btn-danger y bg-danger (rojo - Cancelar) */
-.btn-danger,
-.bg-danger {
-    background-color: #ed5a5a !important;
-    border-color: #ed5a5a !important;
-    color: white !important;
-}
-
-/* bg-info (azul - Editar) */
-.bg-info {
-    background-color: #4534b6 !important;
-    color: white !important;
-}
-
-/* bg-primary y btn-primary (morado - Nuevo evento, Notificaciones) */
-.bg-primary,
-.btn-primary {
-    background-color: #9682f2 !important;
-    border-color: #9682f2 !important;
-    color: white !important;
-}
-
-/* Border-primary (input morado) */
-.border-primary {
-    border-color: #9682f2 !important;
-}
-
-/* Texto en tabs - Eventos */
-.text-primary {
-    color: #9682f2 !important;
-}
-
-/* Texto - Proveedores (gris oscuro) */
-.text-dark {
-    color: #303030 !important;
-}
-
-/* Border - gris claro */
-.border-secondary {
-    border-color: #9682F2 !important;
-}
-
 .centered-text-top {
     position: absolute;
     top: 8%;
@@ -79,6 +32,7 @@
     /* Añade un poco de espacio alrededor del texto */
     font-weight: bold;
 }
+
 
 .title {
     font-size: 1rem;
@@ -286,4 +240,86 @@ p {
     background-color: #ff2b00;
     border-color: #ff2b00;
     border-radius: 1px
+}
+
+/* Sobreescribir el estilo de las alertas de Bootstrap */
+.alert {
+    border-radius: 12px;
+    /* Bordes redondeados */
+    padding: 20px;
+    /* Más padding para una mejor apariencia */
+    font-size: 1rem;
+    /* Tamaño de fuente más grande */
+    line-height: 1.5;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra sutil */
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.alert .btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Estilo para el borde izquierdo que se asemeja a Material Design */
+.alert-warning {
+    border-left: 6px solid #fbc02d;
+    background-color: #fff8e1;
+    color: #856404;
+}
+
+.alert-info {
+    border-left: 6px solid #039be5;
+    background-color: #e1f5fe;
+    color: #0277bd;
+}
+
+.alert-success {
+    border-left: 6px solid #66bb6a;
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+.alert-danger {
+    border-left: 6px solid #e57373;
+    background-color: #ffebee;
+    color: #d32f2f;
+}
+
+/* Icono de alerta - personalización */
+.alert i {
+    font-size: 1.5rem;
+    /* Aumentar el tamaño del icono */
+    margin-right: 15px;
+    /* Separar icono del texto */
+}
+
+/* Estilo para los botones de alerta */
+.alert button {
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    font-size: 1.2rem;
+}
+
+/* Hover de los botones */
+.alert button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+/* Ajuste de las alertas en pantalla pequeña */
+@media (max-width: 576px) {
+    .alert {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .alert i {
+        margin-bottom: 10px;
+    }
 }

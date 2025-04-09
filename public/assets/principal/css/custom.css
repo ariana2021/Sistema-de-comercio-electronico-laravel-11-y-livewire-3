@@ -193,6 +193,28 @@ p {
     text-transform: uppercase;
 }
 
+.tp-feature-item {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Asegura que los elementos hijos llenen toda la altura */
+}
+
+.tp-feature-content {
+    flex-grow: 1; /* Hace que este contenedor crezca para llenar el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Esto hace que el contenido esté distribuido */
+}
+
+.tp-feature-item .tp-feature-icon {
+    margin-bottom: 15px; /* Espacio entre el icono y el texto */
+}
+
+.tp-feature-item .tp-feature-content p {
+    margin-top: auto; /* Asegura que el texto quede al final de la tarjeta si hay espacio adicional */
+}
+
+
 .ui-autocomplete{
 	z-index: 10000 !important;
 }

@@ -5,47 +5,234 @@
 @section('content')
 
     <div class="row">
-        <!-- Ventas semanales -->
-        <div class="col-md-4 stretch-card grid-margin">
-            <div class="card bg-gradient-danger card-img-holder text-white">
+        <div class="col-xxl-8 d-flex align-items-stretch">
+            <div class="card w-100 overflow-hidden rounded-4">
+                <div class="card-body position-relative p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-7">
+                            <div class="d-flex align-items-center gap-3 mb-5">
+                                @if (Auth::user()->avatar)
+                                    <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" width="60"
+                                        height="60" class="rounded-circle bg-grd-info p-1">
+                                @else
+                                    <img src="{{ asset('assets/admin/images/avatars/01.png') }}"
+                                        class="rounded-circle bg-grd-info p-1" width="60" height="60" alt="">
+                                @endif
+                                <div>
+                                    <p class="mb-0 fw-semibold">Bienvenido de nuevo</p>
+                                    <h4 class="fw-semibold mb-0 fs-4 mb-0">{{ Auth::user()->name }}</h4>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-5">
+                                <!-- Ventas -->
+                                <div>
+                                    <h4 class="mb-1 fw-semibold d-flex align-items-center">
+                                        {{ number_format($weeklySales, 2) }}
+                                        <i
+                                            class="ti {{ $weeklySales >= $lastWeekSales ? 'ti-arrow-up-right text-success' : 'ti-arrow-down-right text-danger' }} fs-5 lh-base ms-1"></i>
+                                    </h4>
+                                    <p class="mb-3">Ventas Semanales</p>
+                                    <div class="progress mb-0" style="height:5px;">
+                                        <div class="progress-bar bg-grd-success" role="progressbar"
+                                            style="width: {{ min($salesPercentage, 100) }}%"
+                                            aria-valuenow="{{ $salesPercentage }}" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="vr"></div>
+
+                                <!-- Pedidos -->
+                                <div>
+                                    <h4 class="mb-1 fw-semibold d-flex align-items-center">
+                                        {{ number_format($weeklyOrders, 2) }}
+                                        <i
+                                            class="ti {{ $weeklyOrders >= $lastWeekOrders ? 'ti-arrow-up-right text-success' : 'ti-arrow-down-right text-danger' }} fs-5 lh-base ms-1"></i>
+                                    </h4>
+                                    <p class="mb-3">Pedidos Semanales</p>
+                                    <div class="progress mb-0" style="height:5px;">
+                                        <div class="progress-bar bg-grd-danger" role="progressbar"
+                                            style="width: {{ min($ordersPercentage, 100) }}%"
+                                            aria-valuenow="{{ $ordersPercentage }}" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-5">
+                            <div class="welcome-back-img pt-4">
+                                <img src="{{ asset('assets/admin/images/gallery/welcome-back-3.png') }}" height="180"
+                                    alt="">
+                            </div>
+                        </div>
+                    </div><!--end row-->
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 col-xxl-3 d-flex flex-column">
+            <div class="card rounded-4 w-100">
                 <div class="card-body">
-                    <img src="{{ asset('assets/admin/images/dashboard/circle.svg') }}" class="card-img-absolute"
-                        alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Ventas Semanales <i
-                            class="mdi mdi-chart-line mdi-24px float-right"></i></h4>
-                    <h2 class="">$ {{ number_format($weeklySales, 2) }}</h2>
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <p class="mb-1">Posts</p>
+                            <h3 class="mb-0">{{ $currentPosts }}</h3>
+                        </div>
+                        <div class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-primary">
+                            <span class="material-icons-outlined fs-5 text-white">article</span>
+                        </div>
+                    </div>
+                    <div class="progress mb-0" style="height:6px;">
+                        <div class="progress-bar bg-success" role="progressbar"
+                            style="width: {{ min($postPercentage, 100) }}%" aria-valuenow="{{ $postPercentage }}"
+                            aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mt-3 gap-2">
+                        <div class="card-lable bg-success bg-opacity-10">
+                            <p class="text-success mb-0">
+                                {{ $lastMonthPosts > 0 ? number_format((($currentPosts - $lastMonthPosts) / $lastMonthPosts) * 100, 1) : '0.0' }}%
+                            </p>
+                        </div>
+                        <p class="mb-0 font-13">del mes pasado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 col-xxl-3 d-flex flex-column">
+            <div class="card rounded-4 w-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <p class="mb-1">Calificaciones</p>
+                            <h3 class="mb-0">{{ $currentCalificaciones }}</h3>
+                        </div>
+                        <div class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-warning">
+                            <span class="material-icons-outlined fs-5 text-white">grade</span>
+                        </div>
+                    </div>
+                    <div class="progress mb-0" style="height:6px;">
+                        <div class="progress-bar bg-warning" role="progressbar"
+                            style="width: {{ min($calificacionPercentage, 100) }}%"
+                            aria-valuenow="{{ $calificacionPercentage }}" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mt-3 gap-2">
+                        <div class="card-lable bg-warning bg-opacity-10">
+                            <p class="text-warning mb-0">
+                                {{ $lastMonthCalificaciones > 0
+                                    ? number_format((($currentCalificaciones - $lastMonthCalificaciones) / $lastMonthCalificaciones) * 100, 1)
+                                    : '0.0' }}%
+                            </p>
+                        </div>
+                        <p class="mb-0 font-13">del mes pasado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 col-xxl-3 d-flex flex-column">
+            <div class="card rounded-4 w-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <p class="mb-1">Comentarios</p>
+                            <h3 class="mb-0">{{ $currentComentarios }}</h3>
+                        </div>
+                        <div class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-success">
+                            <span class="material-icons-outlined fs-5 text-white">comment</span>
+                        </div>
+                    </div>
+                    <div class="progress mb-0" style="height:6px;">
+                        <div class="progress-bar bg-success" role="progressbar"
+                            style="width: {{ min($comentarioPercentage, 100) }}%"
+                            aria-valuenow="{{ $comentarioPercentage }}" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mt-3 gap-2">
+                        <div class="card-lable bg-success bg-opacity-10">
+                            <p class="text-success mb-0">
+                                {{ $lastMonthComentarios > 0
+                                    ? number_format((($currentComentarios - $lastMonthComentarios) / $lastMonthComentarios) * 100, 1)
+                                    : '0.0' }}%
+                            </p>
+                        </div>
+                        <p class="mb-0 font-13">del mes pasado</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Pedidos semanales -->
-        <div class="col-md-4 stretch-card grid-margin">
-            <div class="card bg-gradient-info card-img-holder text-white">
+
+        <div class="col-lg-12 col-xxl-8 d-flex align-items-stretch">
+            <div class="card w-100 rounded-4">
                 <div class="card-body">
-                    <img src="{{ asset('assets/admin/images/dashboard/circle.svg') }}" class="card-img-absolute"
-                        alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Pedidos Semanales <i
-                            class="mdi mdi-cart-outline mdi-24px float-right"></i></h4>
-                    <h2 class="">{{ number_format($weeklyOrders) }}</h2>
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div class="">
+                            <h5 class="mb-0">Pedidos recientes</h5>
+                        </div>
+                        {{-- <div class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
+                                data-bs-toggle="dropdown">
+                                <span class="material-icons-outlined fs-5">more_vert</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="javascript:;">Reporte PDF</a></li>
+                                <li><a class="dropdown-item" href="javascript:;">Reporte Excel</a></li>
+                            </ul>
+                        </div> --}}
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Nombre del artículo</th>
+                                    <th>Precio</th>
+                                    <th>Cliente</th>
+                                    <th>Estado</th>
+                                    <th>Calificación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($recentOrders as $order)
+                                    @foreach ($order->items as $item)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="">
+                                                        <img src="{{ Storage::url($item->product->image) }}"
+                                                            class="rounded-circle" width="50" height="50"
+                                                            alt="{{ $item->product->name }}">
+                                                    </div>
+                                                    <p class="mb-0">{{ \Str::limit($item->product->name, 30) }}</p>
+                                                </div>
+                                            </td>
+                                            <td>{{ config('app.currency_symbol') }}{{ number_format($item->total, 2) }}
+                                            </td>
+                                            <td>{{ $order->user->name }}</td>
+                                            <td>
+                                                <p
+                                                    class="dash-lable mb-0 bg-{{ $order->status == 'completed' ? 'success' : ($order->status == 'pending' ? 'warning' : 'danger') }} bg-opacity-10 text-{{ $order->status == 'completed' ? 'success' : ($order->status == 'pending' ? 'warning' : 'danger') }} rounded-2">
+                                                    {{ ucfirst($order->status) }}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <p class="mb-0">{{ $item->product->average_rating }}</p>
+                                                    <i class="material-icons-outlined text-warning fs-6">star</i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Visitantes en línea -->
-        <div class="col-md-4 stretch-card grid-margin">
-            <div class="card bg-gradient-success card-img-holder text-white">
-                <div class="card-body">
-                    <img src="{{ asset('assets/admin/images/dashboard/circle.svg') }}" class="card-img-absolute"
-                        alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Visitantes en Línea <i
-                            class="mdi mdi-account-group-outline mdi-24px float-right"></i></h4>
-                    <h2 class="">{{ number_format($onlineVisitors) }}</h2>
-                </div>
-            </div>
-        </div>
     </div>
-
-
 
     <div class="row">
         <div class="col-md-6 mb-4">
@@ -123,7 +310,7 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('assets/admin/vendors/chartjs/js/Chart.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/chartjs/js/Chart.min.js') }}"></script>
     <script>
         $(function() {
             "use strict";
@@ -259,7 +446,7 @@
                     }]
                 },
                 options: {
-                    maintainAspectRatio: true,
+                    maintainAspectRatio: false,
                     title: {
                         display: true,
                         text: 'Stock de Productos por Categoría'
@@ -298,7 +485,7 @@
                     }]
                 },
                 options: {
-                    maintainAspectRatio: true,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },

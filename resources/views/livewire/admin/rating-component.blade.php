@@ -1,5 +1,5 @@
 @section('title', 'Calificaciones')
-<div class="card shadow-sm">
+<div class="card">
     <div class="card-body">
         <h5 class="card-title">Administrar Calificaciones</h5>
         <hr>
@@ -26,7 +26,6 @@
                 <thead>
                     <tr>
                         <th>Acciones</th>
-                        <th>Destacado</th>
                         <th>Calificación</th>
                         <th>Usuario</th>
                         <th>Producto</th>
@@ -36,15 +35,15 @@
                 <tbody>
                     @foreach ($ratings as $rating)
                         <tr>
-                            <td class="text-center">
-                                <button wire:click="toggleFeatured({{ $rating->id }})"
-                                    class="btn btn-sm {{ $rating->featured ? 'btn-success' : 'btn-secondary' }}">
-                                    {{ $rating->featured ? 'Sí' : 'No' }}
-                                </button>
-                            </td>
-                            <td class="text-center">
-                                <button wire:click="confirmDelete({{ $rating->id }})" class="btn btn-sm btn-danger"><i
-                                        class="fas fa-times-circle"></i></button>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Button group">
+                                    <button wire:click="toggleFeatured({{ $rating->id }})"
+                                        class="btn btn-sm {{ $rating->featured ? 'btn-success' : 'btn-secondary' }}">
+                                        {{ $rating->featured ? 'Sí' : 'No' }}
+                                    </button>
+                                    <button wire:click="confirmDelete({{ $rating->id }})"
+                                        class="btn btn-sm btn-danger"><i class="fas fa-times-circle"></i></button>
+                                </div>
                             </td>
                             <td>
                                 @for ($i = 1; $i <= 5; $i++)

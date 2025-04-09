@@ -59,6 +59,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/comments', App\Livewire\Admin\CommentComponent::class)->name('admin.comments.index');
     Route::get('/admin/ratings', App\Livewire\Admin\RatingComponent::class)->name('admin.ratings.index');
 
+    Route::get('/admin/services', App\Livewire\Admin\ServiceComponent::class)->name('services.index');
     Route::get('/admin/sliders', App\Livewire\Admin\SliderComponent::class)->name('sliders.index');
     Route::get('/admin/coupons', App\Livewire\Admin\CouponComponent::class)->name('coupons.index');
     Route::get('/admin/brands', App\Livewire\Admin\BrandComponent::class)->name('brands.index');

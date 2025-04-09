@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="card shadow border-0">
+    <div class="card">
         <div class="card-body">
             <h3 class="card-title mb-4">Comentarios ({{ $this->totalComments }})</h3>
 
@@ -8,7 +8,7 @@
                     <div class="list-group-item py-3">
                         <div class="d-flex align-items-start">
                             <!-- Avatar -->
-                            <img src="{{ $comment->user->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) . '&background=random&size=80' }}"
+                            <img src="{{ $comment->user->avatar ? Storage::url($comment->user->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) . '&background=random&size=80' }}"
                                 class="rounded-circle border shadow-sm me-3" width="50" height="50"
                                 alt="{{ $comment->user->name }}">
 
@@ -21,7 +21,7 @@
                                             class="text-muted">{{ $comment->created_at->format('d M, Y \a \l\a\s h:i A') }}</small>
                                     </div>
                                     <a href="#" class="text-primary small"
-                                        wire:click.prevent="setReplyingTo({{ $comment->id }})">
+                                        wire:click="setReplyingTo({{ $comment->id }})">
                                         <i class="fas fa-reply"></i> Responder
                                     </a>
                                     

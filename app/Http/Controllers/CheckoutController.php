@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Business;
 use App\Models\Cashback;
 use App\Models\Coupon;
 use App\Models\Order;
@@ -41,7 +42,7 @@ class CheckoutController extends Controller
         if ($user) {
             $billingDetails = $user->billing_details;
         } else {
-            $billingDetails = []; 
+            $billingDetails = [];
         }
         $applied_coupons = $external_reference['applied_coupons'] ?? null;
         $subtotal = collect($carts)->sum(fn($cart) => $cart['price'] * $cart['quantity']);
@@ -114,8 +115,9 @@ class CheckoutController extends Controller
                     }
                 }
             }
+            $business = Business::first();
+            $cashbackPercentage = $business ? $business->cashback_percentage : 0;
 
-            $cashbackPercentage = 5;
             $cashbackAmount = ($subtotal * $cashbackPercentage) / 100;
 
             if ($cashbackAmount > 0) {

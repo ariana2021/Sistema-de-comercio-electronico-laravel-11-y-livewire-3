@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
             'phone' => '123456789',
             'address' => 'Direccion Admin',
             'website' => 'https://example.com',
-            'password' => Hash::make('admin123')
+            'password' => Hash::make('admin123'),
+            'email_verified_at' => date('Y-m-d H:i')
         ])->assignRole('admin');
 
         User::create([
@@ -28,7 +29,8 @@ class UserSeeder extends Seeder
             'phone' => '987654321',
             'address' => 'Direccion Test',
             'website' => 'https://test.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
+            'email_verified_at' => date('Y-m-d H:i')
         ]);
     }
 }

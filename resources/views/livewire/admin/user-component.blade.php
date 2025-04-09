@@ -1,81 +1,87 @@
 @section('title', 'Usuarios')
 
 <div>
-    <div class="row shadow-sm">
-        <div class="col-lg-12">
-            <button wire:click="create()" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus-circle"></i>
-                Nuevo
-            </button>
-            @if (session()->has('message'))
-                <div class="alert alert-success mt-3">{{ session('message') }}</div>
-            @endif
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <button wire:click="create()" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus-circle"></i>
+                        Nuevo
+                    </button>
+                    @if (session()->has('message'))
+                        <div class="alert alert-success mt-3">{{ session('message') }}</div>
+                    @endif
 
-            <input type="text" class="form-control mt-3" placeholder="Buscar..." wire:model.live="search">
+                    <input type="text" class="form-control mt-3" placeholder="Buscar..." wire:model.live="search">
 
-            @if ($users->count())
+                    @if ($users->count())
 
-                <div class="table-responsive">
-                    <table class="table table-striped" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Télefono</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Fecha Registro</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $user)
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>
-                                        @if ($loading)
-                                            <span class="badge bg-secondary">Cargando...</span>
-                                        @else
-                                            <select wire:change="changeStatus({{ $user->id }}, $event.target.value)"
-                                                class="form-control">
-                                                <option value="Activo"
-                                                    {{ $user->status === 'Activo' ? 'selected' : '' }}>Activo
-                                                </option>
-                                                <option value="Inactivo"
-                                                    {{ $user->status === 'Inactivo' ? 'selected' : '' }}>Inactivo
-                                                </option>
-                                            </select>
-                                        @endif
-                                    </td>
-                                    <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</td>
-                                    <td>
-                                        {{-- <a href="{{ route('roles.assign', ['id' => encrypt($user->id)]) }}"
-                                            class="btn btn-outline-success btn-sm">
-                                            <i class="fas fa-user-shield"></i> Roles/Permisos
-                                        </a> --}}
-                                        <button wire:click="edit({{ $user->id }})"
-                                            class="btn btn-outline-primary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button wire:click="confirmDelete({{ $user->id }})"
-                                            class="btn btn-outline-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                        <div class="table-responsive">
+                            <table class="table table-striped" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Télefono</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Fecha Registro</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($users as $user)
+                                        <tr>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->phone }}</td>
+                                            <td>
+                                                @if ($loading)
+                                                    <span class="badge bg-secondary">Cargando...</span>
+                                                @else
+                                                    <select
+                                                        wire:change="changeStatus({{ $user->id }}, $event.target.value)"
+                                                        class="form-control">
+                                                        <option value="Activo"
+                                                            {{ $user->status === 'Activo' ? 'selected' : '' }}>Activo
+                                                        </option>
+                                                        <option value="Inactivo"
+                                                            {{ $user->status === 'Inactivo' ? 'selected' : '' }}>
+                                                            Inactivo
+                                                        </option>
+                                                    </select>
+                                                @endif
+                                            </td>
+                                            <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</td>
+                                            <td>
+                                                {{-- <a href="{{ route('roles.assign', ['id' => encrypt($user->id)]) }}"
+                                                    class="btn btn-outline-success btn-sm">
+                                                    <i class="fas fa-user-shield"></i> Roles/Permisos
+                                                </a> --}}
+                                                <button wire:click="edit({{ $user->id }})"
+                                                    class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button wire:click="confirmDelete({{ $user->id }})"
+                                                    class="btn btn-outline-danger btn-sm">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="mt-2">
+                            {{ $users->links() }}
+                        </div>
+                    @else
+                        <div class="alert alert-warning mt-3" role="alert">
+                            <strong>No hay usuarios</strong>
+                        </div>
+                    @endif
 
                 </div>
-
-                <div class="mt-2">
-                    {{ $users->links() }}
-                </div>
-            @else
-                <div class="alert alert-warning mt-3" role="alert">
-                    <strong>No hay usuarios</strong>
-                </div>
-            @endif
-
+            </div>
         </div>
     </div>
 

@@ -1,67 +1,71 @@
 @section('title', 'Entradas')
 
 <div>
-    <div class="row shadow-sm">
-        <div class="col-lg-12">
-            <button wire:click="create()" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus-circle"></i>
-                Nuevo
-            </button>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <button wire:click="create()" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus-circle"></i>
+                        Nuevo
+                    </button>
 
-            @if (session()->has('message'))
-                <div class="alert alert-success mt-3">{{ session('message') }}</div>
-            @endif
-            <input type="text" class="form-control mt-3" placeholder="Buscar..." wire:model.live="search">
+                    @if (session()->has('message'))
+                        <div class="alert alert-success mt-3">{{ session('message') }}</div>
+                    @endif
+                    <input type="text" class="form-control mt-3" placeholder="Buscar..." wire:model.live="search">
 
-            @if ($posts->count())
+                    @if ($posts->count())
 
-                <div class="table-responsive">
-                    <table class="table table-striped" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th>Acciones</th>
-                                <th>Imagen</th>
-                                <th>Título</th>
-                                <th>Categoría</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($posts as $post)
-                                <tr>
-                                    <td>
-                                        <button wire:click="edit({{ $post->id }})"
-                                            class="btn btn-outline-primary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button wire:click="confirmDelete({{ $post->id }})"
-                                            class="btn btn-outline-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
+                        <div class="table-responsive">
+                            <table class="table table-striped" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Acciones</th>
+                                        <th>Imagen</th>
+                                        <th>Título</th>
+                                        <th>Categoría</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($posts as $post)
+                                        <tr>
+                                            <td>
+                                                <button wire:click="edit({{ $post->id }})"
+                                                    class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button wire:click="confirmDelete({{ $post->id }})"
+                                                    class="btn btn-outline-danger btn-sm">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
 
-                                    <td>
-                                        @if ($post->image)
-                                            <img src="{{ Storage::url($post->image) }}" alt="Imagen del producto"
-                                                width="100">
-                                        @else
-                                            <span>No hay imagen</span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $post->title }}</td>
-                                    <td>{{ $post->category->name ?? 'Sin categoría' }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                            <td>
+                                                @if ($post->image)
+                                                    <img src="{{ Storage::url($post->image) }}"
+                                                        alt="Imagen del producto" width="100">
+                                                @else
+                                                    <span>No hay imagen</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $post->title }}</td>
+                                            <td>{{ $post->category->name ?? 'Sin categoría' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-2">
+                            {{ $posts->links() }}
+                        </div>
+                    @else
+                        <div class="alert alert-warning mt-3" role="alert">
+                            <strong>No hay entradas</strong>
+                        </div>
+                    @endif
                 </div>
-
-                <div class="mt-2">
-                    {{ $posts->links() }}
-                </div>
-            @else
-                <div class="alert alert-warning mt-3" role="alert">
-                    <strong>No hay entradas</strong>
-                </div>
-            @endif
+            </div>
         </div>
     </div>
 

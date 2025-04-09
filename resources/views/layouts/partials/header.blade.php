@@ -194,7 +194,7 @@
                                         stroke-linejoin="round" />
                                 </svg>
                             </span>
-                            <p>FREE Express Shipping On Orders $570+</p>
+                            <p>{{ $business->business_name }}</p>
                         </div>
                     </div>
                     <div class="col-md-6">

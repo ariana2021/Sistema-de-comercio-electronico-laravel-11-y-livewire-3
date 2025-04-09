@@ -35,63 +35,26 @@
     <section class="tp-feature-area tp-feature-border-radius pb-70">
         <div class="container">
             <div class="row gx-1 gy-1 gy-xl-0">
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                    <div class="tp-feature-item d-flex align-items-start">
-                        <div class="tp-feature-icon mr-15">
-                            <span>
-                                <i class="fas fa-truck"></i>
-                            </span>
-                        </div>
-                        <div class="tp-feature-content">
-                            <h3 class="tp-feature-title animate__animated animate__fadeInBottomRight">Entrega gratuita</h3>
-                            <p>Pedidos de todos los artículos</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                    <div class="tp-feature-item d-flex align-items-start">
-                        <div class="tp-feature-icon mr-15">
-                            <span>
-                                <i class="fas fa-undo-alt"></i>
-                            </span>
-                        </div>
-                        <div class="tp-feature-content">
-                            <h3 class="tp-feature-title animate__animated animate__fadeInLeftBig">Devoluciones y reembolsos
-                            </h3>
-                            <p>Garantía de devolución de dinero</p>
+                @foreach ($services as $service)
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                        <div class="tp-feature-item d-flex flex-column align-items-start">
+                            <div class="tp-feature-icon mr-15">
+                                <span>
+                                    <!-- Aquí se utiliza el icono que viene de la base de datos -->
+                                    <i class="{{ $service->icon }}"></i>
+                                </span>
+                            </div>
+                            <div class="tp-feature-content flex-grow-1">
+                                <h3 class="tp-feature-title">{{ $service->name }}</h3>
+                                <p>{{ $service->description }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                    <div class="tp-feature-item d-flex align-items-start">
-                        <div class="tp-feature-icon mr-15">
-                            <span>
-                                <i class="fas fa-users"></i>
-                            </span>
-                        </div>
-                        <div class="tp-feature-content">
-                            <h3 class="tp-feature-title animate__animated animate__fadeInLeftBig">Descuento para miembros
-                            </h3>
-                            <p>En cada pedido superior a {{ config('app.currency_symbol') }}140.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                    <div class="tp-feature-item d-flex align-items-start">
-                        <div class="tp-feature-icon mr-15">
-                            <span>
-                                <i class="fas fa-headset"></i>
-                            </span>
-                        </div>
-                        <div class="tp-feature-content">
-                            <h3 class="tp-feature-title animate__animated animate__fadeInDown">Soporte 24/7</h3>
-                            <p>Contáctanos las 24 horas del día</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
+
 
     <!-- feature area end -->
 
@@ -183,7 +146,8 @@
 
                                                         <div class="tp-testimonial-avater mr-10">
                                                             @if ($avatar)
-                                                                <img src="{{ $avatar }}" alt="{{ $name }}" loading="lazy">
+                                                                <img src="{{ $avatar }}" alt="{{ $name }}"
+                                                                    loading="lazy">
                                                             @else
                                                                 <div class="user-initials">
                                                                     {{ $initials }}
@@ -191,8 +155,7 @@
                                                             @endif
                                                         </div>
 
-                                                        <div
-                                                            class="tp-testimonial-user-info tp-testimonial-user-translate">
+                                                        <div class="tp-testimonial-user-info tp-testimonial-user-translate">
                                                             <h3 class="tp-testimonial-user-title">
                                                                 {{ optional($rating->user)->name ?? 'Anonymous' }}</h3>
                                                             <span
@@ -212,8 +175,8 @@
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1.061 6.99959L16 6.99959" stroke="currentColor" stroke-width="1.5"
                                         stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M7.08618 1L1.06079 6.9995L7.08618 13" stroke="currentColor"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M7.08618 1L1.06079 6.9995L7.08618 13" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </button>
                             <button class="tp-testimonial-slider-button-next">
@@ -221,8 +184,8 @@
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15.939 6.99959L1 6.99959" stroke="currentColor" stroke-width="1.5"
                                         stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M9.91382 1L15.9392 6.9995L9.91382 13" stroke="currentColor"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M9.91382 1L15.9392 6.9995L9.91382 13" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </button>
                         </div>

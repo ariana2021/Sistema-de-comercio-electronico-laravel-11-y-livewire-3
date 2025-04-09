@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Coupon;
 use App\Models\Finance;
 use App\Models\Member;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Post;
 use App\Models\Product;
 use App\Models\Rating;
 use App\Models\TemporaryCart;
@@ -73,25 +75,68 @@ class HomeController extends Controller
             ->with('category')
             ->get();
 
-            $productRatings = Rating::select('product_id', DB::raw('AVG(rating) as avg_rating'))
+        $productRatings = Rating::select('product_id', DB::raw('AVG(rating) as avg_rating'))
             ->groupBy('product_id')
             ->having('avg_rating', '>=', 4)
             ->with('product:id,name')
             ->inRandomOrder()
             ->limit(10)
             ->get();
-            
+
         // Uso de Cupones de Descuento
         $couponUsage = Coupon::selectRaw('code, used_count')
             ->get();
 
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+        $startOfLastWeek = Carbon::now()->subWeek()->startOfWeek();
+        $endOfLastWeek = Carbon::now()->subWeek()->endOfWeek();
+
+        // Ventas completadas esta semana
         $weeklySales = Order::where('status', 'completed')
-            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->sum('total');
 
-        $weeklyOrders = Order::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+        // Ventas completadas la semana pasada
+        $lastWeekSales = Order::where('status', 'completed')
+            ->whereBetween('created_at', [$startOfLastWeek, $endOfLastWeek])
+            ->sum('total');
 
-        $onlineVisitors = rand(50, 500);
+        // Pedidos totales esta semana
+        $weeklyOrders = Order::whereBetween('created_at', [$startOfWeek, $endOfWeek])->count();
+
+        // Pedidos totales la semana pasada
+        $lastWeekOrders = Order::whereBetween('created_at', [$startOfLastWeek, $endOfLastWeek])->count();
+
+        // Porcentajes
+        $salesPercentage = $lastWeekSales > 0 ? ($weeklySales / $lastWeekSales) * 100 : ($weeklySales > 0 ? 100 : 0);
+        $ordersPercentage = $lastWeekOrders > 0 ? ($weeklyOrders / $lastWeekOrders) * 100 : ($weeklyOrders > 0 ? 100 : 0);
+
+        $now = Carbon::now();
+        $startOfCurrentMonth = $now->copy()->startOfMonth();
+        $startOfLastMonth = $now->copy()->subMonth()->startOfMonth();
+        $endOfLastMonth = $now->copy()->subMonth()->endOfMonth();
+
+        // Posts
+        $currentPosts = Post::whereBetween('created_at', [$startOfCurrentMonth, $now])->count();
+        $lastMonthPosts = Post::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->count();
+        $postPercentage = $lastMonthPosts > 0 ? ($currentPosts / $lastMonthPosts) * 100 : ($currentPosts > 0 ? 100 : 0);
+
+        // Calificaciones
+        $currentCalificaciones = Rating::whereBetween('created_at', [$startOfCurrentMonth, $now])->count();
+        $lastMonthCalificaciones = Rating::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->count();
+        $calificacionPercentage = $lastMonthCalificaciones > 0 ? ($currentCalificaciones / $lastMonthCalificaciones) * 100 : ($currentCalificaciones > 0 ? 100 : 0);
+
+        // Comentarios
+        $currentComentarios = Comment::whereBetween('created_at', [$startOfCurrentMonth, $now])->count();
+        $lastMonthComentarios = Comment::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->count();
+        $comentarioPercentage = $lastMonthComentarios > 0 ? ($currentComentarios / $lastMonthComentarios) * 100 : ($currentComentarios > 0 ? 100 : 0);
+
+        // Últimas 10 órdenes
+        $recentOrders = Order::orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
 
         return view('home', compact(
             'salesByMonth',
@@ -103,8 +148,21 @@ class HomeController extends Controller
             'productRatings',
             'couponUsage',
             'weeklySales',
+            'lastWeekSales',
+            'salesPercentage',
             'weeklyOrders',
-            'onlineVisitors'
+            'lastWeekOrders',
+            'ordersPercentage',
+            'currentPosts',
+            'lastMonthPosts',
+            'postPercentage',
+            'currentCalificaciones',
+            'lastMonthCalificaciones',
+            'calificacionPercentage',
+            'currentComentarios',
+            'lastMonthComentarios',
+            'comentarioPercentage',
+            'recentOrders'
         ));
     }
 }

@@ -1,149 +1,114 @@
-<nav class="sidebar sidebar-offcanvas border border-right-dark shadow-sm" id="sidebar">
-    <ul class="nav">
-        <li class="nav-item nav-profile">
-            <a href="{{ route('usuario.perfil') }}" class="nav-link">
-                <div class="nav-profile-image">
-                    @if (Auth::user()->avatar)
-                        <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" width="100">
-                    @else
-                        <img src="{{ asset('assets/admin/images/faces/face1.jpg') }}" alt="profile" width="100">
-                    @endif
-                    <span class="login-status online"></span>
-                </div>
-                <div class="nav-profile-text d-flex flex-column">
-                    <span class="font-weight-bold mb-2">{{ Auth::user()->name }}</span>
-                    <span class="text-secondary text-small">{{ Auth::user()->email }}</span>
-                </div>
-                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-            </a>
-        </li>
+<aside class="sidebar-wrapper" data-simplebar="true">
+    <div class="sidebar-header">
+        {{-- <div class="logo-icon">
+            <img src="{{ asset('assets/principal/img/logo/logo.png') }}" class="logo-img" alt="">
+        </div> --}}
+        <div class="logo-name flex-grow-1">
+            <h5 class="mb-0">FERUP</h5>
+        </div>
+        <div class="sidebar-close">
+            <span class="material-icons-outlined">close</span>
+        </div>
+    </div>
+    <div class="sidebar-nav">
+        <!--navigation-->
+        <ul class="metismenu" id="sidenav">
+            <li class="{{ request()->routeIs('home') ? 'mm-active' : '' }}">
+                <a href="{{ route('home') }}">
+                    <div class="parent-icon"><i class="material-icons-outlined">home</i></div>
+                    <div class="menu-title">Tablero</div>
+                </a>
+            </li>
 
-        <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('home') }}">
-                <span class="menu-title">Tablero</span>
-                <i class="mdi mdi-view-dashboard menu-icon"></i>
-            </a>
-        </li>
-
-        <li class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-administracion"
-                aria-expanded="{{ request()->routeIs('users.*') ? 'true' : 'false' }}"
-                aria-controls="ui-administracion">
-                <span class="menu-title">Administración</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-settings menu-icon"></i>
-            </a>
-            <div class="collapse {{ request()->routeIs('users.*') ||
-            request()->routeIs('coupons.*') ||
-            request()->routeIs('business.*') ||
-            request()->routeIs('sliders.*')
-                ? 'show'
-                : '' }}"
-                id="ui-administracion">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}"
-                            href="{{ route('users.index') }}">
-                            Usuarios
-                        </a>
+            <li
+                class="{{ request()->routeIs('users.*') || request()->routeIs('services.*') || request()->routeIs('business.*') || request()->routeIs('sliders.*') ? 'mm-active' : '' }}">
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="material-icons-outlined">settings</i></div>
+                    <div class="menu-title">Administración</div>
+                </a>
+                <ul>
+                    <li class="{{ request()->routeIs('users.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('users.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Usuarios</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('business.index') ? 'active' : '' }}"
-                            href="{{ route('business.index') }}">
-                            Empresa
-                        </a>
+                    <li class="{{ request()->routeIs('services.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('services.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Servicios</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('coupons.index') ? 'active' : '' }}"
-                            href="{{ route('coupons.index') }}">
-                            Cupones
-                        </a>
+                    <li class="{{ request()->routeIs('business.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('business.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Empresa</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('sliders.index') ? 'active' : '' }}"
-                            href="{{ route('sliders.index') }}">
-                            Sliders
-                        </a>
+                    <li class="{{ request()->routeIs('sliders.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('sliders.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Sliders</a>
                     </li>
                 </ul>
-            </div>
-        </li>
+            </li>
 
-        <li
-            class="nav-item {{ request()->routeIs('categories.*') || request()->routeIs('brands.*') || request()->routeIs('products.*') ? 'active' : '' }}">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-inventario"
-                aria-expanded="{{ request()->routeIs('categories.*') || request()->routeIs('brands.*') || request()->routeIs('products.*') ? 'true' : 'false' }}"
-                aria-controls="ui-inventario">
-                <span class="menu-title">Inventario</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-archive menu-icon"></i>
-            </a>
-            <div class="collapse {{ request()->routeIs('categories.*') || request()->routeIs('brands.*') || request()->routeIs('products.*') ? 'show' : '' }}"
-                id="ui-inventario">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('categories.index') ? 'active' : '' }}"
-                            href="{{ route('categories.index') }}">
-                            Categorías
-                        </a>
+            <li class="{{ request()->routeIs('orders.*') ? 'mm-active' : '' }}">
+                <a href="{{ route('orders.index') }}">
+                    <div class="parent-icon"><i class="material-icons-outlined">local_shipping</i></div>
+                    <div class="menu-title">Ordenes</div>
+                </a>
+            </li>
+
+            <li
+                class="{{ request()->routeIs('categories.*') || request()->routeIs('brands.*') || request()->routeIs('products.*') ? 'mm-active' : '' }}">
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="material-icons-outlined">inventory_2</i></div>
+                    <div class="menu-title">Inventario</div>
+                </a>
+                <ul>
+                    <li class="{{ request()->routeIs('categories.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('categories.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Categorías</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('brands.index') ? 'active' : '' }}"
-                            href="{{ route('brands.index') }}">
-                            Marcas
-                        </a>
+                    <li class="{{ request()->routeIs('brands.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('brands.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Marcas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('products.index') ? 'active' : '' }}"
-                            href="{{ route('products.index') }}">
-                            Productos
-                        </a>
+                    <li class="{{ request()->routeIs('products.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('products.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Productos</a>
                     </li>
                 </ul>
-            </div>
-        </li>
+            </li>
 
-        <li class="nav-item {{ request()->routeIs('orders*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('orders.index') }}">
-                <span class="menu-title">Pedidos</span>
-                <i class="mdi mdi-package-variant-closed menu-icon"></i>
-            </a>
-        </li>
+            <li class="{{ request()->routeIs('coupons*') ? 'mm-active' : '' }}">
+                <a href="{{ route('coupons.index') }}">
+                    <div class="parent-icon"><i class="material-icons-outlined">local_offer</i></div>
+                    <div class="menu-title">Cupones</div>
+                </a>
+            </li>
 
-        <li class="nav-item {{ request()->routeIs('admin.posts.*') ? 'active' : '' }}">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-post"
-                aria-expanded="{{ request()->routeIs('admin.posts.*') ? 'true' : 'false' }}" aria-controls="ui-post">
-                <span class="menu-title">Entradas</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-folder-outline menu-icon"></i> <!-- 📁 Carpeta -->
-            </a>
-            <div class="collapse {{ request()->routeIs('admin.posts.*') ? 'show' : '' }}" id="ui-post">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.posts.index') ? 'active' : '' }}"
-                            href="{{ route('admin.posts.index') }}">
-                            Blog
-                        </a>
+
+            <li
+                class="{{ request()->routeIs('admin.posts.*') || request()->routeIs('admin.comments.index') ? 'mm-active' : '' }}">
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="material-icons-outlined">folder</i></div>
+                    <div class="menu-title">Entradas</div>
+                </a>
+                <ul>
+                    <li class="{{ request()->routeIs('admin.posts.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('admin.posts.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Blog</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.comments.index') ? 'active' : '' }}"
-                            href="{{ route('admin.comments.index') }}">
-                            Comentarios
-                        </a>
+                    <li class="{{ request()->routeIs('admin.comments.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('admin.comments.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Comentarios</a>
                     </li>
                 </ul>
-            </div>
-        </li>
+            </li>
 
-        <li class="nav-item {{ request()->routeIs('admin.ratings*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.ratings.index') }}">
-                <span class="menu-title">Calificaciones</span>
-                <i class="mdi mdi-star-circle menu-icon"></i> <!-- ⭐ Estrella -->
-            </a>
-        </li>
+            <li class="{{ request()->routeIs('admin.ratings.*') ? 'mm-active' : '' }}">
+                <a href="{{ route('admin.ratings.index') }}">
+                    <div class="parent-icon"><i class="material-icons-outlined">star</i></div>
+                    <div class="menu-title">Calificaciones</div>
+                </a>
+            </li>
+        </ul>
 
-
-
-    </ul>
-
-</nav>
+        <!--end navigation-->
+    </div>
+</aside>
