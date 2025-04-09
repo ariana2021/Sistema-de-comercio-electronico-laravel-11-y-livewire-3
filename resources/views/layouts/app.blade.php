@@ -16,9 +16,9 @@
     </main>
 
     <!-- Start of LiveChat (www.livechat.com) code -->
-    {{-- <script>
+    <script>
         window.__lc = window.__lc || {};
-        window.__lc.license = 19102206;
+        window.__lc.license = 19110061;
         window.__lc.integration_name = "manual_channels";
         window.__lc.product_name = "livechat";;
         (function(n, t, c) {
@@ -47,16 +47,15 @@
                 },
                 init: function() {
                     var n = t.createElement("script");
-                    n.async = !0, n.type = "text/javascript", n.src = "https://cdn.livechatinc.com/tracking.js",
-                        t.head.appendChild(n)
+                    n.async = !0, n.type = "text/javascript", n.src = "https://cdn.livechatinc.com/tracking.js", t.head.appendChild(n)
                 }
             };
             !n.__lc.asyncInit && e.init(), n.LiveChatWidget = n.LiveChatWidget || e
         }(window, document, [].slice))
     </script>
-    <noscript><a href="https://www.livechat.com/chat-with/19102206/" rel="nofollow">Chat with us</a>, powered by <a
-            href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript> --}}
+    <noscript><a href="https://www.livechat.com/chat-with/19110061/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
     <!-- End of LiveChat code -->
+
 
 
     <!-- footer area start -->

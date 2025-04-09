@@ -201,7 +201,7 @@
 
 
     <!-- instagram area start -->
-    {{-- <div class="tp-instagram-area pt-30">
+    <div class="tp-instagram-area pt-30">
         <div class="container">
             <div class="row">
                 <div class="col-xl-4 col-md-5 col-sm-6">
@@ -217,13 +217,10 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <!-- LightWidget WIDGET -->
-                    <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script><iframe src="//lightwidget.com/widgets/a680bc773e375d42bfc665eee24fb394.html"
-                        scrolling="no" allowtransparency="true" class="lightwidget-widget"
-                        style="width:100%;border:0;overflow:hidden;"></iframe>
+                    <!-- LightWidget WIDGET --><script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script><iframe src="//lightwidget.com/widgets/c94fa4eb61c658e08540126f0660d908.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width:100%;border:0;overflow:hidden;"></iframe>
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- instagram area end -->
 @endsection
