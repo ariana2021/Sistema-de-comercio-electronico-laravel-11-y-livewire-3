@@ -30,7 +30,6 @@
         $(".data-attributes span").peity("donut")
     </script>
     <script src="{{ asset('assets/admin/js/main.js') }}"></script>
-    {{-- <script src="{{ asset('assets/admin/js/dashboard1.') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function abrirVentanaEmergente(url) {

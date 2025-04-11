@@ -11,6 +11,7 @@ use App\Models\TemporaryCart;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class CheckoutController extends Controller
 {
@@ -138,6 +139,18 @@ class CheckoutController extends Controller
         }
     }
 
+
+    public function listHistory()
+    {
+        $response = Http::withToken(config('services.mercadopago.access_token'))
+        ->get('https://api.mercadopago.com/v1/payments/search' , [
+            'sort' => 'date_created',
+            'criteria' => 'desc',
+            'limit' => 100,
+        ]);
+
+        $lists = $response->json();
+    }
 
     public function failure()
     {

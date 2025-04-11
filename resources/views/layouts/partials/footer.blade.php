@@ -1,7 +1,7 @@
 
 <footer>
-    <div class="tp-footer-area" data-bg-color="footer-bg-grey">
-        <div class="tp-footer-top pt-95 pb-40">
+    <div class="tp-footer-area">
+        <div class="tp-footer-top pt-95 pb-40 bg-gray-sm">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-4 col-lg-3 col-md-4 col-sm-6">
@@ -130,13 +130,13 @@
 
             </div>
         </div>
-        <div class="tp-footer-bottom">
+        <div class="tp-footer-bottom bg-gray">
             <div class="container">
                 <div class="tp-footer-bottom-wrapper">
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="tp-footer-copyright">
-                                <p>© {{ date('Y') }} All Rights Reserved <a href="#">Tu sitio web</a>.</p>
+                                <p class="text-white">© {{ date('Y') }} All Rights Reserved <a href="#">Tu sitio web</a>.</p>
                             </div>
                         </div>
                         <div class="col-md-6">

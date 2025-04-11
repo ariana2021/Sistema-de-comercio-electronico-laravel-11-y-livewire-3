@@ -198,29 +198,4 @@
         </div>
     </section>
     <!-- testimonial area end -->
-
-
-    <!-- instagram area start -->
-    <div class="tp-instagram-area pt-30">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-4 col-md-5 col-sm-6">
-                    <div class="tp-section-title-wrapper mb-40">
-                        <h3 class="tp-section-title">Instagram
-                            <svg width="114" height="35" viewBox="0 0 114 35" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M112 23.275C1.84952 -10.6834 -7.36586 1.48086 7.50443 32.9053"
-                                    stroke="currentColor" stroke-width="4" stroke-miterlimit="3.8637"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </h3>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <!-- LightWidget WIDGET --><script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script><iframe src="//lightwidget.com/widgets/c94fa4eb61c658e08540126f0660d908.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width:100%;border:0;overflow:hidden;"></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- instagram area end -->
 @endsection

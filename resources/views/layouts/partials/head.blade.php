@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="zxx" style="--tp-theme-primary: #FFC107;">
 
 <head>
     <meta charset="utf-8">

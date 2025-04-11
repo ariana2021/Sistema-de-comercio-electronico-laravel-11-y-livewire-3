@@ -846,7 +846,8 @@ div.demo img {
   left: 100%;
 }
 .tp-theme-settings-open button {
-  background-color: var(--tp-common-white);
+  background-color: rgb(198, 4, 4);
+  color: white;
   border: 1px solid #EAEAEF;
   border-left: 0;
   width: 60px;
@@ -6168,7 +6169,7 @@ body .ui-tooltip {
   margin-left: 10px;
 }
 .tp-header-search-box {
-  width: 58%;
+  width: 87%;
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .tp-header-search-box {
@@ -6233,7 +6234,8 @@ body .ui-tooltip {
   width: 60px;
   height: 46px;
   line-height: 46px;
-  background-color: var(--tp-theme-primary);
+  border: 1px solid white;
+  background-color: (--tp-theme-primary);
   color: var(--tp-common-white);
 }
 .tp-header-login-icon span {

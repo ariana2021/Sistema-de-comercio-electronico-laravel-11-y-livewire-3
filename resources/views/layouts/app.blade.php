@@ -15,12 +15,43 @@
 
     </main>
 
+    <article class="contenedor-redes-sociales">
+		<div class="icono">
+			<a href="https://www.facebook.com/FormandoLaWeb" class="icono-primary" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+
+			<div class="contenedor-descripcion">
+				<a href="#" class="icono-descripcion">Seguir Facebook</a>
+			</div>
+		</div>
+		<div class="icono">
+			<a href="https://www.twitter.com/FormandoLaWeb" class="icono-primary color-tiktok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+
+			<div class="contenedor-descripcion">
+				<a href="#" class="icono-descripcion color-tiktok">Seguir Tik Tok</a>
+			</div>
+		</div>
+        <div class="icono">
+			<a href="https://www.twitter.com/FormandoLaWeb" class="icono-primary color-whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+			<div class="contenedor-descripcion">
+				<a href="#" class="icono-descripcion color-whatsapp">WhatsApp</a>
+			</div>
+		</div>
+		<div class="icono">
+			<a href="https://plus.google.com/114090693030000856714" class="icono-primary color-instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+
+			<div class="contenedor-descripcion">
+				<a href="#" class="icono-descripcion color-instagram">Seguir Instagram</a>
+			</div>
+		</div>
+	</article>
+
     <!-- Start of LiveChat (www.livechat.com) code -->
     <script>
         window.__lc = window.__lc || {};
         window.__lc.license = 19110061;
         window.__lc.integration_name = "manual_channels";
-        window.__lc.product_name = "livechat";;
+        window.__lc.product_name = "livechat";
         (function(n, t, c) {
             function i(n) {
                 return e._h ? e._h.apply(null, n) : e._q.push(n)

@@ -1,3 +1,12 @@
+body{
+    background-color: #eaeff1;
+}
+.bg-gray-sm{
+    background-color: #d7dadb;
+}
+.bg-gray{
+    background-color: #3c464b;
+}
 .efecto-parallax {
     background-image: url('/assets/principal/img/fondos/categorias.jpg');
     background-size: cover;
@@ -219,4 +228,88 @@ p {
 	z-index: 10000 !important;
 }
 
+.contenedor-redes-sociales {
+	width: 400px;
+	left: 0;
+	position: fixed;
+	bottom: 20px;
+	margin-left: 10px;
+}
 
+.icono {
+	top: 50%;
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.icono-primary {
+	display: inline-block;
+	text-decoration: none;
+	color: #fff;
+	background: #3b5998;
+	border-radius: 50%;
+	position: relative;
+	z-index: 1;
+	height: 40px;
+	width: 40px;
+	text-align: center;
+	line-height: 40px;
+
+	-webkit-box-shadow: 1px 0 1px rgba(0,0,0,0.5);
+	box-shadow: 1px 0 1px rgba(0,0,0,0.5);
+}
+
+.contenedor-descripcion {
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 24px;
+}
+
+.icono-descripcion {
+	width: 250px;
+	display: inline-block;
+	text-decoration: none;
+	color: #fff;
+	background: #3b5998;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 40px;
+	border-radius: 0 20px 20px 0;
+
+	-webkit-box-shadow: 1px 0 1px rgba(0,0,0,0.5);
+	box-shadow: 1px 0 1px rgba(0,0,0,0.5);
+
+	-webkit-transform: translate3d(-110%, 0, 0);
+	-ms-transform: translate3d(-110%, 0, 0);
+	-o-transform: translate3d(-110%, 0, 0);
+	transform: translate3d(-110%, 0, 0);
+
+	-webkit-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+.icono-primary:hover ~ .contenedor-descripcion .icono-descripcion {
+	-webkit-transform: translate(0, 0);
+	-ms-transform: translate(0, 0);
+	-o-transform: translate(0, 0);
+	transform: translate(0, 0);
+}
+
+/*-------Colores Para Redes Sociales-------*/
+.color-instagram {
+	background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+}
+
+.color-whatsapp {
+	background: #015f1a;
+}
+
+.color-tiktok {
+	background: #000501;
+}
+
+.text-danger-full{
+    color: rgb(198, 4, 4);
+}

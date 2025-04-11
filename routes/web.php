@@ -28,6 +28,8 @@ Route::get('/products/search', [ShoppingCart::class, 'search'])->name('products.
 Route::get('/auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
 
+Route::get('/listHistoriesPayments', [CheckoutController::class, 'listHistory'])->name('listHistory.payament.mercadopago');
+
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
