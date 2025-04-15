@@ -19,7 +19,7 @@ class CartPageComponent extends Component
     public $couponCode;
     public $business;
 
-    public $listeners = ['updateShippingCost'];
+    public $listeners = ['updateShipping'];
 
     public function mount()
     {
@@ -127,10 +127,11 @@ class CartPageComponent extends Component
     }
 
 
-    public function updateShippingCost($cost)
+    public function updateShipping($cost, $lugar)
     {
         $this->shippingCost = $cost;
         session(['shipping_cost' => $cost]);
+        session(['shipping_place' => $lugar]);
         $this->calculateTotals();
     }
 

@@ -89,16 +89,15 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 mt-3">
-                                    <div class="form-check">
+                                    <div class="form-check form-switch">
                                         <input type="checkbox" id="confirm" class="form-check-input"
                                             wire:model="isConfirmed">
-                                        <label for="confirm" class="form-check-label">Confirmo que mis datos son
-                                            correctos</label>
+                                        <label for="confirm" class="form-check-label">Confirmo que mis datos son correctos</label>
                                     </div>
                                     @error('isConfirmed')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -146,9 +145,16 @@
                                 <span>{{ config('app.currency_symbol') }}{{ number_format($subtotal, 2) }}</span>
                             </li>
                             <li class="tp-order-info-list-shipping">
-                                <span>Envío</span>
-                                <span>{{ config('app.currency_symbol') }}{{ number_format($shippingCost, 2) }}</span>
+                                <div>
+                                    <span>Envío:</span>
+                                    <b>{{ $shippingPlace }}</b>
+                                </div>
+                                <div>
+                                    <span>Costo:</span>
+                                    <b>{{ config('app.currency_symbol') }}{{ number_format($shippingCost, 2) }}</b>
+                                </div>
                             </li>
+                            <li></li>
                             <li class="tp-order-info-list-total">
                                 <span>Total</span>
                                 <span>{{ config('app.currency_symbol') }}{{ number_format($total, 2) }}</span>
@@ -167,7 +173,13 @@
                             max="{{ $cashbackDisponible }}" step="0.01" value="0">
                     </div>
 
-                    <button wire:click="checkoutSuccess" class="btn btn-primary">Finalizar Compra</button>
+                    <button wire:click="checkoutSuccess" class="btn btn-primary" wire:loading.attr="disabled">
+                        <span wire:loading.remove wire:target="checkoutSuccess">Procesar Pago</span>
+                        <span wire:loading wire:target="checkoutSuccess">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Procesando...
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>

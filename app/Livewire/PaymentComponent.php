@@ -22,6 +22,7 @@ class PaymentComponent extends Component
     public $discount = 0;
     public $cashback_usado = 0;
     public $preference_id;
+    public $shippingPlace = '';
 
     public function mount()
     {
@@ -46,6 +47,7 @@ class PaymentComponent extends Component
         }
 
         $this->shippingCost = session('shipping_cost', 0.00);
+        $this->shippingPlace = session('shipping_place', '');
         $this->cashback_usado = session('cashback_usado', 0.00);
         $this->subtotal = array_sum(array_map(fn($cart) => $cart['price'] * $cart['quantity'], $this->carts));
         $this->calculateTotal();
@@ -97,14 +99,15 @@ class PaymentComponent extends Component
                     "failure" => route('checkout.failure', [], true),
                     "pending" => route('checkout.pending', [], true)
                 ],
+                "notification_url" => route('webhook.mercadopago', [], true),
                 "auto_return" => "approved",
                 "external_reference" => json_encode([
                     'user_id' => Auth::id(),
                     'shipping_cost' => session('shipping_cost', 0.00),
+                    'shipping_place' => session('shipping_place', ''),
                     'applied_coupons' => session('applied_coupons', 0.00),
                     'discount' => session('discount', 0.00),
                     'cashback_usado' => $this->cashback_usado,
-                    // 'billing_details' => session('billing_details', [])
                 ]),
             ]);
 
@@ -113,57 +116,6 @@ class PaymentComponent extends Component
             session()->flash('error', 'Error al generar la preferencia de pago.');
         }
     }
-
-    // public function createMercadoPagoPreference()
-    // {
-    //     try {
-    //         MercadoPagoConfig::setAccessToken(config('services.mercadopago.access_token'));
-
-    //         $client = new PreferenceClient();
-    //         $items = [];
-
-    //         foreach ($this->carts as $item) {
-    //             $items[] = [
-    //                 "title" => $item['name'],
-    //                 "quantity" => $item['quantity'],
-    //                 "unit_price" => (float) $item['price'],
-    //                 //"currency_id" => "PEN"
-    //             ];
-    //         }
-
-    //         if ($this->shippingCost > 0) {
-    //             $items[] = [
-    //                 "title" => "Costo de Envío",
-    //                 "quantity" => 1,
-    //                 "unit_price" => (float) $this->shippingCost,
-    //                 //"currency_id" => "PEN"
-    //             ];
-    //         }
-
-    //         $preference = $client->create([
-    //             "items" => $items,
-    //             "back_urls" => [
-    //                 "success" => route('checkout.success', [], true),
-    //                 "failure" => route('checkout.failure', [], true),
-    //                 "pending" => route('checkout.pending', [], true)
-    //             ],
-    //             "auto_return" => "approved",
-    //             "external_reference" => json_encode([
-    //                 'user_id' => Auth::id(),
-    //                 'shipping_cost' => session('shipping_cost', 0.00),
-    //                 'applied_coupons' => session('applied_coupons', 0.00),
-    //                 'discount' => session('discount', 0.00),
-    //                 'billing_details' => session('billing_details', [])
-    //             ]),
-    //         ]);
-
-    //         //dd($preference);
-
-    //         $this->preference_id = $preference->id;
-    //     } catch (MPApiException $e) {
-    //         session()->flash('error', 'Error al generar la preferencia de pago.');
-    //     }
-    // }
 
     public function calculateTotal()
     {

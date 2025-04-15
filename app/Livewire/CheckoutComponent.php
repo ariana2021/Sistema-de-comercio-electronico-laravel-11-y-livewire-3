@@ -16,7 +16,7 @@ class CheckoutComponent extends Component
 
     public $carts = [];
     public $subtotal;
-    public $shippingCost;
+    public $shippingCost, $shippingPlace;
     public $total;
     public $coupon, $cashbackDisponible;
     public $discount = 0;
@@ -38,6 +38,7 @@ class CheckoutComponent extends Component
         }
 
         $this->shippingCost = session('shipping_cost', 0.00);
+        $this->shippingPlace = session('shipping_place', '');
         $this->subtotal = array_sum(array_map(fn($cart) => $cart['price'] * $cart['quantity'], $this->carts));
         $this->calculateTotal();
     }

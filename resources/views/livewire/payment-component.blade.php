@@ -18,13 +18,15 @@
                                 <div class="col-md-6">
                                     <div class="tp-checkout-input">
                                         <label>Nombre <span>*</span></label>
-                                        <input type="text" wire:model.defer="first_name" placeholder="Tu Nombre" disabled>
+                                        <input type="text" wire:model.defer="first_name" placeholder="Tu Nombre"
+                                            disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="tp-checkout-input">
                                         <label>Apellido <span>*</span></label>
-                                        <input type="text" wire:model.defer="last_name" placeholder="Tu Apellido" disabled>
+                                        <input type="text" wire:model.defer="last_name" placeholder="Tu Apellido"
+                                            disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -36,7 +38,8 @@
                                 <div class="col-md-12">
                                     <div class="tp-checkout-input">
                                         <label>Teléfono <span>*</span></label>
-                                        <input type="text" wire:model.defer="phone" placeholder="Tu Teléfono" disabled>
+                                        <input type="text" wire:model.defer="phone" placeholder="Tu Teléfono"
+                                            disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -55,7 +58,8 @@
                                 <div class="col-md-6">
                                     <div class="tp-checkout-input">
                                         <label>Código Postal</label>
-                                        <input type="text" wire:model.defer="zip_code" placeholder="Código Postal" disabled>
+                                        <input type="text" wire:model.defer="zip_code" placeholder="Código Postal"
+                                            disabled>
                                     </div>
                                 </div>
                             </div>
@@ -86,8 +90,14 @@
                                 <span>{{ config('app.currency_symbol') }}{{ number_format($subtotal, 2) }}</span>
                             </li>
                             <li class="tp-order-info-list-shipping">
-                                <span>Envío</span>
-                                <span>{{ config('app.currency_symbol') }}{{ number_format($shippingCost, 2) }}</span>
+                                <div>
+                                    <span>Envío:</span>
+                                    <b>{{ $shippingPlace }}</b>
+                                </div>
+                                <div>
+                                    <span>Costo:</span>
+                                    <b>{{ config('app.currency_symbol') }}{{ number_format($shippingCost, 2) }}</b>
+                                </div>
                             </li>
                             <li class="tp-order-info-list-shipping">
                                 <span>Uso Cashback</span>

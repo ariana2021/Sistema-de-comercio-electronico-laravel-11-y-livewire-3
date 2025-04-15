@@ -177,15 +177,16 @@
                     if (!place.geometry) return;
 
                     const destination = place.geometry.location;
+                    const lugar = place.formatted_address;
                     marker.setPosition(destination);
                     map.setCenter(destination);
 
-                    calcularCosto(origin, destination);
+                    calcularCosto(origin, destination, lugar);
                     trazarRuta(origin, destination);
                 });
             }
 
-            function calcularCosto(origen, destino) {
+            function calcularCosto(origen, destino, lugar) {
                 service.getDistanceMatrix({
                     origins: [origen],
                     destinations: [destino],
@@ -195,12 +196,11 @@
                         let distanciaKm = response.rows[0].elements[0].distance.value / 1000;
                         let costoEnvio = (distanciaKm * costPerKm).toFixed(2);
 
-                        // Usamos Livewire.dispatch para actualizar el shippingCost en Livewire
-                        Livewire.dispatch('updateShippingCost', {
-                            cost: costoEnvio
+                        Livewire.dispatch('updateShipping', {
+                            cost: costoEnvio,
+                            lugar: lugar,
                         });
 
-                        // También lo mostramos en el HTML
                         document.getElementById("shipping-cost").innerText =
                             `{{ config('app.currency_symbol') }}${costoEnvio}`;
                     } else {
