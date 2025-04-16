@@ -731,6 +731,7 @@
 		spaceBetween: 30,
 		loop: true,
 		rtl: rtl_setting,
+		autoplay: true,
 		effect : 'fade',
 		// Navigation arrows
 		navigation: {

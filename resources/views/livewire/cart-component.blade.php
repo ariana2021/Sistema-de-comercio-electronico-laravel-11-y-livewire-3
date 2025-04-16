@@ -46,7 +46,7 @@
         <div class="cartmini__checkout">
             <div class="cartmini__checkout-title mb-30">
                 <h4>Subtotal:</h4>
-                <span>${{ $subtotal }}</span>
+                <span>{{ config('app.currency_symbol') }}{{ $subtotal }}</span>
             </div>
             <div class="cartmini__checkout-btn">
                 <a href="{{ route('carts.index') }}" class="tp-btn mb-10 w-100">Ver carrito</a>

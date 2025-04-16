@@ -43,6 +43,33 @@ class CheckoutComponent extends Component
         $this->calculateTotal();
     }
 
+    public function handleCashbackChange()
+    {
+        if ($this->cashbackDisponible <= 0) {
+            $this->cashback_usado = 0;
+            session()->flash('fail', 'No tienes cashback disponible.');
+            return;
+        }
+
+        if ($this->cashback_usado >= $this->total) {
+            $this->cashback_usado = $this->total - 0.01; // Ajustar el valor del cashback a algo menor que el total
+            session()->flash('fail', 'El monto de cashback no puede ser mayor o igual al total.');
+            return;
+        }
+
+        if ($this->cashback_usado < 0) {
+            $this->cashback_usado = 0; // Resetear a 0 si el valor es negativo
+            session()->flash('fail', 'El monto de cashback no puede ser negativo.');
+            return;
+        }
+
+        if ($this->cashback_usado > $this->cashbackDisponible) {
+            $this->cashback_usado = $this->cashbackDisponible; // Ajustar el valor al máximo disponible
+            session()->flash('fail', 'No puedes usar más cashback del disponible.');
+        }
+    }
+
+
     public function applyCoupon()
     {
         $coupon = Coupon::where('code', $this->coupon)->where('active', true)->first();
@@ -108,6 +135,11 @@ class CheckoutComponent extends Component
             'phone.min' => 'El teléfono debe tener al menos 10 caracteres.',
             'isConfirmed.accepted' => 'Debes confirmar que la información es correcta.',
         ]);
+
+        if ($this->cashback_usado > $this->cashbackDisponible) {
+            session()->flash('error', 'No puedes usar más cashback del disponible.');
+            return;
+        }
 
         // Si pasa la validación, continúas con el proceso
         try {

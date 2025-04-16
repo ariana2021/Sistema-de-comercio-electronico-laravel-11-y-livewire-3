@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('phone')->nullable(); // Teléfono
             $table->string('website')->nullable(); // Sitio web
             $table->string('logo')->nullable(); // Logo de la empresa
-            $table->decimal('cashback_percentage', 10, 2)->default(0); //
+            $table->json('cashbacks')->nullable(); //
             $table->text('description')->nullable(); // Descripción de la empresa
 
             // Dirección
@@ -43,7 +43,7 @@ return new class extends Migration {
             $table->string('facebook_url')->nullable();
             $table->string('instagram_url')->nullable();
             $table->string('twitter_url')->nullable();
-            $table->string('linkedin_url')->nullable();
+            $table->string('whatsapp_url')->nullable();
 
             $table->timestamps();
         });

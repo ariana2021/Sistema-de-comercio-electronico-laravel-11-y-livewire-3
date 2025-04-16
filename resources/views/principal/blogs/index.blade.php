@@ -2,22 +2,115 @@
 
 @section('content')
     <!-- breadcrumb area start -->
-    <section class="breadcrumb__area include-bg pt-150 pb-150 breadcrumb__overlay breadcrumb__style-3"
-        data-background="{{ asset('assets/principal/img/breadcrumb/breadcrumb-bg-1.jpg') }}">
-        <div class="container">
-            <div class="row">
-                <div class="col-xxl-12">
-                    <div class="breadcrumb__content text-center p-relative z-index-1">
-                        <h3 class="breadcrumb__title">Nuestro Blog</h3>
-                        <div class="breadcrumb__list">
-                            <span><a href="#">Home</a></span>
-                            <span>Blog</span>
+    <section class="tp-slider-area p-relative z-index-1">
+        <div class="tp-slider-active tp-slider-variation swiper-container">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="tp-slider-item tp-slider-height d-flex align-items-center swiper-slide green-dark-bg">
+                    <div class="tp-slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-1"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-1.png') }}" alt="slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-2"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-2.png') }}" alt="slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-3"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-3.png') }}" alt="slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-4"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-4.png') }}" alt="slider-shape">
+                    </div>
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-xl-5 col-lg-6 col-md-6">
+                                <div class="tp-slider-content p-relative z-index-1">
+                                    <h3 class="tp-slider-title">Taladro Inalámbrico 20V</h3>
+                                    <p>Herramienta ideal para trabajos en casa y proyectos profesionales.</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 col-lg-6 col-md-6">
+                                <div class="tp-slider-thumb text-end">
+                                    <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?w=600"
+                                        alt="Taladro">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="tp-slider-item tp-slider-height d-flex align-items-center swiper-slide green-dark-bg">
+                    <div class="tp-slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-1"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-1.png') }}" alt="slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-2"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-2.png') }}" alt="slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-3"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-3.png') }}" alt="slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-4"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-4.png') }}" alt="slider-shape">
+                    </div>
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-xl-5 col-lg-6 col-md-6">
+                                <div class="tp-slider-content p-relative z-index-1">
+                                    <h3 class="tp-slider-title">Juego de Llaves Combinadas</h3>
+                                    <p>Incluye 12 piezas de acero reforzado para mecánica y hogar.</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 col-lg-6 col-md-6">
+                                <div class="tp-slider-thumb text-end">
+                                    <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?w=600"
+                                        alt="Llaves">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="tp-slider-item tp-slider-height d-flex align-items-center swiper-slide green-dark-bg">
+                    <div class="tp-slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-1"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-1.png') }}" alt="slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-2"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-2.png') }}" alt="slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-3"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-3.png') }}" alt="slider-shape">
+                        <img loading="lazy" class="tp-slider-shape-4"
+                            src="{{ asset('assets/principal/img/slider/shape/slider-shape-4.png') }}" alt="slider-shape">
+                    </div>
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-xl-5 col-lg-6 col-md-6">
+                                <div class="tp-slider-content p-relative z-index-1">
+                                    <h3 class="tp-slider-title">Caja de Clavos y Tornillos</h3>
+                                    <p>Kit surtido de alta resistencia para todas tus necesidades.</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 col-lg-6 col-md-6">
+                                <div class="tp-slider-thumb text-end">
+                                    <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?w=600"
+                                        alt="Clavos y tornillos">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Flechas de navegación -->
+            <div class="tp-slider-arrow tp-swiper-arrow d-none d-lg-block">
+                <button type="button" class="tp-slider-button-prev">
+                    <i class="fa-solid fa-left-from-line"></i>
+                </button>
+                <button type="button" class="tp-slider-button-next">
+                    <i class="fa-solid fa-right-to-line"></i>
+                </button>
+            </div>
+
+            <!-- Paginación -->
+            <div class="tp-slider-dot tp-swiper-dot"></div>
         </div>
     </section>
+
     <!-- breadcrumb area end -->
 
     <!-- postbox area start -->

@@ -15,7 +15,7 @@ class Business extends Model
         'tax_id',
         'email',
         'phone',
-        'cashback_percentage',
+        'cashbacks',
         'website',
         'logo',
         'description',
@@ -34,10 +34,11 @@ class Business extends Model
         'facebook_url',
         'instagram_url',
         'twitter_url',
-        'linkedin_url',
+        'whatsapp_url',
     ];
 
     protected $casts = [
         'shipping_enabled' => 'boolean',
+        'cashbacks' => 'array',
     ];
 }

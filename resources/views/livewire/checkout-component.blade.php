@@ -92,12 +92,13 @@
                                     <div class="form-check form-switch">
                                         <input type="checkbox" id="confirm" class="form-check-input"
                                             wire:model="isConfirmed">
-                                        <label for="confirm" class="form-check-label">Confirmo que mis datos son correctos</label>
+                                        <label for="confirm" class="form-check-label">Confirmo que mis datos son
+                                            correctos</label>
                                     </div>
                                     @error('isConfirmed')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -170,8 +171,14 @@
                     <div class="mb-3">
                         <label for="cashback_usado">¿Cuánto cashback quieres usar?</label>
                         <input type="number" id="cashback_usado" wire:model="cashback_usado"
+                            wire:change="handleCashbackChange"
                             max="{{ $cashbackDisponible }}" step="0.01" value="0">
+                    
+                        @error('fail')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+                    
 
                     <button wire:click="checkoutSuccess" class="btn btn-primary" wire:loading.attr="disabled">
                         <span wire:loading.remove wire:target="checkoutSuccess">Procesar Pago</span>

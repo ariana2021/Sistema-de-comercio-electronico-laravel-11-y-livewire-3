@@ -48,6 +48,14 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI'),
-    ],    
+    ],  
+    
+    'niubiz' => [
+        'merchantId' => env('NIUBIZ_MERCHANT_ID'),
+        'user' => env('NIUBIZ_USER'),
+        'password' => env('NIUBIZ_PASSWORD'),
+        'url_api' => env('NIUBIZ_URL_API'),
+        'url_js' => env('NIUBIZ_URL_JS'),
+    ],
 
 ];

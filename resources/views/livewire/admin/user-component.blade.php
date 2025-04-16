@@ -51,10 +51,11 @@
                                             </td>
                                             <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</td>
                                             <td>
-                                                {{-- <a href="{{ route('roles.assign', ['id' => encrypt($user->id)]) }}"
+                                                <button wire:click="toggleRol({{ $user->id }})"
                                                     class="btn btn-outline-success btn-sm">
-                                                    <i class="fas fa-user-shield"></i> Roles/Permisos
-                                                </a> --}}
+                                                <i class="fas fa-user-shield"></i>
+                                            </button>
+                                            
                                                 <button wire:click="edit({{ $user->id }})"
                                                     class="btn btn-outline-primary btn-sm">
                                                     <i class="fas fa-edit"></i>

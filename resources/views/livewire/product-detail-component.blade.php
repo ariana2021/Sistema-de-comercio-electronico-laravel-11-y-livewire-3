@@ -11,13 +11,13 @@
                                         <button class="nav-link active" id="nav-main-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-main" type="button" role="tab"
                                             aria-controls="nav-main" aria-selected="true">
-                                            <img loading="lazy" src="{{ Storage::url($product->image) }}" alt="">
+                                            <img loading="lazy" src="{{ Storage::url($product->image) }}"
+                                                alt="">
                                         </button>
                                     @endif
 
                                     @foreach ($product->images as $index => $image)
-                                        <button
-                                            class="nav-link {{ $index == 0 && !$product->image ? 'active' : '' }}"
+                                        <button class="nav-link {{ $index == 0 && !$product->image ? 'active' : '' }}"
                                             id="nav-{{ $index }}-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-{{ $index }}" type="button" role="tab"
                                             aria-controls="nav-{{ $index }}"
@@ -115,7 +115,10 @@
                                         </button>
                                     </div>
                                 </div>
-                                <button class="tp-product-details-buy-now-btn w-100">Comprar ahora</button>
+                                <button class="tp-product-details-buy-now-btn w-100" wire:click="buyNow({{ $product->id }})">
+                                    Comprar ahora
+                                </button>
+                                
                             </div>
 
                             <!-- Lista de deseos -->
@@ -139,13 +142,36 @@
                             </div>
 
                             <!-- Redes Sociales -->
+                            @php
+                                $title = urlencode(config('services.name', 'Mi publicación'));
+                                $shareUrl = urlencode(url()->current());
+                            @endphp
+
                             <div class="tp-product-details-social">
                                 <span>Compartir: </span>
-                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="#"><i class="fa-brands fa-vimeo-v"></i></a>
+
+                                {{-- Facebook --}}
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ $shareUrl }}"
+                                    target="_blank">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+
+                                {{-- Twitter (X) --}}
+                                <a href="https://twitter.com/intent/tweet?url={{ $shareUrl }}&text={{ $title }}"
+                                    target="_blank">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+
+                                {{-- LinkedIn --}}
+                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ $shareUrl }}"
+                                    target="_blank">
+                                    <i class="fa-brands fa-linkedin-in"></i>
+                                </a>
+
+                                {{-- Vimeo (no tiene opción de compartir URL externa, se puede quitar o usar solo ícono si tienes video subido) --}}
+                                {{-- Si querés usar otra red como WhatsApp o Telegram, puedo agregártela --}}
                             </div>
+
 
                             <!-- Mensajes -->
                             <div class="tp-product-details-msg mb-15">
@@ -257,7 +283,8 @@
                                                             <div
                                                                 class="tp-product-details-review-avater d-flex align-items-start">
                                                                 <div class="tp-product-details-review-avater-thumb">
-                                                                    <img loading="lazy" src="https://ui-avatars.com/api/?name={{ urlencode($rating->user->name) }}"
+                                                                    <img loading="lazy"
+                                                                        src="https://ui-avatars.com/api/?name={{ urlencode($rating->user->name) }}"
                                                                         alt="">
                                                                 </div>
                                                                 <div class="tp-product-details-review-avater-content">
@@ -479,7 +506,8 @@
                                         data-bs-target="#nav-{{ $index }}" type="button" role="tab"
                                         aria-controls="nav-{{ $index }}"
                                         aria-selected="{{ $loop->first ? 'true' : 'false' }}">
-                                        <img loading="lazy" src="{{ Storage::url($image) }}" alt="" class="img-fluid">
+                                        <img loading="lazy" src="{{ Storage::url($image) }}" alt=""
+                                            class="img-fluid">
                                     </button>
                                 @endforeach
                             </div>

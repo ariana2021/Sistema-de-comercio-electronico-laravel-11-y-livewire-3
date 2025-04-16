@@ -1,10 +1,7 @@
 <aside class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
-        {{-- <div class="logo-icon">
+        <div class="logo-icon">
             <img src="{{ asset('assets/principal/img/logo/logo.png') }}" class="logo-img" alt="">
-        </div> --}}
-        <div class="logo-name flex-grow-1">
-            <h5 class="mb-0">FERUP</h5>
         </div>
         <div class="sidebar-close">
             <span class="material-icons-outlined">close</span>

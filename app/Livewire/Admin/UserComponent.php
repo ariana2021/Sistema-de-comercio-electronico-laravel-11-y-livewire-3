@@ -123,6 +123,20 @@ class UserComponent extends Component
         $this->openModal();
     }
 
+    public function toggleRol($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->hasRole('admin')) {
+            $user->removeRole('admin');
+            session()->flash('message', 'Rol "Admin" eliminado del usuario.');
+        } else {
+            $user->assignRole('admin');
+            session()->flash('message', 'Rol "Admin" asignado al usuario.');
+        }
+    }
+
+
     public function confirmDelete($id)
     {
         $this->dispatch('show-delete-confirmation', id: $id);

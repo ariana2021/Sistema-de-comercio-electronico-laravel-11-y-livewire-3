@@ -16,7 +16,7 @@ class BusinessController extends Controller
 
     public function update(Request $request)
     {
-        $business = Business::firstOrFail(); // Aseguramos que la empresa existe
+        $business = Business::firstOrFail();
 
         $validated = $request->validate([
             'business_name' => 'required|string|max:255',
@@ -35,12 +35,31 @@ class BusinessController extends Controller
             'cost_per_km' => 'required|numeric|min:0',
             'tax_percentage' => 'nullable|numeric|min:0|max:100',
             'cashback_percentage' => 'nullable|numeric|min:0|max:100',
+
+            // ✅ Redes sociales
+            'facebook_url' => 'nullable|url|max:255',
+            'instagram_url' => 'nullable|url|max:255',
+            'twitter_url' => 'nullable|url|max:255',
+            'whatsapp_url' => 'nullable|string|regex:/^\+?[0-9]{6,15}$/',
+
+            // ✅ Validación de los pares monto/porcentaje
+            'cashbacks' => 'nullable|array',
+            'cashbacks.*.amount' => 'required_with:cashbacks.*.percentage|numeric|min:0',
+            'cashbacks.*.percentage' => 'required_with:cashbacks.*.amount|numeric|min:0|max:100',
         ], $this->messages());
 
-        $business->update($validated);
+        $cashbacks = $validated['cashbacks'] ?? [];
+        unset($validated['cashbacks']);
+
+        $business->update([
+            ...$validated,
+            'cashbacks' => $cashbacks,
+        ]);
 
         return redirect()->route('business.index')->with('success', 'Empresa actualizada correctamente.');
     }
+
+
 
     private function messages()
     {

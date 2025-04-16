@@ -1,3 +1,30 @@
+<div class="redes-sociales">
+    @if (!empty($business->facebook_url))
+        <a href="{{ $business->facebook_url }}" class="icono facebook" title="Facebook" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+    @endif
+
+    @if (!empty($business->twitter_url))
+        <a href="{{ $business->twitter_url }}" class="icono twitter" title="Twitter" target="_blank">
+            <i class="fab fa-twitter"></i>
+        </a>
+    @endif
+
+    @if (!empty($business->instagram_url))
+        <a href="{{ $business->instagram_url }}" class="icono instagram" title="Instagram" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+    @endif
+
+    @if (!empty($business->whatsapp_url))
+        <a href="https://wa.me/{{ $business->whatsapp_url }}" class="icono whatsapp" title="WhatsApp" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    @endif
+</div>
+
+
 
 <footer>
     <div class="tp-footer-area">
@@ -9,7 +36,8 @@
                             <div class="tp-footer-widget-content">
                                 <div class="tp-footer-logo">
                                     <a href="{{ url('/') }}">
-                                        <img width="180" src="{{ asset($business->logo ?? 'assets/principal/img/logo/logo.png') }}"
+                                        <img width="180"
+                                            src="{{ asset($business->logo ?? 'assets/principal/img/logo/logo.png') }}"
                                             alt="logo">
                                     </a>
                                 </div>
@@ -24,10 +52,12 @@
                                         <a href="{{ $business->twitter_url }}" target="_blank"><i
                                                 class="fa-brands fa-twitter"></i></a>
                                     @endif
-                                    @if ($business->linkedin_url)
-                                        <a href="{{ $business->linkedin_url }}" target="_blank"><i
-                                                class="fa-brands fa-linkedin-in"></i></a>
+                                    @if ($business->whatsapp_url)
+                                        <a href="https://wa.me/{{ $business->whatsapp_url }}" target="_blank">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </a>
                                     @endif
+
                                     @if ($business->instagram_url)
                                         <a href="{{ $business->instagram_url }}" target="_blank"><i
                                                 class="fa-brands fa-instagram"></i></a>
@@ -53,8 +83,8 @@
                             <h4 class="tp-footer-widget-title">Información</h4>
                             <div class="tp-footer-widget-content">
                                 <ul>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="{{ route('privacidad') }}">Privacy Policy</a></li>
+                                    <li><a href="{{ route('terminos') }}">Terms & Conditions</a></li>
                                     <li><a href="{{ route('contact') }}">Contactos</a></li>
                                 </ul>
                             </div>
@@ -136,7 +166,8 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="tp-footer-copyright">
-                                <p class="text-white">© {{ date('Y') }} All Rights Reserved <a href="#">Tu sitio web</a>.</p>
+                                <p class="text-white">© {{ date('Y') }} All Rights Reserved <a href="#">Tu
+                                        sitio web</a>.</p>
                             </div>
                         </div>
                         <div class="col-md-6">

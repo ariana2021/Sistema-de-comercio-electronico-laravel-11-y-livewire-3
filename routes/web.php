@@ -34,9 +34,15 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
+Route::view('/terminos', 'legales.terminos')->name('terminos');
+Route::view('/privacidad', 'legales.privacidad')->name('privacidad');
+
+
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/checkout/paidNiubiz', [CheckoutController::class, 'paidNiubiz'])->name('checkout.paidNiubiz');
+
     Route::get('/checkout', [ShoppingCart::class, 'checkout'])->name('carts.checkout');
     Route::get('/payment', [CheckoutController::class, 'index'])->name('payment.index');
     Route::get('/checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
@@ -71,12 +77,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/upload-image/{product}', [ProductImageController::class, 'upload'])->name('product.upload');
     Route::delete('/admin/delete-image/{id}', [ProductImageController::class, 'delete'])->name('product.delete');
     Route::get('/admin/orders', App\Livewire\Admin\OrderComponent::class)->name('orders.index');
-
-    Route::get('/admin/roles/assign/{id}', [RolController::class, 'assignRoles'])->name('roles.assign');
-
-    Route::resource('/admin/roles', RolController::class);
-
-    Route::put('/admin/roles/updateRoles/{id}', [RolController::class, 'updateRoles'])->name('roles.updateRoles');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/admin/perfil', [App\Http\Controllers\Admin\ProfileController::class, 'perfil'])->name('usuario.perfil');

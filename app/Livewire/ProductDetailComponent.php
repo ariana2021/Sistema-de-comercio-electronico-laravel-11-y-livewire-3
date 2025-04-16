@@ -41,7 +41,14 @@ class ProductDetailComponent extends Component
         $this->email = Auth::check() ? Auth::user()->email : '';
     }
 
+    public function buyNow($productId)
+    {
+        $this->addToCart($productId);
 
+        // Redirige al checkout
+        return redirect()->route('carts.checkout');
+    }
+    
     public function setRating($value)
     {
         $this->qualification = (int) $value;

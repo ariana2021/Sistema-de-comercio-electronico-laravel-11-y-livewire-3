@@ -13,6 +13,20 @@
                 <i class="fa-solid fa-box-open"></i> Ver Pedido
             </a>
         </div>
-        
     </div>
+    @if (session('niubiz'))
+        @php
+            $response = session('niubiz')['response'];
+            $fecha = \Carbon\Carbon::createFromFormat('ymdHis', $response['dataMap']['TRANSACTION_DATE'] ?? '');
+        @endphp
+
+
+        <div class="alert alert-success" role="alert">
+            <p>{{ $response['dataMap']['ACTION_DESCRIPTION'] ?? 'Descripción no disponible' }}</p>
+            <p><b>N° Pedido: </b>{{ $response['order']['purchaseNumber'] ?? '---' }}</p>
+            <p><b>Fecha y Hora: </b>{{ $fecha ? $fecha->format('d/m/Y H:i') : 'Fecha inválida' }}</p>
+            <p><b>Tarjeta: </b>{{ $response['dataMap']['CARD'] ?? '---' }} ({{ $response['dataMap']['BRAND'] ?? '' }})</p>
+            <p><b>Importe: </b>{{ $response['order']['amount'] ?? '0.00' }} ({{ $response['order']['currency'] ?? '' }})</p>
+        </div>
+    @endif
 @endsection
