@@ -34,19 +34,18 @@
     <!-- feature area start -->
     <section class="tp-feature-area tp-feature-border-radius pb-70">
         <div class="container">
-            <div class="row gx-1 gy-1 gy-xl-0">
+            <div class="row gx-1 gy-1 gy-xl-0 tp-slick-carousel">
                 @foreach ($services as $service)
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                        <div class="tp-feature-item d-flex flex-column align-items-start">
-                            <div class="tp-feature-icon mr-15">
-                                <span>
-                                    <!-- Aquí se utiliza el icono que viene de la base de datos -->
-                                    <i class="{{ $service->icon }}"></i>
+                        <div class="tp-feature-item d-flex flex-column align-items-center p-5 rounded-xl service-card">
+                            <div class="tp-feature-icon mb-4 d-flex justify-content-center align-items-center">
+                                <span class="icon-container">
+                                    <i class="{{ $service->icon }} icon"></i>
                                 </span>
                             </div>
-                            <div class="tp-feature-content flex-grow-1">
+                            <div class="tp-feature-content text-center d-flex flex-column flex-grow-1">
                                 <h3 class="tp-feature-title">{{ $service->name }}</h3>
-                                <p>{{ $service->description }}</p>
+                                <p class="service-description">{{ $service->description }}</p>
                             </div>
                         </div>
                     </div>
@@ -54,8 +53,7 @@
             </div>
         </div>
     </section>
-
-
+    
     <!-- feature area end -->
 
     <!-- product offer area start -->
@@ -138,7 +136,7 @@
 
                                                             // Verificar si el usuario tiene avatar personalizado
                                                             $avatar = $user->avatar
-                                                                ? asset('storage/avatars/' . $user->avatar)
+                                                                ? Storage::url($user->avatar)
                                                                 : (Http::get($gravatar)->successful()
                                                                     ? $gravatar
                                                                     : null);
@@ -199,3 +197,117 @@
     </section>
     <!-- testimonial area end -->
 @endsection
+
+
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <style>
+        /* Estilo principal de las tarjetas */
+        .service-card {
+            background-color: #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e0e0e0;
+            /* Borde sutil */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            /* Garantiza que todas las tarjetas tengan la misma altura */
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Contenedor del icono */
+        .icon-container {
+            background-color: #3f51b5;
+            /* Color primario similar a Material Design */
+            color: white;
+            padding: 25px;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .icon-container i {
+            color: white;
+        }
+
+        .icon-container:hover {
+            background-color: #673ab7;
+            /* Color de hover */
+            transform: scale(1.1);
+        }
+
+        /* Estilo del icono */
+        .icon {
+            font-size: 2.5rem;
+            /* Icono más grande */
+            transition: color 0.3s ease;
+        }
+
+        .icon-container:hover .icon {
+            color: white;
+        }
+
+        /* Título de la tarjeta */
+        .tp-feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333333;
+            margin-top: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .tp-feature-title:hover {
+            color: #673ab7;
+            /* Color de hover */
+        }
+
+        /* Descripción de la tarjeta */
+        .service-description {
+            color: #757575;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+            flex-grow: 1;
+            /* Permite que el texto ocupe el espacio disponible sin afectar el alto */
+        }
+
+        .service-description:hover {
+            color: #333333;
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('.tp-feature-area .row').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                dots: true,
+                arrows: false,
+                responsive: [{
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+@endpush

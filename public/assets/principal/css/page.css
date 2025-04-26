@@ -1,0 +1,91 @@
+:root {
+    --md-primary: #4CAF50;
+    --md-primary-light: #A5D6A7;
+    --md-dark: #1B5E20;
+    --md-muted: #757575;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Parallax background */
+.parallax-section {
+    background-image: url('../img/fondos/1.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    padding: 100px 20px;
+}
+
+.content-wrapper {
+    max-width: 850px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    animation: fadeInUp 1s ease;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--md-dark);
+}
+
+.updated-at {
+    color: var(--md-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.contenido-pagina {
+    color: #333;
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.contenido-pagina h2,
+.contenido-pagina h3 {
+    color: var(--md-dark);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.contenido-pagina a {
+    color: var(--md-primary);
+    text-decoration: underline;
+}
+
+.contenido-pagina blockquote {
+    border-left: 4px solid var(--md-primary-light);
+    padding-left: 1rem;
+    color: var(--md-muted);
+    font-style: italic;
+    margin: 1.5rem 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding: 2rem 1.2rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+}

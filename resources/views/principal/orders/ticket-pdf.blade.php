@@ -99,21 +99,21 @@
                 <td>Subtotal:</td>
                 <td>
                     {{ config('app.currency_symbol') }}
-                    {{ number_format($order->total / (1 + $business->tax_percentage / 100), 2) }}
+                    {{ number_format($order->subtotal / (1 + $business->tax_percentage / 100), 2) }}
                 </td>
             </tr>
             <tr>
                 <td>IGV ({{ $business->tax_percentage }}%):</td>
                 <td>
                     {{ config('app.currency_symbol') }}
-                    {{ number_format($order->total - $order->total / (1 + $business->tax_percentage / 100), 2) }}
+                    {{ number_format($order->subtotal - $order->subtotal / (1 + $business->tax_percentage / 100), 2) }}
                 </td>
             </tr>
             <tr class="total">
                 <td><strong>Total:</strong></td>
                 <td>
                     <strong>{{ config('app.currency_symbol') }}
-                        {{ number_format($order->total + $order->shipping_cost, 2) }}</strong>
+                        {{ number_format($order->subtotal + $order->shipping_cost, 2) }}</strong>
                 </td>
             </tr>
         </table>

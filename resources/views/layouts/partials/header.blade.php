@@ -384,6 +384,7 @@
                                         <li><a class="text-white" href="{{ url('/') }}">Inicio</a></li>
                                         <li><a class="text-white" href="{{ route('shop') }}">Productos</a></li>
                                         <li><a class="text-white" href="{{ route('posts.index') }}">Blog</a></li>
+                                        <li><a class="text-white" href="{{ route('us') }}">Nosotras</a></li>
                                         <li><a class="text-white" href="{{ route('contact') }}">Contacto</a></li>
                                     </ul>
                                 </nav>

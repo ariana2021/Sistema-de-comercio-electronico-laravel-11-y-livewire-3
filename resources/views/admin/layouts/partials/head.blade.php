@@ -27,7 +27,7 @@
     <link href="{{ asset('assets/admin/sass/responsive.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/IconPicker/dist/iconpicker-1.5.0.css') }}" />
     <link href="{{ asset('assets/admin/css/custom.css') }}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ asset('assets/admin/images/favicon-32x32.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/principal/img/logo/logo.png') }}" />
     @livewireStyles
     @stack('styles')
 </head>

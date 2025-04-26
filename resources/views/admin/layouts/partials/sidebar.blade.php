@@ -18,7 +18,8 @@
             </li>
 
             <li
-                class="{{ request()->routeIs('users.*') || request()->routeIs('services.*') || request()->routeIs('business.*') || request()->routeIs('sliders.*') ? 'mm-active' : '' }}">
+                class="{{ request()->routeIs('users.*') || request()->routeIs('services.*') || request()->routeIs('business.*') 
+                || request()->routeIs('sliders.*') || request()->routeIs('about.*') || request()->is('admin/pages/terminos*') || request()->is('admin/pages/privacidad*') ? 'mm-active' : '' }}">
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="material-icons-outlined">settings</i></div>
                     <div class="menu-title">Administración</div>
@@ -40,8 +41,21 @@
                         <a href="{{ route('sliders.index') }}"><i
                                 class="material-icons-outlined">arrow_right</i>Sliders</a>
                     </li>
+                    <li class="{{ request()->routeIs('about.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('about.index') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Nosotr@s</a>
+                    </li>
+                    <li class="{{ request()->is('admin/pages/terminos*') ? 'mm-active' : '' }}">
+                        <a href="{{ route('admin.pages.edit', 'terminos') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Términos</a>
+                    </li>
+                    <li class="{{ request()->is('admin/pages/privacidad*') ? 'mm-active' : '' }}">
+                        <a href="{{ route('admin.pages.edit', 'privacidad') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Privacidad</a>
+                    </li>
                 </ul>
             </li>
+
 
             <li class="{{ request()->routeIs('orders.*') ? 'mm-active' : '' }}">
                 <a href="{{ route('orders.index') }}">

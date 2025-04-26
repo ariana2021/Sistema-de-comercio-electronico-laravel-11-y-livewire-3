@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutUsController;
 use App\Http\Controllers\Admin\BusinessController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\RolController;
 use App\Http\Controllers\CheckoutController;
@@ -13,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PrincipalController::class, 'index'])->name('index');
+Route::get('/terminos', [PrincipalController::class, 'terminos'])->name('terminos');
+Route::get('/privacidad', [PrincipalController::class, 'privacidad'])->name('privacidad');
+
+Route::get('/us', [PrincipalController::class, 'us'])->name('us');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/wishlist', [ShoppingCart::class, 'wishlist'])->name('wishlist.index');
@@ -34,20 +40,20 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::view('/terminos', 'legales.terminos')->name('terminos');
-Route::view('/privacidad', 'legales.privacidad')->name('privacidad');
-
 
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    
     Route::post('/checkout/paidNiubiz', [CheckoutController::class, 'paidNiubiz'])->name('checkout.paidNiubiz');
 
     Route::get('/checkout', [ShoppingCart::class, 'checkout'])->name('carts.checkout');
     Route::get('/payment', [CheckoutController::class, 'index'])->name('payment.index');
-    Route::get('/checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
+
+    Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
     Route::get('/checkout/failure', [CheckoutController::class, 'failure'])->name('checkout.failure');
     Route::get('/checkout/pending', [CheckoutController::class, 'pending'])->name('checkout.pending');
+
     Route::get('/thank-you', [CheckoutController::class, 'thankyou'])->name('checkout.thank-you');
 
     Route::get('/profile', [PrincipalController::class, 'profile'])->name('profile.index');
@@ -59,6 +65,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('admin/about', AboutUsController::class);
+    
+    Route::get('/admin/pages/{slug}/edit', [PageController::class, 'edit'])->name('admin.pages.edit');
+    Route::put('/admin/pages/{slug}', [PageController::class, 'update'])->name('admin.pages.update');
+
     Route::get('/admin/empresa', [BusinessController::class, 'index'])->name('business.index');
     Route::put('/admin/empresa', [BusinessController::class, 'update'])->name('business.update');
 

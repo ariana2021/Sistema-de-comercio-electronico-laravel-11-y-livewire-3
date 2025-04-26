@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutUs;
 use App\Models\Business;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\Rating;
 use App\Models\Service;
-use App\Models\Slider;
 use App\Models\TemporaryCart;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -36,6 +36,30 @@ class PrincipalController extends Controller
 
         return view('principal.home.index', compact('ratings', 'business', 'services'));
     }
+
+    public function us()
+    {
+        $historia = AboutUs::where('type', 'historia')->first();
+        $mision = AboutUs::where('type', 'mision')->first();
+        $vision = AboutUs::where('type', 'vision')->first();
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', '!=', 'cliente');
+        })->get();
+        return view('principal.us', compact('historia', 'mision', 'vision', 'users'));
+    }
+
+    public function terminos()
+    {
+        $page = Page::where('slug', 'terminos')->firstOrFail();
+        return view('legales.terminos', compact('page'));
+    }
+
+    public function privacidad()
+    {
+        $page = Page::where('slug', 'privacidad')->firstOrFail();
+        return view('legales.privacidad', compact('page'));
+    }
+
 
     public function category($slug)
     {
@@ -68,8 +92,8 @@ class PrincipalController extends Controller
         $wishlistCount = count($wishlist);
 
         $availableCashback = Auth::user()->cashbacks()
-                                ->where('status', 'available')
-                                ->sum('amount');
+            ->where('status', 'available')
+            ->sum('amount');
 
         return view('principal.home.profile', compact('orders', 'ordersCount', 'wishlist', 'wishlistCount', 'availableCashback'));
     }
@@ -148,7 +172,6 @@ class PrincipalController extends Controller
             return redirect()->back()->with('error', 'Orden no encontrada.');
         }
     }
-
 
     public function generateTicket($encryptedId)
     {
