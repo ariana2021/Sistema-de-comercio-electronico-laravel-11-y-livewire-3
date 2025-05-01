@@ -32,20 +32,21 @@
     <!-- product area end -->
 
     <!-- feature area start -->
-    <section class="tp-feature-area tp-feature-border-radius pb-70">
+    <section class="tp-feature-area py-5" style="background-color: #f2f6f9;">
         <div class="container">
-            <div class="row gx-1 gy-1 gy-xl-0 tp-slick-carousel">
+            <div class="row g-4">
                 @foreach ($services as $service)
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                        <div class="tp-feature-item d-flex flex-column align-items-center p-5 rounded-xl service-card">
-                            <div class="tp-feature-icon mb-4 d-flex justify-content-center align-items-center">
-                                <span class="icon-container">
-                                    <i class="{{ $service->icon }} icon"></i>
-                                </span>
+                    <div class="col-xl-4 col-lg-4 col-md-6 d-flex">
+                        <div class="card w-100 d-flex flex-column align-items-center text-center shadow-sm border-0 p-4">
+                            <div class="mb-3">
+                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="{{ $service->icon }} fs-4"></i>
+                                </div>
                             </div>
-                            <div class="tp-feature-content text-center d-flex flex-column flex-grow-1">
-                                <h3 class="tp-feature-title">{{ $service->name }}</h3>
-                                <p class="service-description">{{ $service->description }}</p>
+                            <div class="d-flex flex-column flex-grow-1 justify-content-center w-100">
+                                <h5 class="fw-bold mb-2">{{ $service->name }}</h5>
+                                <p class="text-muted small">{{ $service->description }}</p>
                             </div>
                         </div>
                     </div>
@@ -53,7 +54,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- feature area end -->
 
     <!-- product offer area start -->
@@ -182,8 +183,8 @@
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15.939 6.99959L1 6.99959" stroke="currentColor" stroke-width="1.5"
                                         stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M9.91382 1L15.9392 6.9995L9.91382 13" stroke="currentColor" stroke-width="1.5"
-                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M9.91382 1L15.9392 6.9995L9.91382 13" stroke="currentColor"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </button>
                         </div>
@@ -287,6 +288,23 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            $('.tp-feature-area .row').on('setPosition', function() {
+                let slickTrack = $(this).find('.slick-track');
+                let slickSlides = slickTrack.find('.slick-slide');
+
+                let maxHeight = 0;
+
+                slickSlides.each(function() {
+                    $(this).css('height', 'auto'); // reset
+                    if ($(this).height() > maxHeight) {
+                        maxHeight = $(this).height();
+                    }
+                });
+
+                slickSlides.css('height', maxHeight + 'px');
+            });
+
+
             $('.tp-feature-area .row').slick({
                 slidesToShow: 3,
                 slidesToScroll: 1,

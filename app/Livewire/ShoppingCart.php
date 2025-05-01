@@ -20,6 +20,14 @@ class ShoppingCart extends Component
         }])->orderBy('id', 'desc')->get();        
     }
 
+    public function buyNow($productId)
+    {
+        $this->addToCart($productId);
+
+        // Redirige al checkout
+        return redirect()->route('carts.checkout');
+    }
+
     public function render()
     {
         return view('livewire.shopping-cart');

@@ -16,7 +16,18 @@
             <!-- Pestaña de formulario -->
             <div class="tab-pane fade show active p-3" id="form" role="tabpanel" aria-labelledby="form-tab">
                 @if (session()->has('success'))
-                    <div class="alert alert-success mt-3">{{ session('success') }}</div>
+                    <div class="mt-2 alert alert-success border-0 bg-grd-success alert-dismissible fade show">
+                        <div class="d-flex align-items-center">
+                            <div class="font-35 text-white"><span
+                                    class="material-icons-outlined fs-2">check_circle</span>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0 text-white">Respuesta</h6>
+                                <div class="text-white">{{ session('success') }}!</div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 @endif
                 <form wire:submit.prevent="save" class="mt-3">
                     <div class="mb-3">
@@ -56,7 +67,7 @@
                         @error('icon')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        
+
                     </div>
 
                     <button class="btn btn-primary">Guardar</button>
@@ -68,7 +79,7 @@
             <div class="tab-pane fade p-3" id="table" role="tabpanel" aria-labelledby="table-tab">
                 <div class="table-responsive">
                     @if ($services->isEmpty())
-                        <div class="alert alert-warning mt-2" role="alert">
+                        <div class="mt-2 alert alert-border-danger" role="alert">
                             No hay servicios disponibles. Por favor, agregue un servicio.
                         </div>
                     @else

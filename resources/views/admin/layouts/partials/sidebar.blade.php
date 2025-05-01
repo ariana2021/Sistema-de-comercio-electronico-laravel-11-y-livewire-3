@@ -12,22 +12,35 @@
         <ul class="metismenu" id="sidenav">
             <li class="{{ request()->routeIs('home') ? 'mm-active' : '' }}">
                 <a href="{{ route('home') }}">
-                    <div class="parent-icon"><i class="material-icons-outlined">home</i></div>
+                    <div class="parent-icon"><i class="material-icons-outlined">bar_chart</i></div>
                     <div class="menu-title">Tablero</div>
                 </a>
             </li>
 
+            <li class="menu-label">Administración</li>
             <li
-                class="{{ request()->routeIs('users.*') || request()->routeIs('services.*') || request()->routeIs('business.*') 
-                || request()->routeIs('sliders.*') || request()->routeIs('about.*') || request()->is('admin/pages/terminos*') || request()->is('admin/pages/privacidad*') ? 'mm-active' : '' }}">
+                class="{{ request()->routeIs('users.*') ||
+                request()->routeIs('roles.*') ||
+                request()->routeIs('services.*') ||
+                request()->routeIs('business.*') ||
+                request()->routeIs('sliders.*') ||
+                request()->routeIs('about.*') ||
+                request()->is('admin/pages/terminos*') ||
+                request()->is('admin/pages/privacidad*')
+                    ? 'mm-active'
+                    : '' }}">
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="material-icons-outlined">settings</i></div>
                     <div class="menu-title">Administración</div>
                 </a>
                 <ul>
+                    <li class="{{ request()->routeIs('roles.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('roles.index') }}"><i class="material-icons-outlined">arrow_right</i>Roles
+                        </a>
+                    </li>
                     <li class="{{ request()->routeIs('users.index') ? 'mm-active' : '' }}">
-                        <a href="{{ route('users.index') }}"><i
-                                class="material-icons-outlined">arrow_right</i>Usuarios</a>
+                        <a href="{{ route('users.index') }}"><i class="material-icons-outlined">arrow_right</i>Usuarios
+                        </a>
                     </li>
                     <li class="{{ request()->routeIs('services.index') ? 'mm-active' : '' }}">
                         <a href="{{ route('services.index') }}"><i
@@ -40,11 +53,7 @@
                     <li class="{{ request()->routeIs('sliders.index') ? 'mm-active' : '' }}">
                         <a href="{{ route('sliders.index') }}"><i
                                 class="material-icons-outlined">arrow_right</i>Sliders</a>
-                    </li>
-                    <li class="{{ request()->routeIs('about.index') ? 'mm-active' : '' }}">
-                        <a href="{{ route('about.index') }}"><i
-                                class="material-icons-outlined">arrow_right</i>Nosotr@s</a>
-                    </li>
+                    </li>                    
                     <li class="{{ request()->is('admin/pages/terminos*') ? 'mm-active' : '' }}">
                         <a href="{{ route('admin.pages.edit', 'terminos') }}"><i
                                 class="material-icons-outlined">arrow_right</i>Términos</a>
@@ -53,10 +62,14 @@
                         <a href="{{ route('admin.pages.edit', 'privacidad') }}"><i
                                 class="material-icons-outlined">arrow_right</i>Privacidad</a>
                     </li>
+                    <li class="{{ request()->routeIs('about.index') ? 'mm-active' : '' }}">
+                        <a href="{{ route('about.index') }}"><i class="material-icons-outlined">arrow_right</i>Quienes
+                            Somos</a>
+                    </li>
                 </ul>
             </li>
 
-
+            <li class="menu-label">Ventas</li>
             <li class="{{ request()->routeIs('orders.*') ? 'mm-active' : '' }}">
                 <a href="{{ route('orders.index') }}">
                     <div class="parent-icon"><i class="material-icons-outlined">local_shipping</i></div>
@@ -64,6 +77,7 @@
                 </a>
             </li>
 
+            <li class="menu-label">Inventario</li>
             <li
                 class="{{ request()->routeIs('categories.*') || request()->routeIs('brands.*') || request()->routeIs('products.*') ? 'mm-active' : '' }}">
                 <a href="javascript:;" class="has-arrow">
@@ -86,6 +100,7 @@
                 </ul>
             </li>
 
+            <li class="menu-label">Marketing</li>
             <li class="{{ request()->routeIs('coupons*') ? 'mm-active' : '' }}">
                 <a href="{{ route('coupons.index') }}">
                     <div class="parent-icon"><i class="material-icons-outlined">local_offer</i></div>
@@ -93,7 +108,7 @@
                 </a>
             </li>
 
-
+            <li class="menu-label">Contenido</li>
             <li
                 class="{{ request()->routeIs('admin.posts.*') || request()->routeIs('admin.comments.index') ? 'mm-active' : '' }}">
                 <a href="javascript:;" class="has-arrow">
@@ -112,6 +127,7 @@
                 </ul>
             </li>
 
+            <li class="menu-label">Otros</li>
             <li class="{{ request()->routeIs('admin.ratings.*') ? 'mm-active' : '' }}">
                 <a href="{{ route('admin.ratings.index') }}">
                     <div class="parent-icon"><i class="material-icons-outlined">star</i></div>
@@ -119,6 +135,7 @@
                 </a>
             </li>
         </ul>
+
 
         <!--end navigation-->
     </div>

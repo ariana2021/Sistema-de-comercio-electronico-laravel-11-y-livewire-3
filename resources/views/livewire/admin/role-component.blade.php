@@ -1,64 +1,56 @@
-@section('title', 'Categorias')
+@section('title', 'Permisos')
 
 <div>
     <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <button wire:click="create()" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus-circle"></i>
-                        Nuevo
+                    <button wire:click="create()" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-plus-circle"></i> Nuevo Rol
                     </button>
 
                     @if (session()->has('message'))
                         <div class="mt-2 alert alert-success border-0 bg-grd-success alert-dismissible fade show">
                             <div class="d-flex align-items-center">
-                                <div class="font-35 text-white"><span
-                                        class="material-icons-outlined fs-2">check_circle</span>
+                                <div class="font-35 text-white">
+                                    <span class="material-icons-outlined fs-2">check_circle</span>
                                 </div>
                                 <div class="ms-3">
                                     <h6 class="mb-0 text-white">Respuesta</h6>
-                                    <div class="text-white">{{ session('message') }}!</div>
+                                    <div class="text-white">{{ session('message') }}</div>
                                 </div>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                 aria-label="Close"></button>
                         </div>
                     @endif
-                    <input type="text" class="form-control mt-3" placeholder="Buscar..." wire:model.live="search">
 
-                    @if ($categories->count())
+                    <input type="text" class="form-control mt-3" placeholder="Buscar rol..."
+                        wire:model.live="search">
 
-                        <div class="table-responsive">
-                            <table class="table table-striped align-middle" style="width: 100%">
+                    @if ($roles->count())
+                        <div class="table-responsive mt-3">
+                            <table class="table table-striped" style="width: 100%">
                                 <thead>
                                     <tr>
                                         <th scope="col">Acciones</th>
-                                        <th scope="col">Imagen</th>
                                         <th scope="col">Nombre</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($categories as $category)
+                                    @foreach ($roles as $role)
                                         <tr>
                                             <td>
-                                                <button wire:click="edit({{ $category->id }})"
+                                                <button wire:click="edit({{ $role->id }})"
                                                     class="btn btn-outline-primary btn-sm">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button wire:click="confirmDelete({{ $category->id }})"
+                                                <button wire:click="confirmDelete({{ $role->id }})"
                                                     class="btn btn-outline-danger btn-sm">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
-                                            <td>
-                                                @if ($category->image)
-                                                    <img src="{{ Storage::url($category->image) }}"
-                                                        alt="Imagen del producto" width="100">
-                                                @else
-                                                    <span>No hay imagen</span>
-                                                @endif
-                                            </td>
-                                            <td>{{ $category->name }}</td>
+                                            <td>{{ $role->name }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -66,13 +58,14 @@
                         </div>
 
                         <div class="mt-2">
-                            {{ $categories->links() }}
+                            {{ $roles->links() }}
                         </div>
                     @else
                         <div class="mt-2 alert alert-border-danger">
-                            <div class="">No hay datos</div>
+                            <div>No hay datos</div>
                         </div>
                     @endif
+
                 </div>
             </div>
         </div>
@@ -83,27 +76,40 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-gray">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ $category_id ? 'Editar Categoria' : 'Crear Categoria' }}</h5>
+                    <h5 class="modal-title">{{ $role_id ? 'Editar Rol' : 'Crear Rol' }}</h5>
                     <button type="button" class="btn-close" wire:click="closeModal()" aria-label="Close"></button>
                 </div>
                 <form wire:submit.prevent="store()">
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label for="name">Nombre</label>
-                                <input type="text" class="form-control form-control-lg" id="name"
-                                    placeholder="Nombre" wire:model="name">
+                                <label for="name">Nombre del Rol</label>
+                                <input type="text" class="form-control" id="name" placeholder="Nombre del rol"
+                                    wire:model="name">
                                 @error('name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="image">Imagen</label>
-                                <input type="file" class="form-control" id="image" wire:model="image">
-                                @error('image')
+
+                            <div class="form-group col-md-12 mt-3">
+                                <label for="permissions">Permisos</label>
+                                <div>
+                                    @foreach ($permissions as $permission)
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="permission{{ $permission->id }}" wire:model="selectedPermissions"
+                                                value="{{ $permission->name }}">
+                                            <label class="form-check-label" for="permission{{ $permission->id }}">
+                                                {{ $permission->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @error('selectedPermissions')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -115,7 +121,10 @@
             </div>
         </div>
     </div>
+
 </div>
+
+
 
 @push('scripts')
     <script>
@@ -132,7 +141,7 @@
                     confirmButtonText: 'Si, Eliminar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.dispatchTo('admin.category-component', 'delete', {
+                        Livewire.dispatchTo('admin.role-component', 'delete', {
                             valor: id
                         });
                     }

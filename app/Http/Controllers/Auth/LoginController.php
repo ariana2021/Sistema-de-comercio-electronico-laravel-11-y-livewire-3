@@ -43,10 +43,11 @@ class LoginController extends Controller
         Session::put('cart', $temporaryCart->cart_data);
         Session::put('wishlist', $temporaryCart->wishlist_data);
 
-        // Redireccionar según el rol del usuario
-        return $user->hasRole('admin')
-            ? redirect()->route('home')
-            : redirect()->route('profile.index');
+        if ($user->roles->isEmpty()) {
+            return redirect()->route('profile.index');
+        }
+
+        return redirect()->route('home');
     }
 
 

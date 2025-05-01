@@ -65,7 +65,8 @@
 }
 [data-bs-theme=semi-dark] body .sidebar-wrapper .sidebar-nav .metismenu .mm-active > a {
   color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.05);
+  text-decoration: none;
+  background-color: #008cff;
 }
 [data-bs-theme=semi-dark] body .sidebar-wrapper .menu-label {
   color: #b0afaf;

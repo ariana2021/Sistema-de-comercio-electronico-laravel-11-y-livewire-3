@@ -48,18 +48,32 @@ class BusinessController extends Controller
             'cashbacks.*.percentage' => 'required_with:cashbacks.*.amount|numeric|min:0|max:100',
         ], $this->messages());
 
-        $cashbacks = $validated['cashbacks'] ?? [];
+        // Sacar los nuevos cashbacks enviados
+        $newCashbacks = $validated['cashbacks'] ?? [];
         unset($validated['cashbacks']);
 
+        // Leer los cashbacks actuales
+        $existingCashbacks = $business->cashbacks ?? [];
+
+        // Combinar los cashbacks actuales con los nuevos
+        $mergedCashbacks = array_merge($existingCashbacks, $newCashbacks);
+
+        // Eliminar duplicados (por amount y percentage juntos)
+        $uniqueCashbacks = [];
+        foreach ($mergedCashbacks as $cashback) {
+            $key = $cashback['amount'] . '-' . $cashback['percentage']; // Genera clave única
+            $uniqueCashbacks[$key] = $cashback;
+        }
+        $finalCashbacks = array_values($uniqueCashbacks); // Quitar las claves y reindexar
+
+        // Actualizar el negocio
         $business->update([
             ...$validated,
-            'cashbacks' => $cashbacks,
+            'cashbacks' => $finalCashbacks,
         ]);
 
         return redirect()->route('business.index')->with('success', 'Empresa actualizada correctamente.');
     }
-
-
 
     private function messages()
     {

@@ -321,7 +321,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <button class="tp-product-details-buy-now-btn w-100">Comprar Ahora</button>
+                                <button class="tp-product-details-buy-now-btn w-100" wire:click="buyNow({{ $productView->id }})">Comprar Ahora</button>
                             </div>
 
                         @endif

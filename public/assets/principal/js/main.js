@@ -1535,7 +1535,7 @@
 	});
 
 	var slider = new Swiper('.tp-testimonial-slider-active-5', {
-		slidesPerView: 1,
+		slidesPerView: 2,
 		spaceBetween: 0,
 		loop: true,
 		autoplay: true,

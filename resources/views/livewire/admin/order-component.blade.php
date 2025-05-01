@@ -5,28 +5,42 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <input type="text" class="form-control mt-3" placeholder="Buscar pedidos..."
+                    <input type="text" class="form-control mt-3 mb-2" placeholder="Buscar pedidos..."
                         wire:model.live="search">
 
                     @if (session()->has('message'))
-                        <div class="alert alert-success mt-3">{{ session('message') }}</div>
+                        <div class="mt-2 alert alert-success border-0 bg-grd-success alert-dismissible fade show">
+                            <div class="d-flex align-items-center">
+                                <div class="font-35 text-white"><span
+                                        class="material-icons-outlined fs-2">check_circle</span>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-0 text-white">Respuesta</h6>
+                                    <div class="text-white">{{ session('message') }}!</div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
                     @endif
 
                     @if ($orders->count())
 
                         <div class="table-responsive">
-                            <table class="table table-striped" style="width: 100%">
+                            <table class="table table-striped table-hover table-bordered align-middle"
+                                style="width: 100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Acciones</th>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Cliente</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Envio</th>
-                                        <th scope="col">Estado</th>
-                                        <th scope="col">Fecha</th>
+                                        <th scope="col"><i class="fas fa-cogs"></i> Acciones</th>
+                                        <th scope="col"><i class="fas fa-hashtag"></i> ID</th>
+                                        <th scope="col"><i class="fas fa-user"></i> Cliente</th>
+                                        <th scope="col"><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th scope="col"><i class="fas fa-truck"></i> Envío</th>
+                                        <th scope="col"><i class="fas fa-info-circle"></i> Estado</th>
+                                        <th scope="col"><i class="fas fa-calendar-day"></i> Fecha</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     @foreach ($orders as $order)
                                         <tr>
@@ -60,7 +74,7 @@
                             {{ $orders->links() }}
                         </div>
                     @else
-                        <div class="alert alert-warning mt-3" role="alert">
+                        <div class="mt-2 alert alert-border-danger" role="alert">
                             <strong>No hay pedidos disponibles</strong>
                         </div>
                     @endif

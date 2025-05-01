@@ -20,7 +20,7 @@
                                     <a href="{{ route('shop') }}">Productos</a>
                                 </li>
                                 <li><a href="{{ route('posts.index') }}">Blog</a></li>
-                                <li><a href="{{ route('us') }}">Nosotras</a></li>
+                                <li><a href="{{ route('us') }}">Quienes Somos</a></li>
                                 <li><a href="{{ route('contact') }}">Contacto</a></li>
                             </ul>
                         </nav>

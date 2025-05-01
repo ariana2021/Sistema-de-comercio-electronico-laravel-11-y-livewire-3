@@ -28,6 +28,14 @@ class ProductComponent extends Component
         $this->brands = Brand::all();
     }
 
+    public function buyNow($productId)
+    {
+        $this->addToCart($productId);
+
+        // Redirige al checkout
+        return redirect()->route('carts.checkout');
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -82,10 +90,12 @@ class ProductComponent extends Component
         }
 
         if ($this->categorySelected) {
+            $this->resetPage();
             $query->where('category_id', $this->categorySelected);
         }
 
         if ($this->brandSelected) {
+            $this->resetPage();
             $query->where('brand_id', $this->brandSelected);
         }
 

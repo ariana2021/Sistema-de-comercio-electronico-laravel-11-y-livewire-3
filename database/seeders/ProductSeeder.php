@@ -73,12 +73,15 @@ class ProductSeeder extends Seeder
             $fileName = 'products/' . Str::uuid() . '.jpg';
             Storage::disk('public')->put($fileName, $response->body());
 
+            $price = $faker->randomFloat(2, 10, 100);
+            $discount_price = $faker->randomFloat(2, 5, $price);
+
             $products[] = [
                 'name' => $name,
                 'slug' => $slug,
-                'description' => $faker->sentence(),
-                'price' => $faker->randomFloat(2, 10, 500),
-                'discount_price' => $faker->optional()->randomFloat(2, 5, 400),
+                'description' => $faker->paragraph(3),
+                'price' => $price,
+                'discount_price' => $discount_price,
                 'stock' => $faker->numberBetween(10, 200),
                 'sku' => strtoupper($faker->lexify('??????')),
                 'status' => 1,
@@ -91,4 +94,3 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert($products);
     }
 }
-

@@ -18,6 +18,13 @@ class CategoryProductComponent extends Component
         $this->category = Category::with('products')->findOrFail($categoryId);
     }
 
+    public function buyNow($productId)
+    {
+        $this->addToCart($productId);
+
+        return redirect()->route('carts.checkout');
+    }
+
     public function render()
     {
         return view('livewire.category-product-component');

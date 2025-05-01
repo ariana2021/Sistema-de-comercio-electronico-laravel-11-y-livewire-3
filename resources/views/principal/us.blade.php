@@ -58,43 +58,86 @@
     @endif
     <!-- Nuestro Equipo (con Slick Carousel) -->
 
-    <section class="py-5">
-
-        <h2 class="section-title text-center mb-5">
-            <span id="typed-title" class="text-primary"></span>
-        </h2>
+    <section class="tp-testimonial-area grey-bg-7 pt-130 pb-135 efecto-parallax">
         <div class="container">
-            <ul class="row mt-4 justify-content-around equipo-carousel">
-                @foreach ($users as $user)
-                    <li class="col-sm-6 col-lg-4 py-4 text-center team-item">
-                        <!-- Avatar dinámico -->
-                        <div class="team-img d-flex justify-content-center align-items-center"
-                            style="width: 150px; height: 150px; border-radius: 50%; background-color: #ddd; overflow: hidden; margin: 0 auto;">
-                            @if ($user->avatar)
-                                <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}"
-                                    class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
-                            @else
-                                <span class="d-flex justify-content-center align-items-center"
-                                    style="font-size: 36px; font-weight: bold; width: 100%; height: 100%;">
-                                    {{ strtoupper(substr($user->name, 0, 1)) }}{{ strtoupper(substr(explode(' ', $user->name)[1] ?? '', 0, 1)) }}
-                                </span>
-                            @endif
+            <div class="row justify-content-center">
+                <div class="col-xl-12">
+                    <div class="tp-testimonial-slider p-relative z-index-1 card">
+                        <h3 class="tp-testimonial-section-title text-center mt-3">Conoce a nuestro equipo</h3>
+
+                        <div class="row justify-content-center">
+                            <div class="col-xl-8 col-lg-8 col-md-10">
+                                <div class="tp-testimonial-slider-active-5 swiper-container">
+                                    <div class="swiper-wrapper">
+                                        @foreach ($users as $user)
+                                            @php
+                                                $name = $user->name;
+                                                $email = $user->email ?? 'anonymous@example.com';
+                                                $gravatar =
+                                                    'https://www.gravatar.com/avatar/' .
+                                                    md5(strtolower(trim($email))) .
+                                                    '?s=100&d=404';
+                                                $initials = collect(explode(' ', $name))
+                                                    ->map(fn($n) => strtoupper($n[0]))
+                                                    ->join('');
+                                                $avatar = $user->avatar
+                                                    ? Storage::url($user->avatar)
+                                                    : (Http::get($gravatar)->successful()
+                                                        ? $gravatar
+                                                        : null);
+                                            @endphp
+
+                                            <div class="tp-testimonial-item text-center mb-20 swiper-slide">
+                                                <div
+                                                    class="tp-testimonial-user-wrapper d-flex align-items-center justify-content-center">
+                                                    <div class="tp-testimonial-user d-flex align-items-center">
+                                                        <div class="tp-testimonial-avater mr-10">
+                                                            @if ($avatar)
+                                                                <img src="{{ $avatar }}" alt="{{ $name }}"
+                                                                    loading="lazy">
+                                                            @else
+                                                                <div class="user-initials">
+                                                                    {{ $initials }}
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="tp-testimonial-user-info tp-testimonial-user-translate">
+                                                            <h3 class="tp-testimonial-user-title">{{ $name }}</h3>
+                                                            <span
+                                                                class="tp-testimonial-designation">{{ $user->getRoleNames()->first() ?? 'Sin rol' }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="title mt-3">
-                            <!-- Nombre y título del usuario -->
-                            <h3 class="name">{{ $user->name }}</h3>
-                            <h5 class="sep">{{ $user->getRoleNames()->first() ?? 'Sin rol' }}</h5>
+
+                        <div class="tp-testimonial-arrow d-none d-md-block">
+                            <button class="tp-testimonial-slider-button-prev">
+                                <svg width="17" height="14" viewBox="0 0 17 14">
+                                    <path d="M1.061 6.99959L16 6.99959" stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M7.08618 1L1.06079 6.9995L7.08618 13" stroke="currentColor"
+                                        stroke-width="1.5" />
+                                </svg>
+                            </button>
+                            <button class="tp-testimonial-slider-button-next">
+                                <svg width="17" height="14" viewBox="0 0 17 14">
+                                    <path d="M15.939 6.99959L1 6.99959" stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M9.91382 1L15.9392 6.9995L9.91382 13" stroke="currentColor"
+                                        stroke-width="1.5" />
+                                </svg>
+                            </button>
                         </div>
-                        <br>
-                        <span class="social py-3 px-3">
-                            <i class="fa-brands fa-facebook-f" style="color: #ff4848;"></i>
-                            <i class="fa-brands fa-twitter" style="color: #ff4848;"></i>
-                            <i class="fa-brands fa-instagram" style="color: #ff4848;"></i>
-                            <i class="fa-brands fa-github" style="color: #ff4848;"></i>
-                        </span>
-                    </li>
-                @endforeach
-            </ul>
+
+                        <div
+                            class="tp-testimonial-slider-dot tp-swiper-dot text-center mt-30 tp-swiper-dot-style-darkRed d-md-none">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

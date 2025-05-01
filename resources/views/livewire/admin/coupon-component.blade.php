@@ -11,12 +11,22 @@
             </div>
             <hr>
             @if (session()->has('success'))
-                <div class="alert alert-success mt-3">{{ session('success') }}</div>
+                <div class="mt-2 alert alert-success border-0 bg-grd-success alert-dismissible fade show">
+                    <div class="d-flex align-items-center">
+                        <div class="font-35 text-white"><span class="material-icons-outlined fs-2">check_circle</span>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0 text-white">Respuesta</h6>
+                            <div class="text-white">{{ session('success') }}!</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             @endif
             <input type="text" class="form-control mb-3" placeholder="Buscar cupones..."
                 wire:model.live="searchCoupons">
             @if ($coupons->isEmpty())
-                <div class="alert alert-warning text-center">
+                <div class="mt-2 alert alert-border-danger">
                     <strong>No hay cupones registrados.</strong>
                 </div>
             @else

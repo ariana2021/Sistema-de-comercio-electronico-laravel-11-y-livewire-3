@@ -15,6 +15,7 @@ class Order extends Model
         'discount',
         'shipping_cost',
         'shipping_place',
+        'tracking_number',
         'total',
         'payment_method',
         'status',

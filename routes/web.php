@@ -64,33 +64,139 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/order/{encryptedId}/invoice/pdf', [PrincipalController::class, 'generateTicket'])->name('order.invoice.pdf');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('admin/about', AboutUsController::class);
+Route::middleware(['auth', 'check.role'])->group(function () {
+    // About Us
+    Route::resource('admin/about', AboutUsController::class)
+        ->middleware('can:ver acerca de nosotros,editar acerca de nosotros');
     
-    Route::get('/admin/pages/{slug}/edit', [PageController::class, 'edit'])->name('admin.pages.edit');
-    Route::put('/admin/pages/{slug}', [PageController::class, 'update'])->name('admin.pages.update');
+    // Pages
+    Route::get('/admin/pages/{slug}/edit', [PageController::class, 'edit'])
+        ->name('admin.pages.edit')
+        ->middleware('can:gestionar páginas');
+    Route::put('/admin/pages/{slug}', [PageController::class, 'update'])
+        ->name('admin.pages.update')
+        ->middleware('can:gestionar páginas');
 
-    Route::get('/admin/empresa', [BusinessController::class, 'index'])->name('business.index');
-    Route::put('/admin/empresa', [BusinessController::class, 'update'])->name('business.update');
+    // Business Configuration
+    Route::get('/admin/empresa', [BusinessController::class, 'index'])
+        ->name('business.index')
+        ->middleware('can:ver configuración del negocio');
+    Route::put('/admin/empresa', [BusinessController::class, 'update'])
+        ->name('business.update')
+        ->middleware('can:actualizar configuración del negocio');
 
-    Route::get('/admin/users', App\Livewire\Admin\UserComponent::class)->name('users.index');
-    Route::get('/admin/posts', App\Livewire\Admin\PostComponent::class)->name('admin.posts.index');
-    Route::get('/admin/comments', App\Livewire\Admin\CommentComponent::class)->name('admin.comments.index');
-    Route::get('/admin/ratings', App\Livewire\Admin\RatingComponent::class)->name('admin.ratings.index');
+    // Permissions
+    Route::get('/admin/roles', App\Livewire\Admin\RoleComponent::class)
+        ->name('roles.index')
+        ->middleware('can:gestionar permisos');
+    
+    // Users
+    Route::get('/admin/users', App\Livewire\Admin\UserComponent::class)
+        ->name('users.index')
+        ->middleware('can:gestionar usuarios');
+    
+    // Posts
+    Route::get('/admin/posts', App\Livewire\Admin\PostComponent::class)
+        ->name('admin.posts.index')
+        ->middleware('can:gestionar publicaciones');
+    
+    // Comments
+    Route::get('/admin/comments', App\Livewire\Admin\CommentComponent::class)
+        ->name('admin.comments.index')
+        ->middleware('can:gestionar comentarios');
+    
+    // Ratings
+    Route::get('/admin/ratings', App\Livewire\Admin\RatingComponent::class)
+        ->name('admin.ratings.index')
+        ->middleware('can:gestionar valoraciones');
 
-    Route::get('/admin/services', App\Livewire\Admin\ServiceComponent::class)->name('services.index');
-    Route::get('/admin/sliders', App\Livewire\Admin\SliderComponent::class)->name('sliders.index');
-    Route::get('/admin/coupons', App\Livewire\Admin\CouponComponent::class)->name('coupons.index');
-    Route::get('/admin/brands', App\Livewire\Admin\BrandComponent::class)->name('brands.index');
-    Route::get('/admin/categories', App\Livewire\Admin\CategoryComponent::class)->name('categories.index');
-    Route::get('/admin/products', App\Livewire\Admin\ProductComponent::class)->name('products.index');
-    Route::get('/admin/product/{product}/gallery', [ProductImageController::class, 'gallery'])->name('product.gallery');
-    Route::post('/admin/upload-image/{product}', [ProductImageController::class, 'upload'])->name('product.upload');
-    Route::delete('/admin/delete-image/{id}', [ProductImageController::class, 'delete'])->name('product.delete');
-    Route::get('/admin/orders', App\Livewire\Admin\OrderComponent::class)->name('orders.index');
+    // Services
+    Route::get('/admin/services', App\Livewire\Admin\ServiceComponent::class)
+        ->name('services.index')
+        ->middleware('can:gestionar servicios');
+    
+    // Sliders
+    Route::get('/admin/sliders', App\Livewire\Admin\SliderComponent::class)
+        ->name('sliders.index')
+        ->middleware('can:gestionar sliders');
+    
+    // Coupons
+    Route::get('/admin/coupons', App\Livewire\Admin\CouponComponent::class)
+        ->name('coupons.index')
+        ->middleware('can:gestionar cupones');
+    
+    // Brands
+    Route::get('/admin/brands', App\Livewire\Admin\BrandComponent::class)
+        ->name('brands.index')
+        ->middleware('can:gestionar marcas');
+    
+    // Categories
+    Route::get('/admin/categories', App\Livewire\Admin\CategoryComponent::class)
+        ->name('categories.index')
+        ->middleware('can:gestionar categorías');
+    
+    // Products
+    Route::get('/admin/products', App\Livewire\Admin\ProductComponent::class)
+        ->name('products.index')
+        ->middleware('can:gestionar productos');
+    
+    // Product Gallery
+    Route::get('/admin/product/{product}/gallery', [ProductImageController::class, 'gallery'])
+        ->name('product.gallery')
+        ->middleware('can:subir imágenes de productos');
+    Route::post('/admin/upload-image/{product}', [ProductImageController::class, 'upload'])
+        ->name('product.upload')
+        ->middleware('can:subir imágenes de productos');
+    Route::delete('/admin/delete-image/{id}', [ProductImageController::class, 'delete'])
+        ->name('product.delete')
+        ->middleware('can:eliminar imágenes de productos');
+    
+    // Orders
+    Route::get('/admin/orders', App\Livewire\Admin\OrderComponent::class)
+        ->name('orders.index')
+        ->middleware('can:gestionar pedidos');
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/admin/perfil', [App\Http\Controllers\Admin\ProfileController::class, 'perfil'])->name('usuario.perfil');
-    Route::put('/admin/profile', [App\Http\Controllers\Admin\ProfileController::class, 'updateProfile'])->name('profile.update');
-    Route::put('/admin/profile/update-password', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+    // Home
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+        ->name('home');
+    
+    // Profile
+    Route::get('/admin/perfil', [App\Http\Controllers\Admin\ProfileController::class, 'perfil'])
+        ->name('usuario.perfil');
+    Route::put('/admin/profile', [App\Http\Controllers\Admin\ProfileController::class, 'updateProfile'])
+        ->name('profile.update');
+    Route::put('/admin/profile/update-password', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])
+        ->name('profile.updatePassword');
 });
+
+// Route::middleware(['auth', 'role:admin'])->group(function () {
+//     Route::resource('admin/about', AboutUsController::class);
+    
+//     Route::get('/admin/pages/{slug}/edit', [PageController::class, 'edit'])->name('admin.pages.edit');
+//     Route::put('/admin/pages/{slug}', [PageController::class, 'update'])->name('admin.pages.update');
+
+//     Route::get('/admin/empresa', [BusinessController::class, 'index'])->name('business.index');
+//     Route::put('/admin/empresa', [BusinessController::class, 'update'])->name('business.update');
+
+//     Route::get('/admin/permissions', App\Livewire\Admin\RoleComponent::class)->name('permissions.index');
+//     Route::get('/admin/users', App\Livewire\Admin\UserComponent::class)->name('users.index');
+//     Route::get('/admin/posts', App\Livewire\Admin\PostComponent::class)->name('admin.posts.index');
+//     Route::get('/admin/comments', App\Livewire\Admin\CommentComponent::class)->name('admin.comments.index');
+//     Route::get('/admin/ratings', App\Livewire\Admin\RatingComponent::class)->name('admin.ratings.index');
+
+//     Route::get('/admin/services', App\Livewire\Admin\ServiceComponent::class)->name('services.index');
+//     Route::get('/admin/sliders', App\Livewire\Admin\SliderComponent::class)->name('sliders.index');
+//     Route::get('/admin/coupons', App\Livewire\Admin\CouponComponent::class)->name('coupons.index');
+//     Route::get('/admin/brands', App\Livewire\Admin\BrandComponent::class)->name('brands.index');
+//     Route::get('/admin/categories', App\Livewire\Admin\CategoryComponent::class)->name('categories.index');
+//     Route::get('/admin/products', App\Livewire\Admin\ProductComponent::class)->name('products.index');
+//     Route::get('/admin/product/{product}/gallery', [ProductImageController::class, 'gallery'])->name('product.gallery');
+//     Route::post('/admin/upload-image/{product}', [ProductImageController::class, 'upload'])->name('product.upload');
+//     Route::delete('/admin/delete-image/{id}', [ProductImageController::class, 'delete'])->name('product.delete');
+//     Route::get('/admin/orders', App\Livewire\Admin\OrderComponent::class)->name('orders.index');
+
+//     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//     Route::get('/admin/perfil', [App\Http\Controllers\Admin\ProfileController::class, 'perfil'])->name('usuario.perfil');
+//     Route::put('/admin/profile', [App\Http\Controllers\Admin\ProfileController::class, 'updateProfile'])->name('profile.update');
+//     Route::put('/admin/profile/update-password', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+// });

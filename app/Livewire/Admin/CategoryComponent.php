@@ -110,7 +110,6 @@ class CategoryComponent extends Component
         $this->category_id = $id;
         $this->name = $category->name;
         $this->slug = $category->slug;
-        $this->image = $category->image;
         $this->openModal();
     }
 

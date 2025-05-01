@@ -17,9 +17,9 @@ class ProductComponent extends Component
     public $search = '';
     public $name, $slug, $description, $price, $discount_price, $stock, $sku, $status = 1, $image, $category_id, $brand_id;
     public $product_id, $isOpen = false;
-
+    public string $features = '';
     protected $queryString = ['search'];
-    protected $listeners = ['delete'];
+    protected $listeners = ['delete', 'updateFeatures'];
     protected $paginationTheme = 'bootstrap';
     public array $brands = [];
     public array $categories = [];
@@ -30,6 +30,7 @@ class ProductComponent extends Component
             'name' => 'required|string|max:255|unique:products,name,' . $this->product_id,
             'slug' => 'required|string|max:255|unique:products,slug,' . $this->product_id,
             'description' => 'nullable|string',
+            'features' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0|lt:price',
             'stock' => 'required|numeric|min:0',
@@ -45,6 +46,11 @@ class ProductComponent extends Component
     {
         $this->brands = Brand::all()->toArray();
         $this->categories = Category::all()->toArray();
+    }
+
+    public function updateFeatures($valor)
+    {
+        $this->features = $valor;
     }
 
     public function updatedName()
@@ -77,6 +83,7 @@ class ProductComponent extends Component
     public function openModal()
     {
         $this->isOpen = true;
+        $this->dispatch('modalOpened', $this->features);
     }
 
     public function closeModal()
@@ -91,6 +98,7 @@ class ProductComponent extends Component
         $this->name = '';
         $this->slug = '';
         $this->description = '';
+        $this->features = '';
         $this->price = '';
         $this->discount_price = '';
         $this->stock = '';
@@ -137,6 +145,7 @@ class ProductComponent extends Component
         $this->name = $product->name;
         $this->slug = $product->slug;
         $this->description = $product->description;
+        $this->features = empty($product->features) ? '' : $product->features;
         $this->price = $product->price;
         $this->discount_price = $product->discount_price;
         $this->stock = $product->stock;
