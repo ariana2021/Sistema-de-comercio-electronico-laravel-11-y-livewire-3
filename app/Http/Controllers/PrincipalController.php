@@ -42,9 +42,7 @@ class PrincipalController extends Controller
         $historia = AboutUs::where('type', 'historia')->first();
         $mision = AboutUs::where('type', 'mision')->first();
         $vision = AboutUs::where('type', 'vision')->first();
-        $users = User::whereHas('roles', function ($query) {
-            $query->where('name', '!=', 'cliente');
-        })->get();
+        $users = User::whereHas('roles')->get();
         return view('principal.us', compact('historia', 'mision', 'vision', 'users'));
     }
 

@@ -317,7 +317,7 @@ class CheckoutController extends Controller
             }
 
             try {
-                Mail::to($user->email)->send(new VentaConfirmadaMail($order));
+                Mail::to($user->email)->send(new VentaConfirmadaMail($order, $business));
                 //Mail::to($user->email)->queue(new VentaConfirmadaMail($order));
             } catch (\Exception $e) {
                 Log::error('Error al enviar correo: ' . $e->getMessage());

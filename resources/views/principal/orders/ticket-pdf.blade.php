@@ -80,7 +80,7 @@
 <body>
     <div class="ticket">
         @if ($business->logo)
-            <img src="{{ public_path('admin/images/logo-1.png') }}" class="logo">
+            <img src="{{ public_path('principal/img/logo/logo.png') }}" class="logo">
         @else
             <h3>{{ $business->business_name }}</h3>
         @endif

@@ -241,3 +241,135 @@ p {
     border-color: #ff2b00;
     border-radius: 1px
 }
+
+
+.product-card {
+    height: 250px;
+    background-color: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.product-img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    /* Centra horizontalmente si quieres */
+}
+
+.badge-stock {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #28a745;
+    /* Verde por defecto */
+    color: white;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.badge-stock.out-of-stock {
+    background-color: #dc3545;
+    /* Rojo si no hay stock */
+}
+
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    z-index: 2;
+}
+
+/* Estado inicial (cuando el modal empieza a abrir) */
+.modal-content {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Cuando el modal está completamente visible */
+.modal.show .modal-content {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.product-title {
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0;
+    color: white;
+}
+
+.product-price {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Menú de Categorías */
+.menu-categorias {
+    background-color: #e8eaf6;
+    /* Indigo lighten-5 */
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.menu-categorias a {
+    color: #3f51b5;
+    /* Indigo */
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu-categorias a:hover {
+    background-color: #c5cae9;
+    /* Indigo lighten-3 */
+    color: #1a237e;
+    /* Indigo darken-4 */
+    text-decoration: none;
+}
+
+/* Menú de Marcas */
+.menu-marcas {
+    background-color: #f3e5f5;
+    /* Purple lighten-5 */
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.menu-marcas a {
+    text-decoration: none;
+    color: #9c27b0;
+    /* Purple */
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu-marcas a:hover {
+    background-color: #e1bee7;
+    /* Purple lighten-3 */
+    color: #6a1b9a;
+    /* Purple darken-3 */
+}

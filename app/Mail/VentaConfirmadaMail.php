@@ -14,10 +14,12 @@ class VentaConfirmadaMail extends Mailable
     use Queueable, SerializesModels;
 
     public $order;
+    public $business;
 
-    public function __construct(Order $order)
+    public function __construct(Order $order, $business)
     {
         $this->order = $order;
+        $this->business = $business;
     }
 
     /**
@@ -36,7 +38,7 @@ class VentaConfirmadaMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.venta_confirmada',
+            view: 'principal.orders.ticket-pdf',
         );
     }
 

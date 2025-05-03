@@ -37,8 +37,7 @@
                                         <th scope="col"><i class="fas fa-user"></i> Nombre</th>
                                         <th scope="col"><i class="fas fa-envelope"></i> Correo</th>
                                         <th scope="col"><i class="fas fa-phone"></i> Télefono</th>
-                                        <th scope="col"><i class="fas fa-map-marker-alt"></i> Estado</th>
-                                        <th scope="col"><i class="fas fa-user-tag"></i> Rol</th>
+                                        <th scope="col"><i class="fas fa-coins"></i> CashBack</th>
                                         <th scope="col"><i class="fas fa-cogs"></i> Acciones</th>
                                     </tr>
                                 </thead>
@@ -48,32 +47,7 @@
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->phone }}</td>
-                                            <td>
-                                                @if ($loading)
-                                                    <span class="badge bg-secondary">Cargando...</span>
-                                                @else
-                                                    <select
-                                                        wire:change="changeStatus({{ $user->id }}, $event.target.value)"
-                                                        class="form-control">
-                                                        <option value="Activo"
-                                                            {{ $user->status === 'Activo' ? 'selected' : '' }}>Activo
-                                                        </option>
-                                                        <option value="Inactivo"
-                                                            {{ $user->status === 'Inactivo' ? 'selected' : '' }}>
-                                                            Inactivo</option>
-                                                    </select>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($user->getRoleNames()->isEmpty())
-                                                    <span class="badge bg-secondary">Cliente</span>
-                                                @else
-                                                    @foreach ($user->getRoleNames() as $role)
-                                                        <span class="badge bg-info text-dark">{{ $role }}</span>
-                                                    @endforeach
-                                                @endif
-                                            </td>
-
+                                            <td>💰 {{ $user->cashbacks->sum('amount') }}</td>
                                             <td>
                                                 <button wire:click="edit({{ $user->id }})"
                                                     class="btn btn-outline-primary btn-sm">
@@ -96,7 +70,7 @@
                         </div>
                     @else
                         <div class="mt-2 alert alert-border-danger" role="alert">
-                            <strong>No hay usuarios</strong>
+                            <strong>No hay clientes</strong>
                         </div>
                     @endif
 
@@ -110,23 +84,23 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-gray">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ $user_id ? 'Editar Usuario' : 'Crear Usuario' }}</h5>
+                    <h5 class="modal-title">{{ $user_id ? 'Editar Cliente' : 'Crear Cliente' }}</h5>
                     <button type="button" class="btn-close" wire:click="closeModal()" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form class="row">
                         <div class="form-group col-md-12 mb-3">
                             <label for="name">Nombre</label>
-                            <input type="text" class="form-control" id="name" placeholder="Nombre"
-                                wire:model="name">
+                            <input type="text" class="form-control" id="name"
+                                placeholder="Nombre" wire:model="name">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group col-md-6 mb-3">
                             <label for="email">Correo</label>
-                            <input type="text" class="form-control" id="email" placeholder="Correo"
-                                wire:model="email">
+                            <input type="text" class="form-control" id="email"
+                                placeholder="Correo" wire:model="email">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -134,8 +108,8 @@
 
                         <div class="form-group col-md-6 mb-3">
                             <label for="address">Dirección</label>
-                            <input type="text" class="form-control" id="address" placeholder="Dirección"
-                                wire:model="address">
+                            <input type="text" class="form-control" id="address"
+                                placeholder="Dirección" wire:model="address">
                             @error('address')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -143,8 +117,8 @@
                         <div class="form-group col-md-6 mb-3">
                             <label for="password">Contraseña <span
                                     class="text-primary">{{ $opcional }}</span></label>
-                            <input type="password" class="form-control" id="password" placeholder="Contraseña"
-                                wire:model="password">
+                            <input type="password" class="form-control" id="password"
+                                placeholder="Contraseña" wire:model="password">
                             @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -157,20 +131,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
-                        <!-- Roles -->
-                        <div class="form-group col-md-12">
-                            <label for="roles">Roles</label>
-                            <select id="roles" class="form-select" wire:model="selectedRoles">
-                                @foreach ($roles as $role)
-                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('selectedRoles')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -200,7 +160,7 @@
                     confirmButtonText: 'Si, Eliminar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.dispatchTo('admin.user-component', 'delete', {
+                        Livewire.dispatchTo('admin.client-component', 'delete', {
                             valor: id
                         });
                     }

@@ -5,9 +5,8 @@ namespace App\Livewire\Admin;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Spatie\Permission\Models\Role;
 
-class UserComponent extends Component
+class ClientComponent extends Component
 {
     use WithPagination;
 
@@ -15,9 +14,6 @@ class UserComponent extends Component
     public $opcional = '';
     public $name, $email, $password, $password_confirmation, $address, $user_id;
     public $isOpen = 0;
-    public $roles = [];
-    public $selectedRoles = [];
-    public $loading = false;
 
     protected $queryString = ['search'];
 
@@ -25,20 +21,16 @@ class UserComponent extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public function mount()
-    {
-        $this->roles = Role::all();
-    }
-
     public function render()
     {
         $searchTerm = '%' . $this->search . '%';
 
-        $users = User::whereHas('roles')->where('name', 'like', $searchTerm)
+        $users = User::with('cashbacks')->whereDoesntHave('roles')
+            ->where('name', 'like', $searchTerm)
             ->orderBy('id', 'desc')
             ->paginate(9);
 
-        return view('livewire.admin.user-component', compact('users'))->extends('admin.layouts.app');
+        return view('livewire.admin.client-component', compact('users'))->extends('admin.layouts.app');
     }
 
     public function updatingSearch()
@@ -103,14 +95,9 @@ class UserComponent extends Component
             $data['password'] = bcrypt($this->password);
         }
 
-        $user = User::updateOrCreate(['id' => $this->user_id], $data);
-        $user->syncRoles($this->selectedRoles);
-        // Asignar rol Admin solo si es un nuevo registro
-        // if (!$this->user_id) {
-        //     $user->assignRole('Admin');
-        // }
+        User::updateOrCreate(['id' => $this->user_id], $data);
 
-        session()->flash('message', $this->user_id ? 'Usuario Actualizado.' : 'Usuario Creado.');
+        session()->flash('message', $this->user_id ? 'Cliente Actualizado.' : 'Cliente Creado.');
 
         $this->closeModal();
         $this->resetInputFields();
@@ -125,8 +112,6 @@ class UserComponent extends Component
         $this->address = $usuario->address;
         $this->password = '';
         $this->opcional = '(Opcional)';
-        $this->selectedRoles = $usuario->roles->pluck('name')->toArray();
-
         // Abrir el modal
         $this->openModal();
     }
@@ -136,21 +121,10 @@ class UserComponent extends Component
         $this->dispatch('show-delete-confirmation', id: $id);
     }
 
-
     public function delete($valor)
     {
         User::find($valor['id'])->delete();
 
-        session()->flash('message', 'Usuario Eliminada.');
-    }
-
-    public function changeStatus($userId, $newStatus)
-    {
-        $this->loading = true;
-        $user = User::find($userId);
-        $user->status = $newStatus;
-        $user->save();
-        $this->loading = false;
-        session()->flash('message', 'Estado actualizado correctamente.');
+        session()->flash('message', 'Cliente Eliminada.');
     }
 }

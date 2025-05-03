@@ -30,6 +30,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'subir imágenes de productos']);
         Permission::create(['name' => 'eliminar imágenes de productos']);
         Permission::create(['name' => 'gestionar pedidos']);
+        Permission::create(['name' => 'gestionar ventas']);
+        Permission::create(['name' => 'gestionar métodos de pago']);
+        Permission::create(['name' => 'gestionar clientes']);
 
         // Crear rol admin
         $adminRole = Role::create(['name' => 'admin']);
@@ -54,7 +57,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'gestionar productos',
             'subir imágenes de productos',
             'eliminar imágenes de productos',
-            'gestionar pedidos'
+            'gestionar pedidos',
+            'gestionar ventas',
+            'gestionar métodos de pago',
+            'gestionar clientes'
         ]);
 
         // Crear rol soporte

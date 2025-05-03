@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BusinessController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\RolController;
+use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
@@ -44,7 +45,7 @@ Route::get('/login', function () {
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    
+
     Route::post('/checkout/paidNiubiz', [CheckoutController::class, 'paidNiubiz'])->name('checkout.paidNiubiz');
 
     Route::get('/checkout', [ShoppingCart::class, 'checkout'])->name('carts.checkout');
@@ -68,7 +69,7 @@ Route::middleware(['auth', 'check.role'])->group(function () {
     // About Us
     Route::resource('admin/about', AboutUsController::class)
         ->middleware('can:ver acerca de nosotros,editar acerca de nosotros');
-    
+
     // Pages
     Route::get('/admin/pages/{slug}/edit', [PageController::class, 'edit'])
         ->name('admin.pages.edit')
@@ -89,22 +90,22 @@ Route::middleware(['auth', 'check.role'])->group(function () {
     Route::get('/admin/roles', App\Livewire\Admin\RoleComponent::class)
         ->name('roles.index')
         ->middleware('can:gestionar permisos');
-    
+
     // Users
     Route::get('/admin/users', App\Livewire\Admin\UserComponent::class)
         ->name('users.index')
         ->middleware('can:gestionar usuarios');
-    
+
     // Posts
     Route::get('/admin/posts', App\Livewire\Admin\PostComponent::class)
         ->name('admin.posts.index')
         ->middleware('can:gestionar publicaciones');
-    
+
     // Comments
     Route::get('/admin/comments', App\Livewire\Admin\CommentComponent::class)
         ->name('admin.comments.index')
         ->middleware('can:gestionar comentarios');
-    
+
     // Ratings
     Route::get('/admin/ratings', App\Livewire\Admin\RatingComponent::class)
         ->name('admin.ratings.index')
@@ -114,32 +115,32 @@ Route::middleware(['auth', 'check.role'])->group(function () {
     Route::get('/admin/services', App\Livewire\Admin\ServiceComponent::class)
         ->name('services.index')
         ->middleware('can:gestionar servicios');
-    
+
     // Sliders
     Route::get('/admin/sliders', App\Livewire\Admin\SliderComponent::class)
         ->name('sliders.index')
         ->middleware('can:gestionar sliders');
-    
+
     // Coupons
     Route::get('/admin/coupons', App\Livewire\Admin\CouponComponent::class)
         ->name('coupons.index')
         ->middleware('can:gestionar cupones');
-    
+
     // Brands
     Route::get('/admin/brands', App\Livewire\Admin\BrandComponent::class)
         ->name('brands.index')
         ->middleware('can:gestionar marcas');
-    
+
     // Categories
     Route::get('/admin/categories', App\Livewire\Admin\CategoryComponent::class)
         ->name('categories.index')
         ->middleware('can:gestionar categorías');
-    
+
     // Products
     Route::get('/admin/products', App\Livewire\Admin\ProductComponent::class)
         ->name('products.index')
         ->middleware('can:gestionar productos');
-    
+
     // Product Gallery
     Route::get('/admin/product/{product}/gallery', [ProductImageController::class, 'gallery'])
         ->name('product.gallery')
@@ -150,16 +151,29 @@ Route::middleware(['auth', 'check.role'])->group(function () {
     Route::delete('/admin/delete-image/{id}', [ProductImageController::class, 'delete'])
         ->name('product.delete')
         ->middleware('can:eliminar imágenes de productos');
-    
+
     // Orders
     Route::get('/admin/orders', App\Livewire\Admin\OrderComponent::class)
         ->name('orders.index')
         ->middleware('can:gestionar pedidos');
 
+    Route::get('/admin/payment-methods', App\Livewire\Admin\PaymentMethodComponent::class)
+        ->name('payment.methods.index')
+        ->middleware('can:gestionar métodos de pago');
+
+    Route::get('/admin/clients', App\Livewire\Admin\ClientComponent::class)
+        ->name('clients.index')
+        ->middleware('can:gestionar clientes');
+
+    Route::get('/admin/sales', App\Livewire\Admin\SaleComponent::class)->name('sales.index')->middleware('can:gestionar ventas');;
+    Route::get('/admin/sale-ticket/{id}', [SaleController::class, 'generateTicket'])->name('sale.generate.ticket')->middleware('can:gestionar ventas');;
+    Route::get('/admin/sales-details', App\Livewire\Admin\SaleDetailComponent::class)->name('sales.details.index')->middleware('can:gestionar ventas');;
+    Route::get('/export-sales', [SaleController::class, 'exportSales'])->name('sales.export')->middleware('can:gestionar ventas');;
+
     // Home
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
         ->name('home');
-    
+
     // Profile
     Route::get('/admin/perfil', [App\Http\Controllers\Admin\ProfileController::class, 'perfil'])
         ->name('usuario.perfil');
