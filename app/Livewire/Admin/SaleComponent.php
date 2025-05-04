@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Brand;
+use App\Models\Cashback;
 use App\Models\Category;
 use App\Models\PaymentMethod;
 use App\Models\Product;
@@ -235,6 +236,26 @@ class SaleComponent extends Component
                 'price' => $item['price'],
             ]);
             $product->decrement('stock', $item['quantity']);
+        }
+
+        if ($this->use_cashback > 0) {
+            $cashbacks = Cashback::where('user_id', Auth::user()->id)
+                ->where('status', 'available')
+                ->orderBy('created_at')
+                ->get();
+
+            $montoRestante = $this->use_cashback;
+            foreach ($cashbacks as $cashback) {
+                if ($montoRestante <= 0) break;
+
+                if ($cashback->amount <= $montoRestante) {
+                    $montoRestante -= $cashback->amount;
+                    $cashback->update(['status' => 'used']);
+                } else {
+                    $cashback->update(['amount' => $cashback->amount - $montoRestante]);
+                    $montoRestante = 0;
+                }
+            }
         }
 
         // Obtener el ID encriptado
