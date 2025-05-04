@@ -238,8 +238,8 @@ class SaleComponent extends Component
             $product->decrement('stock', $item['quantity']);
         }
 
-        if ($this->use_cashback > 0) {
-            $cashbacks = Cashback::where('user_id', Auth::user()->id)
+        if ($this->use_cashback > 0 && !empty($this->client_id)) {
+            $cashbacks = Cashback::where('user_id', $this->client_id)
                 ->where('status', 'available')
                 ->orderBy('created_at')
                 ->get();
